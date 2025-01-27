@@ -1,11 +1,67 @@
-import background1 from '../images/background.png'
-function Login() {
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 
-    return(
-        <div>
-            <img src={background1} alt="register image" />
-        </div>
-    )
+
+function Login() {
+  return (
+    <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-secondary">
+      <div
+        className="bg-light p-5 rounded shadow"
+        style={{ width: "60%", height: "70%" }}
+      >
+        <h2 className="text-center mb-4 fw-bold">Login Form</h2>
+
+        <form >
+          <div className="mb-4">
+            <label htmlFor="email" className="form-label fw-bold fs-5">
+              Email
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              placeholder="Enter your email"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="role" className="form-label fw-bold fs-5">
+              Role
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="role"
+              placeholder="Enter your role"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="password" className="form-label fw-bold fs-5">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              placeholder="Enter your password"
+            />
+          </div>
+
+          <div className="text-center">
+            <button type="submit" className="btn btn-primary w-40 ">
+              Login
+            </button>
+            <div className="mt-3 ">
+              <Link to="/register" className="text-primary text-decoration-none">Register here</Link>
+            </div>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  );
 }
 
-export default Login
+export default Login;

@@ -11,13 +11,17 @@ import ComplaintsFeedbacks from './screens/ComplaintsFeedbacks';
 import FacilityBooking from './screens/FacilityBooking';
 import Profile from './screens/Profile';
 import Maintenance from './screens/Maintenance';
+import Homepage from './screens/Homepage';
 
 function App() {
   return (
     <div className="App">
        <Routes>
         {/* <Route path='/' element={<Dashboard/>} /> */}
-        <Route path='/' element={<Register/>} />
+
+        <Route path='/' element={<Homepage/>} />
+        <Route path='/register' element={<Register/>} />
+        <Route path='/login' element={<Login/>} />
         <Route path='/dashboard' element={<Dashboard/>} />
         <Route path='/announcements' element={<Announcements/>} />
         <Route path='/maintenance' element={<Maintenance/>} />
