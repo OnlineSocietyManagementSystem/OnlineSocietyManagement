@@ -1,7 +1,7 @@
 package com.society.pojos;
 
 
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +17,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@Table(name="users")
+@Table(name="users")
+@Inheritance(strategy=InheritanceType.JOINED)
+
 public class User{
 	
 	@Id
