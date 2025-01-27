@@ -6,8 +6,10 @@ import registerImage from '../images/register.jpg'
 
   const Register = () => {
     return (
-      <div className="container-fluid vh-100 d-flex align-items-center justify-content-center">
-        
+      <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-success ">
+        <div className="container bg-primary mx-5 ">
+          hello world
+        </div> 
       </div>
     );
   };
