@@ -1,9 +1,48 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-
+import axios from "axios";
 
 const Register = () => {
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmpassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if(password !== confirmpassword) {
+      toast.error("passwords do not match!");
+    }
+
+    try {
+      const response = await axios.post("http://localhost:8080/register", {
+        firstname,
+        lastname,
+        email,
+        role,
+        password,
+      });
+
+      if(response.status === 200) {
+        toast.success("Registration Successful!");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        error.response?.data?.message || "Something Went Wrong, Please Try Again!"
+      );
+    }
+  };
+
+
+
   return (
     <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-secondary">
       <div
@@ -12,7 +51,7 @@ const Register = () => {
       >
         <h2 className="text-center mb-4 fw-bold">Registration Form</h2>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <div className="row">
               <div className="col-md-6">
@@ -23,7 +62,10 @@ const Register = () => {
                   type="text"
                   className="form-control"
                   id="firstname"
+                  value={firstname}
+                  onChange={(e) => setFirstname(e.target.value)}
                   placeholder="Enter your first name"
+                  required
                 />
               </div>
               <div className="col-md-6">
@@ -34,7 +76,10 @@ const Register = () => {
                   type="text"
                   className="form-control"
                   id="lastname"
+                  value={lastname}
+                  onChange={(e) => setLastname(e.target.value)}
                   placeholder="Enter your last name"
+                  required
                 />
               </div>
             </div>
@@ -50,7 +95,10 @@ const Register = () => {
                   type="email"
                   className="form-control"
                   id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
+                  required
                 />
               </div>
 
@@ -62,7 +110,10 @@ const Register = () => {
                   type="text"
                   className="form-control"
                   id="role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
                   placeholder="Enter your role"
+                  required
                 />
               </div>
             </div>
@@ -78,19 +129,27 @@ const Register = () => {
                   type="password"
                   className="form-control"
                   id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
+                  required
                 />
               </div>
               <div className="col-md-6">
-
-                <label htmlFor="confirmpassword" className="form-label fw-bold fs-5">
+                <label
+                  htmlFor="confirmpassword"
+                  className="form-label fw-bold fs-5"
+                >
                   Confirm Password
                 </label>
                 <input
                   type="password"
                   className="form-control"
                   id="confirmpassword"
+                  value={confirmpassword}
+                  onChange={(e) => setConfirmpassword(e.target.value)}
                   placeholder="Confirm your password"
+                  required
                 />
               </div>
             </div>
@@ -101,7 +160,9 @@ const Register = () => {
               Register
             </button>
             <div className="mt-3 ">
-              <Link to="/login" className="text-primary text-decoration-none">Already have an account? Login here.</Link>
+              <Link to="/login" className="text-primary text-decoration-none">
+                Already have an account? Login here.
+              </Link>
             </div>
           </div>
         </form>
