@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-//@Table(name="members")
+@Table(name="members")
 public class Member extends User {
 
 	@Column(length=25)
