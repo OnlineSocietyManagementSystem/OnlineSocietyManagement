@@ -9,9 +9,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>day15_REST2</artifactId>
+	<artifactId>society_management</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>day15_REST2</name>
+	<name>server</name>
 	<description>Blogs API with E-R , Validations , Global Exc handling pagination , img handling</description>
 	<url />
 	<licenses>

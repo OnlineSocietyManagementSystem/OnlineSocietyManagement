@@ -1,4 +1,4 @@
-package com.blogs;
+package com.society;
 
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
