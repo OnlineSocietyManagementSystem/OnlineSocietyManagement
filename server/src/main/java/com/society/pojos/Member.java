@@ -1,7 +1,9 @@
 package com.society.pojos;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import lombok.Getter;
@@ -37,6 +39,11 @@ public class Member extends User {
 		this.phone = phone;
 	}
 	
+	@OneToOne
+	@JoinColumn(name="family_id")
+	private FamilyMember members;
+	
+		
 	
 	
 }
