@@ -1,9 +1,39 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
 function Login() {
+
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
+  const [password, setPassword] = useState("");
+  
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post("http://localhost:8080/login" , {
+                email,
+                role,
+                password,
+            });
+
+            toast.success("login successful");
+            console.log("Response : ", response.data);
+
+            navigate("/dashboard");
+        }catch (error) {
+            const errorMessage = error.response?.data?.message || "login failed";
+            toast.error(errorMessage);
+            console.error("Error : ", errorMessage);
+        }
+  };
+
+
   return (
     <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-secondary">
       <div
@@ -12,7 +42,7 @@ function Login() {
       >
         <h2 className="text-center mb-4 fw-bold">Login Form</h2>
 
-        <form >
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="email" className="form-label fw-bold fs-5">
               Email
@@ -22,6 +52,8 @@ function Login() {
               className="form-control"
               id="email"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -34,6 +66,8 @@ function Login() {
               className="form-control"
               id="role"
               placeholder="Enter your role"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
             />
           </div>
 
@@ -46,6 +80,8 @@ function Login() {
               className="form-control"
               id="password"
               placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
