@@ -58,20 +58,6 @@ function Login() {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="role" className="form-label fw-bold fs-5">
-              Role
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="role"
-              placeholder="Enter your role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-            />
-          </div>
-
-          <div className="mb-4">
             <label htmlFor="password" className="form-label fw-bold fs-5">
               Password
             </label>
