@@ -28,8 +28,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		Member memberEntity = modelMapper.map(dto, Member.class);
 		Member savedMember= memberDao.save(memberEntity);
-		return new ApiResponse("User registered with ID " + savedMember.getId());
+		return new ApiResponse(dto.getRole()+" "+"registered with ID " + savedMember.getId());
 		
 	}
-
 }

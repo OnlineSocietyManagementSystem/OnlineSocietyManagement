@@ -36,16 +36,16 @@ public class Member extends BaseEntity {
 	@Column(length = 30)
 	UserRole role;
 	
-	@Column(unique=true ,length=20,nullable=false)
-	private int addhar;
+	@Column(unique=true ,length=20)
+	private String  addhar;
 	
-	@Column(unique=true ,length=10,nullable=false)
-	private int phone;
+	@Column(unique=true ,length=10)
+	private String phone;
 	
 	@Column(name="family_count")
 	private int familyCount;
 
-	public Member(String building, int flatNo, int floor, int addhar, int phone) {
+	public Member(String building, int flatNo, int floor, String addhar, String phone) {
 		super();
 		this.building = building;
 		this.flatNo = flatNo;
