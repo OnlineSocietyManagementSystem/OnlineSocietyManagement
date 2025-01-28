@@ -19,18 +19,7 @@ public class MemberRegisterDto {
 	private String email;
 	
 	private String password;
-
-	private String building;
-	
-	private int flatNo;
-	
-	private int floor;
-	
 	UserRole role;
 
-	private int addhar;
-
-	private int phone;
-
-	private int familyCount;
+	
 }
