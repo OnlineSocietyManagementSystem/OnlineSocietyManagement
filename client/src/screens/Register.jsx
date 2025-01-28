@@ -16,7 +16,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(password !== confirmpassword) {
+    if (password !== confirmpassword) {
       toast.error("passwords do not match!");
     }
 
@@ -29,19 +29,18 @@ const Register = () => {
         password,
       });
 
-      if(response.status === 200) {
+      if (response.status === 200) {
         toast.success("Registration Successful!");
         navigate("/login");
       }
     } catch (error) {
       console.error(error);
       toast.error(
-        error.response?.data?.message || "Something Went Wrong, Please Try Again!"
+        error.response?.data?.message ||
+          "Something Went Wrong, Please Try Again!"
       );
     }
   };
-
-
 
   return (
     <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-secondary">
@@ -106,15 +105,19 @@ const Register = () => {
                 <label htmlFor="role" className="form-label fw-bold fs-5">
                   Role
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
+                <select
+                  className="form-select"
                   id="role"
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  placeholder="Enter your role"
                   required
-                />
+                >
+                  <option value="" disabled>
+                    Select your role
+                  </option>
+                  <option value="ADMIN">ADMIN</option>
+                  <option value="MEMBER">MEMBER</option>
+                </select>
               </div>
             </div>
           </div>
