@@ -7,17 +7,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.society.custom_exception.ApiException;
-import com.society.daos.MemberDao;
+import com.society.daos.AuthDao;
 import com.society.dtos.ApiResponse;
 import com.society.dtos.MemberRegisterDto;
 import com.society.pojos.Member;
 
 @Service
 @Transactional
-public class MemberServiceImpl implements MemberService {
+public class AuthServiceImpl implements AuthService {
 
 	@Autowired
-	private MemberDao memberDao;
+	private AuthDao memberDao;
 	
 	@Autowired
 	private ModelMapper modelMapper;

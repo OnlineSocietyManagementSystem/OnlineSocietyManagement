@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.society.pojos.Member;
-import com.society.daos.MemberDao;
+import com.society.daos.AuthDao;
 
 @Service
 @Transactional
 public class CustomUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private MemberDao memberDao;
+    private AuthDao memberDao;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
