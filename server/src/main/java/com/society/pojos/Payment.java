@@ -31,7 +31,7 @@ public class Payment extends BaseEntity{
 	private boolean status;
 	
 	
-	public Payment(double amount, String paymentType, LocalDate paymentDate, boolean status, Member member) {
+	public Payment(double amount, String paymentType, LocalDate paymentDate, boolean status, User member) {
 		super();
 		this.amount = amount;
 		this.paymentType = paymentType;
@@ -43,7 +43,7 @@ public class Payment extends BaseEntity{
 
 	@ManyToOne
 	@JoinColumn(name = "member_id",nullable = false)
-	private Member member;
+	private User member;
 	
 	
 	

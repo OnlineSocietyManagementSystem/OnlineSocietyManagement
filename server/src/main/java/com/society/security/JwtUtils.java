@@ -13,7 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
-import com.society.pojos.Member;
+import com.society.pojos.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -40,14 +40,14 @@ public class JwtUtils {
 
     public String generateJwtToken(Authentication authentication) {
         CustomUserDetailsImpl userPrincipal = (CustomUserDetailsImpl) authentication.getPrincipal();
-        Member member = userPrincipal.getMember();
+        User user = userPrincipal.getUser();
 
         return Jwts.builder()
-                .setSubject(member.getEmail()) // Set email as the subject
+                .setSubject(user.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .claim("authorities", getAuthoritiesInString(userPrincipal.getAuthorities()))
-                .claim("member_id", member.getId()) // Add member ID as a custom claim
+                .claim("user_id", user.getId())
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
@@ -75,16 +75,16 @@ public class JwtUtils {
         return AuthorityUtils.commaSeparatedStringToAuthorityList(authString);
     }
 
-    public Long getMemberIdFromJwtToken(Claims claims) {
-        return Long.valueOf((int) claims.get("member_id"));
+    public Long getUserIdFromJwtToken(Claims claims) {
+        return Long.valueOf((int) claims.get("user_id"));
     }
 
     public Authentication populateAuthenticationTokenFromJWT(String jwt) {
         Claims payloadClaims = validateJwtToken(jwt);
         String email = getUserNameFromJwtToken(payloadClaims);
         List<GrantedAuthority> authorities = getAuthoritiesFromClaims(payloadClaims);
-        Long memberId = getMemberIdFromJwtToken(payloadClaims);
+        Long userId = getUserIdFromJwtToken(payloadClaims);
 
-        return new UsernamePasswordAuthenticationToken(email, memberId, authorities);
+        return new UsernamePasswordAuthenticationToken(email, userId, authorities);
     }
 }

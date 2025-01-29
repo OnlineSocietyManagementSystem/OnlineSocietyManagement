@@ -14,6 +14,6 @@ public class Feedback extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name = "member_id",nullable = false)
-	private Member member;
+	private User member;
 	
 }

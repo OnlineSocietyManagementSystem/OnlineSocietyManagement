@@ -7,33 +7,33 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.society.pojos.Member;
+import com.society.pojos.User;
 
 public class CustomUserDetailsImpl implements UserDetails {
-    private Member member;
+    private User user;
 
-    public CustomUserDetailsImpl(Member member) {
+    public CustomUserDetailsImpl(User user) {
         super();
-        this.member = member;
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(member.getRole().name()));
+        return List.of(new SimpleGrantedAuthority(user.getRole().name()));
     }
 
     @Override
     public String getPassword() {
-        return member.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return member.getEmail();
+        return user.getEmail();
     }
 
-    public Member getMember() {
-        return member;
+    public User getUser() {
+        return user;
     }
 
     @Override

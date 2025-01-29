@@ -37,7 +37,7 @@ public class Bookings extends BaseEntity {
 	
 	
 	
-	public Bookings(boolean status, LocalDate bookingDate, String resourceType, String purpose, Member member) {
+	public Bookings(boolean status, LocalDate bookingDate, String resourceType, String purpose, User member) {
 		super();
 		this.status = status;
 		this.bookingDate = bookingDate;
@@ -50,7 +50,7 @@ public class Bookings extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "member_id",nullable = false)
-	private Member member;
+	private User member;
 	
 
 }
