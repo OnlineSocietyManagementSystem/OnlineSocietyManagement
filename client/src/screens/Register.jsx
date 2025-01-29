@@ -31,7 +31,7 @@ const Register = () => {
 
       if (response.status === 201) {
         toast.success("Registration Successful!");
-        console.log(response);
+        // console.log(response);
         console.log(response.data.timestamp);
         console.log(response.data.message);
 
@@ -119,8 +119,8 @@ const Register = () => {
                   <option value="" disabled>
                     Select your role
                   </option>
-                  <option value="ADMIN">ADMIN</option>
-                  <option value="MEMBER">MEMBER</option>
+                  <option value="ROLE_ADMIN">ADMIN</option>
+                  <option value="ROLE_MEMBER">MEMBER</option>
                 </select>
               </div>
             </div>
