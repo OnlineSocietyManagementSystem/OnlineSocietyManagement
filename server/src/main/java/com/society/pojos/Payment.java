@@ -10,6 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,24 +32,25 @@ public class Payment extends BaseEntity{
 	@Column(name="payment_date")
 	private LocalDate paymentDate;
 	
+
 	@Enumerated(EnumType.STRING)  // Store as String in DB
     private PaymentStatus status;
 	
 	
-	public Payment(BigDecimal bigDecimal, String paymentType, LocalDate paymentDate, PaymentStatus status, Member member) {
+	public Payment(BigDecimal bigDecimal, String paymentType, LocalDate paymentDate, PaymentStatus status,User user) {
 		super();
 		this.amount = bigDecimal;
 		this.paymentType = paymentType;
 		this.paymentDate = paymentDate;
 		this.status = status;
-		this.member = member;
+		this.user = user;
 	}
 
 
+
 	@ManyToOne
-	@JoinColumn(name = "member_id",nullable = false)
-	private Member member;
-	
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	
 }

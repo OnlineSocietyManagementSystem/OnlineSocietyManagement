@@ -15,20 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.society.dtos.ApiResponse;
 import com.society.dtos.AuthRequest;
 import com.society.dtos.AuthResp;
-import com.society.dtos.MemberRegisterDto;
+import com.society.dtos.UserRegisterDto;
 import com.society.security.JwtUtils;
-import com.society.service.MemberService;
+import com.society.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/member")
-@CrossOrigin(origins = "http://localhost:5173/")
-public class MemberController {
+@RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:5173")
+public class AuthController {
 
 	@Autowired
-	private MemberService memberService;
+	private UserService userService;
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -36,9 +36,9 @@ public class MemberController {
 	private JwtUtils jwtUtils;
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> registerUser(@RequestBody MemberRegisterDto dto) {
+	public ResponseEntity<?> registerUser(@RequestBody UserRegisterDto dto) {
 		try {
-			return ResponseEntity.status(HttpStatus.CREATED).body(memberService.registerMemeber(dto));
+			return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerMemeber(dto));
 		} catch(RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
 		}

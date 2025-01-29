@@ -21,6 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name="notices")
 public class Notices extends BaseEntity {
 	
@@ -32,22 +33,9 @@ public class Notices extends BaseEntity {
 	
 	private LocalDate date_issued;
 	
-	
-	
-	public Notices(String title, String description, LocalDate date_issued, Admin admin) {
-		super();
-		this.title = title;
-		this.description = description;
-		this.date_issued = date_issued;
-		this.admin = admin;
-	}
-
-
 
 	@ManyToOne
-	@JoinColumn(name = "admin_id",nullable = false)
-	private Admin admin;
+	@JoinColumn(name = "user_id")
+	private User user;
 	
-	
-
 }
