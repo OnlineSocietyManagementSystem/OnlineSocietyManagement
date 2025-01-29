@@ -19,7 +19,7 @@ function Sidebar() {
             <div className="d-flex flex-column p-3 vh-100" style={{ position: "fixed", width: "20%", top: "0", left: "0", backgroundColor: "#e3d5f5" }}>
                 <div className="d-flex flex-column align-items-center" style={{ flex: 1 }}>
                     <div className="text-center mb-2 pb-3 mt-2" style={{ borderBottom: '2px solid #23044a' }}>
-                        <h4 className="text-dark fs-2 fw-bold ">SocioHub</h4>
+                        <h4 className="text-dark fs-1 fw-bold ">SocioHub</h4>
                     </div>
 
                     <ul className="nav flex-column text-start fs-5 fw-semibold mt-3 gap-4">
