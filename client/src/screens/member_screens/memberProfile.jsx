@@ -1,16 +1,15 @@
 import React from 'react'
-import Sidebar from '../components/sidebar'
-import maintenance from './Maintenance';
+import Sidebar from '../../components/sidebar'
 
 
-function Maintenance() {
+function MemberProfile() {
   return (
     <div className='d-flex'>
 
         <Sidebar/>
 
         <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
-            <h2>maintenance</h2>
+            <h2>Profile</h2>
             <p>Here will be your announcements content.</p>
        </div>
         
@@ -18,4 +17,4 @@ function Maintenance() {
   )
 }
 
-export default Maintenance
+export default MemberProfile

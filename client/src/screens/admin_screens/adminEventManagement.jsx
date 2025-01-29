@@ -1,15 +1,15 @@
 import React from 'react'
-import Sidebar from '../components/sidebar'
+import Sidebar from '../../components/sidebar'
 
 
-function FacilityBooking() {
+function AdminEventManagement() {
   return (
     <div className='d-flex'>
 
         <Sidebar/>
 
         <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
-            <h2>Facility Booking</h2>
+            <h2>Event Management</h2>
             <p>Here will be your announcements content.</p>
        </div>
         
@@ -17,4 +17,4 @@ function FacilityBooking() {
   )
 }
 
-export default FacilityBooking
+export default AdminEventManagement

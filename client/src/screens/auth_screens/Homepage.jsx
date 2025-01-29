@@ -9,7 +9,7 @@ const Homepage = () => {
     };
   
     const handleRegister = () => {
-      navigate('/register'); 
+      navigate('/signin'); 
     };
 
   return (

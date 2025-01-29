@@ -1,21 +1,21 @@
 import React from 'react'
-import Sidebar from '../components/sidebar'
+import Sidebar from '../../components/sidebar'
+import maintenance from './adminMaintenance';
 
 
-function Dashboard() {
+function AdminMaintenance() {
   return (
     <div className='d-flex'>
 
         <Sidebar/>
 
         <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
-            <h2>Dashboard</h2>
+            <h2>maintenance</h2>
             <p>Here will be your announcements content.</p>
-            <p>Added line to test from testBranch</p>
        </div>
         
     </div>
   )
 }
 
-export default Dashboard
+export default AdminMaintenance
