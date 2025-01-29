@@ -23,9 +23,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/auth")
 @CrossOrigin(origins = "http://localhost:5173/")
-public class MemberController {
+public class AuthController {
 
 	@Autowired
 	private MemberService memberService;

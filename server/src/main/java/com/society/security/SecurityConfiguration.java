@@ -34,7 +34,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(auth -> auth
                 // Publicly accessible endpoints
                 .requestMatchers(
-                    "/member/register", "/member/signin", 
+                    "/auth/register", "/auth/signin", 
                     "/v*/api-doc*/**", "/swagger-ui/**"
                 ).permitAll()
                 
