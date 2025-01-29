@@ -34,7 +34,6 @@ public class Events extends BaseEntity{
 	
 	private LocalTime time;
 
-	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;

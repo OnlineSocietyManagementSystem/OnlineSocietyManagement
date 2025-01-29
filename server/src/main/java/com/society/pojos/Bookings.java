@@ -19,7 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 @Table(name="bookings")
 public class Bookings extends BaseEntity {
 	
@@ -35,22 +35,10 @@ public class Bookings extends BaseEntity {
 	@Column(length=50)
 	private String purpose;
 	
-	
-	
-	public Bookings(boolean status, LocalDate bookingDate, String resourceType, String purpose, User member) {
-		super();
-		this.status = status;
-		this.bookingDate = bookingDate;
-		this.resourceType = resourceType;
-		this.purpose = purpose;
-		this.member = member;
-	}
-
 
 
 	@ManyToOne
-	@JoinColumn(name = "member_id",nullable = false)
-	private User member;
-	
+	@JoinColumn(name = "user_id")
+	private User user;
 
 }

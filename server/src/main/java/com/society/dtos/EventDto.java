@@ -16,7 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class EventDto {
+public class EventDto extends BaseDto{
 
 	
 	private String title;
