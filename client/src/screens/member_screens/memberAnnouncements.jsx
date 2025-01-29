@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../../components/sidebar";
 
-function Announcements() {
+function MemberAnnouncements() {
   const [announcements, setAnnouncements] = useState([]);
 
   // Utility function to calculate relative date
@@ -93,4 +93,4 @@ function Announcements() {
   );
 }
 
-export default Announcements;
+export default MemberAnnouncements;

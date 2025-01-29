@@ -23,7 +23,7 @@ function Login() {
             toast.success("login successful");
             console.log("Response : ", response.data);
 
-            navigate("/dashboard");
+            navigate("/member-dashboard");
         }catch (error) {
             const errorMessage = error.response?.data?.message || "login failed";
             toast.error(errorMessage);
@@ -74,7 +74,7 @@ function Login() {
               Login
             </button>
             <div className="mt-3 ">
-              <Link to="/register" className="text-primary text-decoration-none">Register here</Link>
+              <Link to="/signin" className="text-primary text-decoration-none">Register here</Link>
             </div>
           </div>
           

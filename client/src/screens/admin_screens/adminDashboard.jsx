@@ -1,20 +1,21 @@
 import React from 'react'
-import Sidebar from '../components/sidebar'
+import Sidebar from '../../components/sidebar'
 
 
-function EventManagement() {
+function AdminDashboard() {
   return (
     <div className='d-flex'>
 
         <Sidebar/>
 
         <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
-            <h2>Event Management</h2>
+            <h2>Dashboard</h2>
             <p>Here will be your announcements content.</p>
+            <p>Added line to test from testBranch</p>
        </div>
         
     </div>
   )
 }
 
-export default EventManagement
+export default AdminDashboard

@@ -1,15 +1,15 @@
 import React from 'react'
-import Sidebar from '../components/sidebar'
+import Sidebar from '../../components/sidebar'
 
 
-function Profile() {
+function MemberFacilityBooking() {
   return (
     <div className='d-flex'>
 
         <Sidebar/>
 
         <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
-            <h2>Profile</h2>
+            <h2>Facility Booking</h2>
             <p>Here will be your announcements content.</p>
        </div>
         
@@ -17,4 +17,4 @@ function Profile() {
   )
 }
 
-export default Profile
+export default MemberFacilityBooking

@@ -13,15 +13,15 @@ function Sidebar() {
                     <ul className="nav flex-column text-start fs-5 fw-semibold mt-3 gap-4">
                         <li className="nav-item">
                             <NavLink
-                                to="/dashboard"
-                                className={({ isActive }) => (isActive || window.location.pathname === "/" || window.location.pathname === "/dashboard" ? "nav-link active-link" : "nav-link")}
+                                to="/member-dashboard"
+                                className={({ isActive }) => (isActive || window.location.pathname === "/" || window.location.pathname === "/member-dashboard" ? "nav-link active-link" : "nav-link")}
                             >
                                 Dashboard
                             </NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink
-                                to="/announcements"
+                                to="/member-announcements"
                                 className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
                             >
                                 Announcements
@@ -29,7 +29,7 @@ function Sidebar() {
                         </li>
                         <li className="nav-item">
                             <NavLink
-                                to="/maintenance"
+                                to="/member-maintenance"
                                 className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
                             >
                                 Maintenance
@@ -37,7 +37,7 @@ function Sidebar() {
                         </li>
                         <li className="nav-item">
                             <NavLink
-                                to="/event-management"
+                                to="/member-event-management"
                                 className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
                             >
                                 Event Management
@@ -45,7 +45,7 @@ function Sidebar() {
                         </li>
                         <li className="nav-item">
                             <NavLink
-                                to="/complaints-feedbacks"
+                                to="/member-complaints-feedbacks"
                                 className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
                             >
                                 Complaints & Feedbacks
@@ -53,7 +53,7 @@ function Sidebar() {
                         </li>
                         <li className="nav-item">
                             <NavLink
-                                to="/facility-booking"
+                                to="/member-facility-booking"
                                 className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
                             >
                                 Facility Booking
@@ -61,7 +61,7 @@ function Sidebar() {
                         </li>
                         <li className="nav-item">
                             <NavLink
-                                to="/profile"
+                                to="/member-profile"
                                 className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
                             >
                                 Profile
