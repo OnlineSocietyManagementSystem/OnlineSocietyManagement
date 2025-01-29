@@ -30,8 +30,8 @@ function App() {
        <Routes>
 
         <Route path='/' element={<Homepage/>} />
-        <Route path='/signin' element={<Register/>} />
-        <Route path='/login' element={<Login/>} />
+        <Route path='/register' element={<Register/>} />
+        <Route path='/signin' element={<Login/>} />
 
         <Route path='/member-dashboard' element={<MemberDashboard/>} />
         <Route path='/member-announcements' element={<MemberAnnouncements/>} />
