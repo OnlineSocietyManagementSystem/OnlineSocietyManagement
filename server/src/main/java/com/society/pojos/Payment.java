@@ -1,5 +1,6 @@
 package com.society.pojos;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
@@ -22,7 +23,7 @@ public class Payment extends BaseEntity{
 
 	
 	
-	private double amount;
+	private BigDecimal amount;
 	
 	@Column(name="payment_type")
 	private String paymentType;
@@ -34,9 +35,9 @@ public class Payment extends BaseEntity{
     private PaymentStatus status;
 	
 	
-	public Payment(double amount, String paymentType, LocalDate paymentDate, PaymentStatus status, Member member) {
+	public Payment(BigDecimal bigDecimal, String paymentType, LocalDate paymentDate, PaymentStatus status, Member member) {
 		super();
-		this.amount = amount;
+		this.amount = bigDecimal;
 		this.paymentType = paymentType;
 		this.paymentDate = paymentDate;
 		this.status = status;

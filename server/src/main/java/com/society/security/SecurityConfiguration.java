@@ -34,7 +34,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(auth -> auth
                 // Publicly accessible endpoints
                 .requestMatchers(
-                    "/member/register", "/member/signin", 
+                    "/member/register", "/member/signin",
                     "/v*/api-doc*/**", "/swagger-ui/**"
                 ).permitAll()
                 
@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
                 
                 // Endpoints accessible only to members
-                .requestMatchers("/member/dashboard", "/member/details/**")
+                .requestMatchers("/member/dashboard", "/member/details/**","/payment")
                 .hasRole("MEMBER")
 
                 // Endpoints accessible only to admins

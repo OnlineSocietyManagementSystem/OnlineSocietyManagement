@@ -29,13 +29,13 @@ public class PaymentServiceImpl implements PaymentService{
 	@Override
 	public ApiResponse makePayment(PaymentDto dto,String email) {
 		 Optional<Member> optionalMember = memberDao.findByEmail(email);
-
+            System.out.println(dto.getAmount()+" "+dto.getPaymentType());
 		    if (!optionalMember.isPresent()) {
 		        return new ApiResponse("Member not found!");
 		    }
 
 		    Member member = optionalMember.get();
-
+             
 		    Payment payment = new Payment(
 		        dto.getAmount(),
 		        dto.getPaymentType(),
@@ -45,7 +45,7 @@ public class PaymentServiceImpl implements PaymentService{
 		    );
 
 		    paymentDao.save(payment);
-		    return new ApiResponse("Payment successfully recorded.");
+		    return new ApiResponse("Payment successfully Done..");
 		}
 		
 	}
