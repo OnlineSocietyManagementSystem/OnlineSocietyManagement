@@ -10,7 +10,7 @@ import com.society.dtos.ApiResponse;
 import com.society.dtos.EventDto;
 import com.society.pojos.Events;
 
-import jakarta.validation.Valid;
+//import jakarta.validation.Valid;
 
 @Service
 @Transactional
@@ -26,7 +26,6 @@ public class EventServiceImpl implements EventService{
 	public ApiResponse addEvent( EventDto eventDto) {
 		Events event =mapper.map(eventDto, Events.class);
 		eventDao.save(event);
-		
 		return new ApiResponse("event added successfully");
 	}
 

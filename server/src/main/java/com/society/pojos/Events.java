@@ -42,8 +42,8 @@ public class Events extends BaseEntity{
 	}
 	
 	@ManyToOne
-	@JoinColumn(name = "admin_id",nullable = false)
-	private Admin admin;
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	
 }

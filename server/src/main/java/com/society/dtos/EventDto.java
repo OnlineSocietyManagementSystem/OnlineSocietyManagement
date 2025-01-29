@@ -3,6 +3,7 @@ package com.society.dtos;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.society.pojos.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,4 +30,5 @@ public class EventDto {
 	private String location;
 	
 	private LocalTime time;
+	
 }
