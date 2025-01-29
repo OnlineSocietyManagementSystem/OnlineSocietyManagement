@@ -39,8 +39,5 @@ public class CustomJWTAuthenticationFilter extends OncePerRequestFilter {
 		}
 		//continue with remaining filter chain.
 		filterChain.doFilter(request, response);
-		
-
 	}
-
 }

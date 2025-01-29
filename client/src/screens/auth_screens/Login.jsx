@@ -13,11 +13,11 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post("http://localhost:8080/member/signin", {
-        email,
-        password,
-      });
+        try {
+            const response = await axios.post("http://localhost:8080/auth/signin" , {
+                email,
+                password,
+            });
 
       toast.success("login successful");
       // console.log("Response : ", response.data);
