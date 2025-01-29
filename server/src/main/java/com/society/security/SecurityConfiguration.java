@@ -35,7 +35,7 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
                 .requestMatchers("/member/dashboard", "/member/details/**")
                 .hasRole("MEMBER")
-                .requestMatchers("/admin/**", "/add-event").hasRole("ADMIN")
+                .requestMatchers("/admin/**","/add-event").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session

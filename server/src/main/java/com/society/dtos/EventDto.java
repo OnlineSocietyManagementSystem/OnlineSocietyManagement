@@ -30,5 +30,4 @@ public class EventDto {
 	private String location;
 	
 	private LocalTime time;
-	
 }
