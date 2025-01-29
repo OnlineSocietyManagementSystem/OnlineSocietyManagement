@@ -7,7 +7,6 @@ import axios from "axios";
 function Login() {
 
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   
   const navigate = useNavigate();
@@ -16,9 +15,8 @@ function Login() {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:8080/login" , {
+            const response = await axios.post("http://localhost:8080/member/signin" , {
                 email,
-                role,
                 password,
             });
 
