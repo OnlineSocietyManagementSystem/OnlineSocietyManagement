@@ -17,7 +17,7 @@ import com.society.dtos.AuthRequest;
 import com.society.dtos.AuthResp;
 import com.society.dtos.UserRegisterDto;
 import com.society.security.JwtUtils;
-import com.society.service.AuthService;
+import com.society.service.MemberService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -28,7 +28,7 @@ import jakarta.validation.Valid;
 public class AuthController {
 
 	@Autowired
-	private AuthService memberService;
+	private MemberService memberService;
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
