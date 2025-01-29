@@ -31,7 +31,7 @@ const Register = () => {
 
       if (response.status === 201) {
         toast.success("Registration Successful!");
-        console.log(response);
+        // console.log(response);
         console.log(response.data.timestamp);
         console.log(response.data.message);
 
