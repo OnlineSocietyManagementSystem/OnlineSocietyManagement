@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Register = () => {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
@@ -22,15 +22,19 @@ const Register = () => {
 
     try {
       const response = await axios.post("http://localhost:8080/member/register", {
-        firstname,
-        lastname,
+        firstName,
+        lastName,
         email,
         role,
         password,
       });
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         toast.success("Registration Successful!");
+        console.log(response);
+        console.log(response.data.timestamp);
+        console.log(response.data.message);
+
         navigate("/login");
       }
     } catch (error) {
@@ -61,8 +65,8 @@ const Register = () => {
                   type="text"
                   className="form-control"
                   id="firstname"
-                  value={firstname}
-                  onChange={(e) => setFirstname(e.target.value)}
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   placeholder="Enter your first name"
                   required
                 />
@@ -75,8 +79,8 @@ const Register = () => {
                   type="text"
                   className="form-control"
                   id="lastname"
-                  value={lastname}
-                  onChange={(e) => setLastname(e.target.value)}
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                   placeholder="Enter your last name"
                   required
                 />

@@ -1,18 +1,7 @@
 package com.society.pojos;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,23 +32,20 @@ public class Member extends BaseEntity {
 	
 	private int floor;
 	
-	
-	
-	@Enumerated(EnumType.STRING) // create column of type
-	// varchar to store the name of constant
+	@Enumerated(EnumType.STRING) 
 	@Column(length = 30)
 	UserRole role;
 	
-	@Column(unique=true ,length=20,nullable=false)
-	private int addhar;
+	@Column(unique=true ,length=20)
+	private String  addhar;
 	
-	@Column(unique=true ,length=10,nullable=false)
-	private int phone;
+	@Column(unique=true ,length=10)
+	private String phone;
 	
 	@Column(name="family_count")
 	private int familyCount;
 
-	public Member(String building, int flatNo, int floor, int addhar, int phone) {
+	public Member(String building, int flatNo, int floor, String addhar, String phone) {
 		super();
 		this.building = building;
 		this.flatNo = flatNo;
@@ -67,7 +53,7 @@ public class Member extends BaseEntity {
 		this.addhar = addhar;
 		this.phone = phone;
 	}
-	
+		
 	
 	
 }

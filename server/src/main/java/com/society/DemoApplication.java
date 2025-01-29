@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.ui.ModelMap;
 
+
 @SpringBootApplication//Java Config class - @Configuration => bean config xml file
 public class DemoApplication {
 
@@ -31,4 +32,8 @@ public class DemoApplication {
 		return mapper;
 	}
 
+//	@Bean
+//	public PasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//	}
 }

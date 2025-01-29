@@ -1,23 +1,17 @@
 package com.society.pojos;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-//@NoArgsConstructor
+@NoArgsConstructor
 //@AllArgsConstructor
 public class Admin extends BaseEntity {
 
-	@Enumerated(EnumType.STRING) // create column of type
-	// varchar to store the name of constant
+	@Enumerated(EnumType.STRING) 
 	@Column(length = 30)
 	UserRole role;
 	
@@ -31,8 +25,15 @@ public class Admin extends BaseEntity {
 	
 	@Column(unique=true ,length=10,nullable=false)
 	private String password;
-	public Admin() {
+	
+	public Admin(UserRole role, String firstName, String lastName, String email, String password) {
 		super();
+		this.role = role;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
 	}
-
+	
+	
 }
