@@ -23,21 +23,24 @@ function MemberAnnouncements() {
       {
         id: 1,
         title: "Water Supply Disruption",
-        description: "Water supply will be disrupted on 25th Dec from 9 AM to 5 PM due to maintenance.",
+        description:
+          "Water supply will be disrupted on 25th Dec from 9 AM to 5 PM due to maintenance.",
         date: "2024-12-24", // Today's date
         category: "Maintenance",
       },
       {
         id: 2,
         title: "Diwali Celebration",
-        description: "Join us for the Diwali celebration on 31st Oct at 7 PM in the community hall.",
+        description:
+          "Join us for the Diwali celebration on 31st Oct at 7 PM in the community hall.",
         date: "2024-12-23", // Yesterday
         category: "Event",
       },
       {
         id: 3,
         title: "Fire Drill Notice",
-        description: "Fire drill will be conducted on 28th Dec at 3 PM in Block A.",
+        description:
+          "Fire drill will be conducted on 28th Dec at 3 PM in Block A.",
         date: "2024-12-20", // Older date
         category: "Safety",
       },
@@ -50,7 +53,31 @@ function MemberAnnouncements() {
       <Sidebar />
 
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
-        <h2 className="mb-4 text-dark" style={{ fontWeight: "bold", color: "#23044a" }}>
+        {/* Add Navbar at the top using Bootstrap classes */}
+        <nav
+          className="navbar navbar-expand-lg navbar-light mb-4"
+          style={{ backgroundColor: "#e3d5f5" }}
+        >
+          <a className="navbar-brand fw-bold fs-3 px-4" href="#">
+          Announcements
+          </a>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+        </nav>
+
+        <h2
+          className="mb-4 text-dark"
+          style={{ fontWeight: "bold", color: "#23044a" }}
+        >
           Announcements
         </h2>
 
@@ -61,21 +88,34 @@ function MemberAnnouncements() {
                 <div className="card border-0 shadow">
                   <div
                     className="card-header"
-                    style={{ backgroundColor: "#e3d5f5", color: "#23044a", fontWeight: "bold" }}
+                    style={{
+                      backgroundColor: "#e3d5f5",
+                      color: "#23044a",
+                      fontWeight: "bold",
+                    }}
                   >
                     <div className="d-flex justify-content-between">
                       <span>{announcement.title}</span>
-                      <span className="badge" style={{ backgroundColor: "#23044a", color: "#ffffff" }}>
+                      <span
+                        className="badge"
+                        style={{ backgroundColor: "#23044a", color: "#ffffff" }}
+                      >
                         {getRelativeDate(announcement.date)}
                       </span>
                     </div>
                   </div>
-                  <div className="card-body" style={{ backgroundColor: "#f6edf9" }}>
-                    <p className="card-text text-dark">{announcement.description}</p>
+                  <div
+                    className="card-body"
+                    style={{ backgroundColor: "#f6edf9" }}
+                  >
+                    <p className="card-text text-dark">
+                      {announcement.description}
+                    </p>
                   </div>
                   <div className="card-footer text-muted">
                     <small>
-                      <span className="fw-bold">Category:</span> {announcement.category} |{" "}
+                      <span className="fw-bold">Category:</span>{" "}
+                      {announcement.category} |{" "}
                       <span className="fw-bold">Date:</span> {announcement.date}
                     </small>
                   </div>
