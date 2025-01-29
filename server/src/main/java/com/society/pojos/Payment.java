@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -28,10 +30,11 @@ public class Payment extends BaseEntity{
 	@Column(name="payment_date")
 	private LocalDate paymentDate;
 	
-	private boolean status;
+	@Enumerated(EnumType.STRING)  // Store as String in DB
+    private PaymentStatus status;
 	
 	
-	public Payment(double amount, String paymentType, LocalDate paymentDate, boolean status, Member member) {
+	public Payment(double amount, String paymentType, LocalDate paymentDate, PaymentStatus status, Member member) {
 		super();
 		this.amount = amount;
 		this.paymentType = paymentType;
