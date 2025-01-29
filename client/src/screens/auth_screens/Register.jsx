@@ -31,11 +31,11 @@ const Register = () => {
 
       if (response.status === 201) {
         toast.success("Registration Successful!");
-        console.log(response);
+        // console.log(response);
         console.log(response.data.timestamp);
         console.log(response.data.message);
 
-        navigate("/login");
+        navigate("/signin");
       }
     } catch (error) {
       console.error(error);
@@ -167,7 +167,7 @@ const Register = () => {
               Register
             </button>
             <div className="mt-3 ">
-              <Link to="/login" className="text-primary text-decoration-none">
+              <Link to="/signin" className="text-primary text-decoration-none">
                 Already have an account? Login here.
               </Link>
             </div>
