@@ -4,11 +4,11 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.society.pojos.Member;
+import com.society.pojos.User;
 
-public interface AuthDao extends JpaRepository<Member, Long> {
+public interface UserDao extends JpaRepository<User, Long> {
 	boolean existsByEmail(String email);
 	
-	Optional<Member> findByEmail(String email);
+	Optional<User> findByEmail(String email);
 
 }

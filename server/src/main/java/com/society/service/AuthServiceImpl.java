@@ -7,17 +7,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.society.custom_exception.ApiException;
+<<<<<<< HEAD:server/src/main/java/com/society/service/AuthServiceImpl.java
 import com.society.daos.AuthDao;
+=======
+import com.society.daos.UserDao;
+>>>>>>> main:server/src/main/java/com/society/service/MemberServiceImpl.java
 import com.society.dtos.ApiResponse;
-import com.society.dtos.MemberRegisterDto;
-import com.society.pojos.Member;
+import com.society.dtos.UserRegisterDto;
+import com.society.pojos.User;
 
 @Service
 @Transactional
 public class AuthServiceImpl implements AuthService {
 
 	@Autowired
-	private AuthDao memberDao;
+
+	private UserDao userDao;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -26,13 +31,13 @@ public class AuthServiceImpl implements AuthService {
 	private PasswordEncoder passwordEncoder;
 	
 	@Override
-	public ApiResponse registerMemeber(MemberRegisterDto dto) {
-		if(memberDao.existsByEmail(dto.getEmail()))
+	public ApiResponse registerMemeber(UserRegisterDto dto) {
+		if(userDao.existsByEmail(dto.getEmail()))
 			throw new ApiException("User email already exists!!!");
 		
-		Member memberEntity = modelMapper.map(dto, Member.class);
+		User memberEntity = modelMapper.map(dto, User.class);
 		memberEntity.setPassword(passwordEncoder.encode(memberEntity.getPassword()));
-		Member savedMember= memberDao.save(memberEntity);
+		User savedMember= userDao.save(memberEntity);
 		return new ApiResponse(dto.getRole()+" "+"registered with ID " + savedMember.getId());
 		
 	}

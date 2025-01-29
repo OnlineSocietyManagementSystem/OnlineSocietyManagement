@@ -1,10 +1,10 @@
 package com.society.service;
 
 import com.society.dtos.ApiResponse;
-import com.society.dtos.MemberRegisterDto;
+import com.society.dtos.UserRegisterDto;
 
 public interface AuthService {
 
-	ApiResponse registerMemeber(MemberRegisterDto dto);
+	ApiResponse registerMemeber(UserRegisterDto dto);
 
 }

@@ -7,23 +7,23 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.society.pojos.Member;
-import com.society.daos.AuthDao;
+import com.society.pojos.User;
+import com.society.daos.UserDao;
 
 @Service
 @Transactional
 public class CustomUserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private AuthDao memberDao;
+	@Autowired
+    private UserDao userDao;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // Fetch the Member entity using DAO
-        Member member = memberDao.findByEmail(email)
+        // Fetch the User entity using DAO
+        User user = userDao.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Email not found: " + email));
 
         // Return a UserDetails implementation for Spring Security
-        return new CustomUserDetailsImpl(member);
+        return new CustomUserDetailsImpl(user);
     }
 }

@@ -23,7 +23,7 @@ public class Complaints extends BaseEntity{
 
 	
 	
-	public Complaints(String title, String description, boolean status, Member member) {
+	public Complaints(String title, String description, boolean status, User member) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -35,7 +35,7 @@ public class Complaints extends BaseEntity{
 
 	@ManyToOne
 	@JoinColumn(name = "member_id",nullable = false)
-	private Member member;
+	private User member;
 	
 	
 	

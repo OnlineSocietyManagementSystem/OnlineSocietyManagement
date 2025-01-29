@@ -13,8 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@Configuration // Equivalent to a Spring bean configuration in XML
-@EnableWebSecurity // Enables Spring Security for the application
+@Configuration 
+@EnableWebSecurity 
 public class SecurityConfiguration {
 
     @Autowired
@@ -22,51 +22,30 @@ public class SecurityConfiguration {
 
     @Autowired
     private CustomJWTAuthenticationFilter customJWTAuthenticationFilter;
-
-    // Configure the Security Filter Chain
-   @Bean
+    
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-//            // 1. Disable CSRF since we're using JWT for authentication
             .csrf(csrf -> csrf.disable())
-
-//            // 2. Configure URL-based access control
-          .authorizeHttpRequests(auth -> auth
-               // Publicly accessible endpoints
+            .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/auth/register", "/auth/signin", 
                     "/v*/api-doc*/**", "/swagger-ui/**"
-               ).permitAll()
-               
-              // Allow preflight requests for CORS
-               .requestMatchers(HttpMethod.OPTIONS).permitAll()
-               
-               // Endpoints accessible only to members
-               .requestMatchers("/member/dashboard", "/member/details/**")
+                ).permitAll()
+                .requestMatchers(HttpMethod.OPTIONS).permitAll()
+                .requestMatchers("/member/dashboard", "/member/details/**")
                 .hasRole("MEMBER")
-
-                // Endpoints accessible only to admins
-                .requestMatchers("/admin/**","/add-event").hasRole("ADMIN")
-                
-                // Any other request requires authentication
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
-            
-
-            // 3. Configure session management to be stateless
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
-
-            // 4. Add the custom JWT authentication filter before the UsernamePasswordAuthenticationFilter
             .addFilterBefore(customJWTAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
        return http.build();
    }
 
-    
-    
-    // Define the AuthenticationManager bean
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

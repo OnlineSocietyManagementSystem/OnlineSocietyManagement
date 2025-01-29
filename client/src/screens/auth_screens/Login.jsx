@@ -2,17 +2,16 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { jwtDecode } from "jwt-decode";
 
 function Login() {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
         try {
             const response = await axios.post("http://localhost:8080/auth/signin" , {
@@ -20,17 +19,34 @@ function Login() {
                 password,
             });
 
-            toast.success("login successful");
-            console.log("Response : ", response.data);
+      toast.success("login successful");
+      // console.log("Response : ", response.data);
+      // console.log(response.data.jwt);
+      const token = response.data.jwt;
 
-            navigate("/member-dashboard");
-        }catch (error) {
-            const errorMessage = error.response?.data?.message || "login failed";
-            toast.error(errorMessage);
-            console.error("Error : ", errorMessage);
-        }
+      localStorage.setItem("token", token);
+
+      if (token) {
+        // console.log("in token block");
+
+        const decoded = jwtDecode(token);
+        // console.log("in token block");
+
+        console.log("decoded jwt : ", decoded);
+        const role = decoded.authorities;
+
+        if(role == "ROLE_MEMBER")
+          navigate("/member-dashboard");
+        else
+          navigate("/admin-dashboard");
+      }
+
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || "login failed";
+      toast.error(errorMessage);
+      console.error("Error : ", errorMessage);
+    }
   };
-
 
   return (
     <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-secondary">
@@ -74,10 +90,14 @@ function Login() {
               Login
             </button>
             <div className="mt-3 ">
-              <Link to="/signin" className="text-primary text-decoration-none">Register here</Link>
+              <Link
+                to="/register"
+                className="text-primary text-decoration-none"
+              >
+                Register here
+              </Link>
             </div>
           </div>
-          
         </form>
       </div>
     </div>
