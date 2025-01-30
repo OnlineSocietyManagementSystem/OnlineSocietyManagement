@@ -23,7 +23,7 @@ public class PaymentController {
 	@Autowired
     private PaymentServiceImpl paymentServiceImpl;
 
-    @PostMapping("/payment")
+    @PostMapping("/make-payment")
     public ResponseEntity<?> makePayment(@RequestBody PaymentDto paymentDto, Authentication authentication) {
    	 try {
             String email = authentication.getName();

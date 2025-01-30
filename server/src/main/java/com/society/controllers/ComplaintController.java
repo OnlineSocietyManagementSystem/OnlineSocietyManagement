@@ -23,7 +23,7 @@ public class ComplaintController {
     @Autowired
     private ComplaintService complaintService;
 
-    @PostMapping("/addComplaint")
+    @PostMapping("/add-complaint")
     public ResponseEntity<?> addComplaint(@RequestBody ComplaintDto dto, Authentication authentication) {
         try {
         	    String email = authentication.getName();

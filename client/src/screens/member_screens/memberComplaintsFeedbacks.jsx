@@ -1,21 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "../../components/sidebar";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function MemberComplaintsFeedbacks() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
   const complaints = [
     {
       id: 1,
       memberName: "John Doe",
-      flatNo: "101",
-      mobileNo: "1234567890",
-      message: "Water leakage issue in the bathroom.",
+      title: "Water leakage issue",
+      description: "Water leakage issue in the bathroom.",
     },
     {
       id: 2,
       memberName: "Jane Smith",
-      flatNo: "102",
-      mobileNo: "0987654321",
-      message: "Elevator not working properly.",
+      title: "Elevator issue",
+      description: "Elevator not working properly.",
     },
   ];
 
@@ -23,18 +26,43 @@ function MemberComplaintsFeedbacks() {
     {
       id: 1,
       memberName: "Alice Johnson",
-      flatNo: "103",
-      mobileNo: "1122334455",
-      message: "Great maintenance service, keep it up!",
+      title: "Great maintenance service",
+      description: "Great maintenance service, keep it up!",
     },
     {
       id: 2,
       memberName: "Bob Brown",
-      flatNo: "104",
-      mobileNo: "5566778899",
-      message: "Loved the recent community event.",
+      title: "Loved the recent event",
+      description: "Loved the recent community event.",
     },
   ];
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+
+    const complaintData = { title, description };
+
+    try {
+      const response = await axios.post("http://localhost:8080/add-complaint", complaintData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Complaint added successfully:", response.data);
+      toast.success("Complaint Successfully Added");
+      // Reset form fields
+      setTitle("");
+      setDescription("");
+      // Optionally, fetch updated complaints to display the new one
+      // fetchComplaints();
+    } catch (error) {
+      console.error("Error adding complaint:", error);
+    }
+  };
 
   return (
     <div className="d-flex">
@@ -61,10 +89,34 @@ function MemberComplaintsFeedbacks() {
             <span className="navbar-toggler-icon"></span>
           </button>
         </nav>
-        <h2 className="mb-4 fw-bold">Complaints</h2>
-        <div>
-          <button className="btn btn-danger btn-lg fw-bold mb-3" type="submit">Add Complaints</button>
-        </div>
+
+        <h2 className="mb-4 fw-bold">Add Complaint</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="title" className="form-label">Title</label>
+            <input
+              type="text"
+              className="form-control"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="description" className="form-label">Description</label>
+            <textarea
+              className="form-control"
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            ></textarea>
+          </div>
+          <button type="submit" className="btn btn-danger btn-lg fw-bold">Add Complaint</button>
+        </form>
+
+        <h2 className="mt-4 mb-4 fw-bold">Complaints</h2>
         <div className="row">
           {complaints.map((complaint) => (
             <div className="col-md-6 mb-3" key={complaint.id}>
@@ -73,14 +125,9 @@ function MemberComplaintsFeedbacks() {
                 style={{ backgroundColor: "#f8d7da", borderColor: "#f5c6cb" }}
               >
                 <div className="card-body">
-                  <h5 className="card-title fw-bold">{complaint.memberName}</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    Flat No: {complaint.flatNo}
-                  </h6>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    Mobile No: {complaint.mobileNo}
-                  </h6>
-                  <p className="card-text fw-bold fs-5">{complaint.message}</p>
+                  <h5 className="card-title fw-bold">{complaint.title}</h5>
+                  <p className="card-text fw-bold fs-5">{complaint.description}</p>
+                  <h6 className="card-subtitle mb-2 text-muted">Member: {complaint.memberName}</h6>
                 </div>
               </div>
             </div>
@@ -89,7 +136,7 @@ function MemberComplaintsFeedbacks() {
 
         <h2 className="mt-4 mb-4 fw-bold">Feedbacks</h2>
         <div>
-          <button className="btn btn-success btn-lg fw-bold mb-3" type="submit">Add Feedbacks</button>
+          <button className="btn btn-success btn-lg fw-bold mb-3" type="submit">Add Feedback</button>
         </div>
         <div className="row">
           {feedbacks.map((feedback) => (
@@ -99,14 +146,9 @@ function MemberComplaintsFeedbacks() {
                 style={{ backgroundColor: "#d4edda", borderColor: "#c3e6cb" }}
               >
                 <div className="card-body">
-                  <h5 className="card-title fw-bold">{feedback.memberName}</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    Flat No: {feedback.flatNo}
-                  </h6>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    Mobile No: {feedback.mobileNo}
-                  </h6>
-                  <p className="card-text fw-bold fs-5">{feedback.message}</p>
+                  <h5 className="card-title fw-bold">{feedback.title}</h5>
+                  <p className="card-text fw-bold fs-5">{feedback.description}</p>
+                  <h6 className="card-subtitle mb-2 text-muted">Member: {feedback.memberName}</h6>
                 </div>
               </div>
             </div>
