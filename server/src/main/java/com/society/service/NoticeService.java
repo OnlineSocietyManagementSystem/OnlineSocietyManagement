@@ -7,6 +7,6 @@ import jakarta.validation.Valid;
 
 public interface NoticeService {
 
-	ApiResponse addNotice(@Valid NoticeDto noticeDto);
+	ApiResponse addNotice(@Valid NoticeDto noticeDto,String email);
 
 }

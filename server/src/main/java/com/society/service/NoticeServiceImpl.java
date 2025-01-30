@@ -1,5 +1,7 @@
 package com.society.service;
 
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,14 +34,23 @@ public class NoticeServiceImpl implements NoticeService  {
 	private UserDao userDao;
 	
 	@Override
-	public ApiResponse addNotice(@Valid NoticeDto noticeDto) {
+	public ApiResponse addNotice(@Valid NoticeDto noticeDto,String email) {
+		
+		 Optional<User> optionalUser = userDao.findByEmail(email);
+		 if (!optionalUser.isPresent()) {
+		        return new ApiResponse("Member not found!");
+		    }
+
+		 User user= optionalUser.get();
+		 
 		Notices notice =mapper.map(noticeDto, Notices.class);
 		
-		
-		if(noticeDto.getUserId() != null) {
-			User user = userDao.findById(noticeDto.getUserId()).orElseThrow(() -> new ApiException("User not found"));
-			notice.setUser(user);
-		}
+		 notice.setUser(user);
+		 
+//		if(noticeDto.getUserId() != null) {
+//			User user = userDao.findById(noticeDto.getUserId()).orElseThrow(() -> new ApiException("User not found"));
+//			notice.setUser(user);
+//		}
 		noticeDao.save(notice);
 		return new ApiResponse("notice added successfully");
 		

@@ -30,7 +30,7 @@ public class EventController {
 				
 				String email = authentication.getName();
 	            // Extract logged-in user's email
-	            System.out.println(eventDto);
+//	            System.out.println(eventDto);
 	           ApiResponse response = eventService.addEvent(eventDto, email);
 				return ResponseEntity.status(HttpStatus.CREATED).body(response);
 			}
