@@ -37,7 +37,9 @@ public class Payment extends BaseEntity{
     private PaymentStatus status;
 	
 	
-	public Payment(BigDecimal bigDecimal, String paymentType, LocalDate paymentDate, PaymentStatus status, User user) {
+
+	public Payment(BigDecimal bigDecimal, String paymentType, LocalDate paymentDate, PaymentStatus status,User user) {
+
 		super();
 		this.amount = bigDecimal;
 		this.paymentType = paymentType;

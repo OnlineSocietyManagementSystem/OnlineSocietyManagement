@@ -33,8 +33,6 @@ public class SecurityConfiguration {
                     "/v*/api-doc*/**", "/swagger-ui/**"
                 ).permitAll()
                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
-
-                
                 // Endpoints accessible only to members
                 .requestMatchers("/member/dashboard", "/member/details/**","/payment")
                 .hasRole("MEMBER")

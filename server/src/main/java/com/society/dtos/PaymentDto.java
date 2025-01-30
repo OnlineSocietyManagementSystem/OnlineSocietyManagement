@@ -20,7 +20,7 @@ public class PaymentDto {
 	    private String paymentType;
 	    @JsonProperty("paymentDate")
 	    private LocalDate paymentDate;
-	    private Long memberId;
+	    private Long userId;
 		public BigDecimal getAmount() {
 			return amount;
 		}
@@ -39,18 +39,18 @@ public class PaymentDto {
 		public void setPaymentDate(LocalDate paymentDate) {
 			this.paymentDate = paymentDate;
 		}
-		public Long getMemberId() {
-			return memberId;
+		public Long getUserId() {
+			return userId;
 		}
-		public void setMemberId(Long memberId) {
-			this.memberId = memberId;
+		public void setUserId(Long userId) {
+			this.userId = userId;
 		}
-		public PaymentDto(BigDecimal amount, String paymentType, LocalDate paymentDate, Long memberId) {
+		public PaymentDto(BigDecimal amount, String paymentType, LocalDate paymentDate, Long userId) {
 			super();
 			this.amount = amount;
 			this.paymentType = paymentType;
 			this.paymentDate = paymentDate;
-			this.memberId = memberId;
+			this.userId = userId;
 		}
 	    
 	    
