@@ -1,19 +1,25 @@
 import { NavLink } from "react-router-dom";
 import '../App.css';
 import { jwtDecode } from "jwt-decode";
+import { useEffect } from "react";
 
 
 function Sidebar() {
 
-    const token = localStorage.getItem("token");
     let role = null;
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+          try {
+            const decoded = jwtDecode(token);
+            // console.log("Decoded JWT: ", decoded);
+            role = decoded.authorities;
+          } catch (error) {
+            console.error("Invalid token:", error);
+          }
+        }
+      }, []);
 
-    if(token){
-        const decoded = jwtDecode(token);
-        // console.log("decoded jwt: ", decoded);
-        role = decoded.authorities;
-
-    }
     return (
         <div className="d-flex">
             <div className="d-flex flex-column p-3 vh-100" style={{ position: "fixed", width: "20%", top: "0", left: "0", backgroundColor: "#e3d5f5" }}>

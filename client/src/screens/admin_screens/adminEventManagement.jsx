@@ -11,20 +11,23 @@ function AdminEventManagement() {
   const [location, setLocation] = useState("");
   const [time, setTime] = useState("");
   const [events, setEvents] = useState([]);
-  const [userId, setUserId] = useState("");
+  // const [userId, setUserId] = useState("");
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
-        console.log("Decoded JWT: ", decoded);
-        setUserId(decoded.user_id); 
-      } catch (error) {
-        console.error("Invalid token:", error);
-      }
-    }
-  }, []);
+
+  const token = localStorage.getItem("token");
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     try {
+  //       const decoded = jwtDecode(token);
+  //       console.log("Decoded JWT: ", decoded);
+  //       setUserId(decoded.user_id);
+  //     } catch (error) {
+  //       console.error("Invalid token:", error);
+  //     }
+  //   }
+  // }, []);
 
   // Fetch all events
   // const fetchEvents = async () => {
@@ -45,12 +48,17 @@ function AdminEventManagement() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const eventData = { title, description, date, location, time, userId };
+    const eventData = { title, description, date, location, time, };
 
     try {
       const response = await axios.post(
         "http://localhost:8080/add-event",
-        eventData
+        eventData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setTitle("");
       setDescription("");
