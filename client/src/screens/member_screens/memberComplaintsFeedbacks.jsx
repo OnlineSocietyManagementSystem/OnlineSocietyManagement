@@ -6,28 +6,28 @@ function MemberComplaintsFeedbacks() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [feedbackContent, setFeedbackContent] = useState("");
-  const [complaints, setComplaints] = useState([]);
   const [feedbacks, setFeedbacks] = useState([]);
+
+  const complaints = [
+    {
+      id: 1,
+      memberName: "John Doe",
+      title: "Water leakage issue",
+      description: "Water leakage issue in the bathroom.",
+    },
+    {
+      id: 2,
+      memberName: "Jane Smith",
+      title: "Elevator issue",
+      description: "Elevator not working properly.",
+    },
+  ];
 
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    // fetchComplaints();
     fetchFeedbacks();
   }, []);
-
-  // const fetchComplaints = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:8080/complaints/all", {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-  //     setComplaints(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching complaints:", error);
-  //   }
-  // };
 
   const fetchFeedbacks = async () => {
     try {
