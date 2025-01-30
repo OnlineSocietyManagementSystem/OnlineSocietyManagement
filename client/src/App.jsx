@@ -1,6 +1,8 @@
 // import logo from './logo.svg';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Homepage from './screens/auth_screens/Homepage';
 import Register from './screens/auth_screens/Register';
@@ -50,6 +52,8 @@ function App() {
         <Route path='/admin-profile' element={<AdminProfile/>} />
 
        </Routes>
+       
+       <ToastContainer/>
     </div>
   );
 }
