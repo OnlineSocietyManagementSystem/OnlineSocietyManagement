@@ -12,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 
-public class PaymentDto {
+public class PaymentDto extends BaseDto {
 	
 	    @JsonProperty("amount")
 	    private BigDecimal amount;

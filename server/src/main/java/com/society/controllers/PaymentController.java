@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,13 +17,13 @@ import com.society.service.PaymentServiceImpl;
 
 import io.jsonwebtoken.io.IOException;
 
-
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class PaymentController {
 	@Autowired
     private PaymentServiceImpl paymentServiceImpl;
 
-    @PostMapping("/payment")
+    @PostMapping("/make-payment")
     public ResponseEntity<?> makePayment(@RequestBody PaymentDto paymentDto, Authentication authentication) {
    	 try {
             String email = authentication.getName();
