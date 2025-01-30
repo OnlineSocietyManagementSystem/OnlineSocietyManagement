@@ -1,6 +1,7 @@
 package com.society.pojos;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name="complaints")
 public class Complaints extends BaseEntity{
 	
@@ -21,21 +23,9 @@ public class Complaints extends BaseEntity{
 	
 	private boolean status;
 
-	
-	
-	public Complaints(String title, String description, boolean status, User member) {
-		super();
-		this.title = title;
-		this.description = description;
-		this.status = status;
-		this.member = member;
-	}
-
-
-
 	@ManyToOne
-	@JoinColumn(name = "member_id",nullable = false)
-	private User member;
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	
 	

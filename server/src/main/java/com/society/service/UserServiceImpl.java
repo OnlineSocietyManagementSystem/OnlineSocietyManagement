@@ -14,7 +14,7 @@ import com.society.pojos.User;
 
 @Service
 @Transactional
-public class MemberServiceImpl implements MemberService {
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;

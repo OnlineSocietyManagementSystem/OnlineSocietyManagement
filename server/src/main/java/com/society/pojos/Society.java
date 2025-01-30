@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name="society")
 
 public class Society extends BaseEntity{
@@ -25,15 +27,9 @@ public class Society extends BaseEntity{
 		
 		@Column(length=50)
 		private String address;
-			
-		public Society(String name, String address, Admin admin) {
-			super();
-			this.name = name;
-			this.address = address;
-			this.admin = admin;
-		}
-
+					
+		
 		@ManyToOne
-		@JoinColumn(name = "admin_id",nullable = false)
-		private Admin admin;
+		@JoinColumn(name = "user_id")
+		private User user;
 }

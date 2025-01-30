@@ -22,7 +22,7 @@ public class SecurityConfiguration {
 
     @Autowired
     private CustomJWTAuthenticationFilter customJWTAuthenticationFilter;
-
+    
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -35,7 +35,7 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
                 .requestMatchers("/member/dashboard", "/member/details/**")
                 .hasRole("MEMBER")
-                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/admin/**","/add-event","/add-notice").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
@@ -43,8 +43,8 @@ public class SecurityConfiguration {
             )
             .addFilterBefore(customJWTAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+       return http.build();
+   }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {

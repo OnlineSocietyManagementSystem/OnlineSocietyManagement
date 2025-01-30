@@ -14,7 +14,7 @@ import com.society.daos.UserDao;
 @Transactional
 public class CustomUserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
+	@Autowired
     private UserDao userDao;
 
     @Override
