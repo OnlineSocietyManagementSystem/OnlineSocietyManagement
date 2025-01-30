@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
 
 function AdminEventManagement() {
   const [title, setTitle] = useState("");
@@ -10,30 +11,47 @@ function AdminEventManagement() {
   const [location, setLocation] = useState("");
   const [time, setTime] = useState("");
   const [events, setEvents] = useState([]);
-
-  // Fetch all events
-  const fetchEvents = async () => {
-    try {
-      const response = await axios.get("http://localhost:8080/events");
-      setEvents(response.data);
-    } catch (error) {
-      console.error("Error fetching events:", error);
-      // toast.error("Error fetching events");
-    }
-  };
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    fetchEvents();
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        console.log("Decoded JWT: ", decoded);
+        setUserId(decoded.user_id); 
+      } catch (error) {
+        console.error("Invalid token:", error);
+      }
+    }
   }, []);
+
+  // Fetch all events
+  // const fetchEvents = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:8080/events");
+  //     setEvents(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching events:", error);
+  //     // toast.error("Error fetching events");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchEvents();
+  // }, []);
 
   // Add Event
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const eventData = { title, description, date, location, time };
+    const eventData = { title, description, date, location, time, userId };
 
     try {
-      const response = await axios.post("http://localhost:8080/add-event", eventData);
+      const response = await axios.post(
+        "http://localhost:8080/add-event",
+        eventData
+      );
       setTitle("");
       setDescription("");
       setDate("");
@@ -65,7 +83,10 @@ function AdminEventManagement() {
 
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
         {/* Navbar */}
-        <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#e3d5f5" }}>
+        <nav
+          className="navbar navbar-expand-lg navbar-light mb-4"
+          style={{ backgroundColor: "#e3d5f5" }}
+        >
           <a className="navbar-brand fw-bold fs-3 px-4" href="#">
             Event Management
           </a>
@@ -75,32 +96,79 @@ function AdminEventManagement() {
         <h3>Add New Event</h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="title" className="form-label">Title</label>
-            <input type="text" className="form-control" id="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+            <label htmlFor="title" className="form-label">
+              Title
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
           </div>
 
           <div className="mb-3">
-            <label htmlFor="description" className="form-label">Description</label>
-            <input type="text" className="form-control" id="description" value={description} onChange={(e) => setDescription(e.target.value)} required />
+            <label htmlFor="description" className="form-label">
+              Description
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
           </div>
 
           <div className="mb-3">
-            <label htmlFor="date" className="form-label">Date</label>
-            <input type="date" className="form-control" id="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+            <label htmlFor="date" className="form-label">
+              Date
+            </label>
+            <input
+              type="date"
+              className="form-control"
+              id="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
           </div>
 
           <div className="row mb-3">
             <div className="col-md-6">
-              <label htmlFor="location" className="form-label">Location</label>
-              <input type="text" className="form-control" id="location" value={location} onChange={(e) => setLocation(e.target.value)} required />
+              <label htmlFor="location" className="form-label">
+                Location
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                required
+              />
             </div>
             <div className="col-md-6">
-              <label htmlFor="time" className="form-label">Time</label>
-              <input type="time" className="form-control" id="time" value={time} onChange={(e) => setTime(e.target.value)} required />
+              <label htmlFor="time" className="form-label">
+                Time
+              </label>
+              <input
+                type="time"
+                className="form-control"
+                id="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                required
+              />
             </div>
           </div>
 
-          <button type="submit" className="btn btn-primary">Add Event</button>
+          <button type="submit" className="btn btn-primary">
+            Add Event
+          </button>
         </form>
 
         {/* Display Events in a Table */}
@@ -128,7 +196,10 @@ function AdminEventManagement() {
                   <td>{event.location}</td>
                   <td>{event.time}</td>
                   <td>
-                    <button className="btn btn-danger btn-sm" onClick={() => handleDelete(event.id)}>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDelete(event.id)}
+                    >
                       Delete
                     </button>
                   </td>
@@ -136,7 +207,9 @@ function AdminEventManagement() {
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="text-center">No events found</td>
+                <td colSpan="7" className="text-center">
+                  No events found
+                </td>
               </tr>
             )}
           </tbody>
