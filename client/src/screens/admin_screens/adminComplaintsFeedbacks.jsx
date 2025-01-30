@@ -1,16 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar";
+import axios from "axios";
 
 function AdminComplaintsFeedbacks() {
-  // Sample static data
+  const [feedbacks, setFeedbacks] = useState([]);
+
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+      fetchFeedbacks();
+    }, []);
+
+  const fetchFeedbacks = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/all-feedbacks", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setFeedbacks(response.data);
+    } catch (error) {
+      console.error("Error fetching feedbacks:", error);
+    }
+  };
+
+  // Sample static data for complaints
   const complaints = [
     { id: 1, memberName: 'John Doe', flatNo: '101', mobileNo: '1234567890', message: 'Water leakage issue in the bathroom.' },
     { id: 2, memberName: 'Jane Smith', flatNo: '102', mobileNo: '0987654321', message: 'Elevator not working properly.' }
-  ];
-
-  const feedbacks = [
-    { id: 1, memberName: 'Alice Johnson', flatNo: '103', mobileNo: '1122334455', message: 'Great maintenance service, keep it up!' },
-    { id: 2, memberName: 'Bob Brown', flatNo: '104', mobileNo: '5566778899', message: 'Loved the recent community event.' }
   ];
 
   return (
@@ -55,16 +72,16 @@ function AdminComplaintsFeedbacks() {
           ))}
         </div>
 
-        <h2 className="mt-4 mb-4">Feedbacks</h2>
+        <h2 className="mt-4 mb-4 fw-bold">Feedbacks</h2>
         <div className="row">
           {feedbacks.map((feedback) => (
             <div className="col-md-6 mb-3" key={feedback.id}>
-              <div className="card" style={{ backgroundColor: '#d4edda', borderColor: '#c3e6cb' }}>
+              <div
+                className="card"
+                style={{ backgroundColor: "#d4edda", borderColor: "#c3e6cb" }}
+              >
                 <div className="card-body">
-                  <h5 className="card-title fw-bold">{feedback.memberName}</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">Flat No: {feedback.flatNo}</h6>
-                  <h6 className="card-subtitle mb-2 text-muted">Mobile No: {feedback.mobileNo}</h6>
-                  <p className="card-text fw-bold fs-5">{feedback.message}</p>
+                  <p className="card-text fw-bold fs-5">{feedback.content}</p>
                 </div>
               </div>
             </div>
