@@ -21,7 +21,8 @@ public class Complaints extends BaseEntity{
 	@Column(length=50)
 	private String description;
 	
-	private boolean status;
+	@Enumerated(EnumType.STRING)  
+	private ComplaintStatus status;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
