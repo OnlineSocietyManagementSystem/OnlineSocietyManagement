@@ -26,6 +26,7 @@ public class EventDto extends BaseDto{
 
 	private LocalDate date;
 
+	private Long userId;
 
 	private String location;
 	

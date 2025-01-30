@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.society.dtos.ApiResponse;
 import com.society.dtos.EventDto;
 import com.society.service.EventService;
 
@@ -28,7 +29,7 @@ public class EventController {
 						.body(eventService.addEvent(eventDto));
 			}
 			catch(RuntimeException e) {
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new com.society.dtos.ApiResponse(e.getMessage()));
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
 			}
 			
    	}
