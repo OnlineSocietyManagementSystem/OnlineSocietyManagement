@@ -66,7 +66,7 @@ function MemberComplaintsFeedbacks() {
   const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
 
-    const feedbackData = { feedbackContent };
+    const feedbackData = {content : feedbackContent };
 
     try {
       const response = await axios.post("http://localhost:8080/add-feedback", feedbackData, 
