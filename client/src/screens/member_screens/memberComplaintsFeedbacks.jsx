@@ -40,10 +40,18 @@ function MemberComplaintsFeedbacks() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem("token");
+
     const complaintData = { title, description };
 
     try {
-      const response = await axios.post("http://localhost:8080/add-complaint", complaintData);
+      const response = await axios.post("http://localhost:8080/add-complaint", complaintData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log("Complaint added successfully:", response.data);
       toast.success("Complaint Successfully Added");
       // Reset form fields
