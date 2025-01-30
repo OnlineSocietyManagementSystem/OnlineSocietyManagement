@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar";
 import axios from "axios";
 
@@ -6,6 +6,7 @@ function MemberComplaintsFeedbacks() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [feedbackContent, setFeedbackContent] = useState("");
+  const [feedbacks, setFeedbacks] = useState([]);
 
   const complaints = [
     {
@@ -22,22 +23,24 @@ function MemberComplaintsFeedbacks() {
     },
   ];
 
-  const feedbacks = [
-    {
-      id: 1,
-      memberName: "Alice Johnson",
-      title: "Great maintenance service",
-      description: "Great maintenance service, keep it up!",
-    },
-    {
-      id: 2,
-      memberName: "Bob Brown",
-      title: "Loved the recent event",
-      description: "Loved the recent community event.",
-    },
-  ];
-
   const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    fetchFeedbacks();
+  }, []);
+
+  const fetchFeedbacks = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/all-feedbacks", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setFeedbacks(response.data);
+    } catch (error) {
+      console.error("Error fetching feedbacks:", error);
+    }
+  };
 
   const handleComplaintSubmit = async (e) => {
     e.preventDefault();
@@ -66,7 +69,7 @@ function MemberComplaintsFeedbacks() {
   const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
 
-    const feedbackData = { feedbackContent };
+    const feedbackData = { content: feedbackContent };
 
     try {
       const response = await axios.post("http://localhost:8080/add-feedback", feedbackData, 
@@ -79,8 +82,8 @@ function MemberComplaintsFeedbacks() {
       console.log("Feedback added successfully:", response.data);
       // Reset form field
       setFeedbackContent("");
-      // Optionally, fetch updated feedbacks to display the new one
-      // fetchFeedbacks();
+      // Fetch updated feedbacks to display the new one
+      fetchFeedbacks();
     } catch (error) {
       console.error("Error adding feedback:", error);
     }
@@ -180,9 +183,7 @@ function MemberComplaintsFeedbacks() {
                 style={{ backgroundColor: "#d4edda", borderColor: "#c3e6cb" }}
               >
                 <div className="card-body">
-                  <h5 className="card-title fw-bold">{feedback.title}</h5>
-                  <p className="card-text fw-bold fs-5">{feedback.description}</p>
-                  <h6 className="card-subtitle mb-2 text-muted">Member: {feedback.memberName}</h6>
+                  <p className="card-text fw-bold fs-5">{feedback.content}</p>
                 </div>
               </div>
             </div>
