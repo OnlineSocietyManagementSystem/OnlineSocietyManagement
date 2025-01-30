@@ -2,6 +2,7 @@ package com.society.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.society.daos.ComplaintDao;
 import com.society.daos.UserDao;
 import com.society.dtos.ApiResponse;
 import com.society.dtos.ComplaintDto;
+import com.society.dtos.ComplaintResDto;
 import com.society.pojos.ComplaintStatus;
 import com.society.pojos.Complaints;
 import com.society.pojos.User;
@@ -27,6 +29,8 @@ public class ComplaintServiceImpl implements ComplaintService {
 
 	    @Autowired
 	    private ModelMapper modelMapper; // Inject ModelMapper
+	    
+	    //------------------add complaint API-------------------------------------
 
 		@Override
 		public ApiResponse addComplaint(ComplaintDto dto, String email) {
@@ -49,9 +53,27 @@ public class ComplaintServiceImpl implements ComplaintService {
 		        complaintDao.save(complaint);
 
 		        return new ApiResponse("Complaint issued Successfully: " + email);
-		    }
+		    }	
+	
 
-//		
 		
-	}
 
+		//-----------------------get all complaints API--------------------------------
+		
+		@Override
+		public List<ComplaintResDto> getAllComplaints() {
+		    List<Complaints> complaints = complaintDao.findAll();
+		    return complaints.stream().map(ComplaintResDto::new).collect(Collectors.toList());
+		}
+		//-------------------get complaints by ID-------------------------------------
+		@Override
+		public Optional<ComplaintDto> getComplaintById(Long complaintId) {
+			// TODO Auto-generated method stub
+			return Optional.empty();
+		}
+}
+
+
+		
+		
+		

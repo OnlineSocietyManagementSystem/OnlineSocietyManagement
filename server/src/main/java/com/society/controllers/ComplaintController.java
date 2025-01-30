@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.society.dtos.ApiResponse;
 import com.society.dtos.ComplaintDto;
+import com.society.dtos.ComplaintResDto;
 import com.society.service.ComplaintService;
 import com.society.service.ComplaintServiceImpl;
 
@@ -40,12 +41,14 @@ public class ComplaintController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
         }
     }
-    
-  
-    
+    @GetMapping("/all-complaints")
+    public ResponseEntity<List<ComplaintResDto>> getAllComplaints() 
+    {
+        List<ComplaintResDto> complaints = complaintService.getAllComplaints();
+        return ResponseEntity.ok(complaints);
+    }
+
 }
-
-
 		 
  
 	
