@@ -49,7 +49,7 @@ function MemberComplaintsFeedbacks() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/complaints/add-complaint",
+        "http://localhost:8080/add-complaint",
         complaintData,
         {
           headers: {
@@ -75,7 +75,7 @@ function MemberComplaintsFeedbacks() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/feedback/add-feedback",
+        "http://localhost:8080/add-feedback",
         feedbackData,
         {
           headers: {
