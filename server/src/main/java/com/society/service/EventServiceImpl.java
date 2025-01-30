@@ -1,5 +1,7 @@
 package com.society.service;
 
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,13 +33,24 @@ public class EventServiceImpl implements EventService{
 	private ModelMapper mapper;
 
 	@Override
-	public ApiResponse addEvent(@Valid EventDto eventDto) {
-		Events event =mapper.map(eventDto, Events.class);
+	public ApiResponse addEvent(@Valid EventDto eventDto,String email) {
 		
-		if(eventDto.getUserId() != null) {
-			User user = userDao.findById(eventDto.getUserId()).orElseThrow(() -> new ApiException("User not found"));
-			event.setUser(user);
-		}
+		 Optional<User> optionalUser = userDao.findByEmail(email);
+
+		 if (!optionalUser.isPresent()) {
+		        return new ApiResponse("Member not found!");
+		    }
+
+		   User user= optionalUser.get();
+		   
+		   Events event =mapper.map(eventDto, Events.class);
+		   
+		   event.setUser(user);
+		
+//		if(eventDto.getUserId() != null) {
+//			User user = userDao.findById(eventDto.getUserId()).orElseThrow(() -> new ApiException("User not found"));
+//			event.setUser(user);
+//		}
 		
 		eventDao.save(event);
 		return new ApiResponse("Event added successfully");

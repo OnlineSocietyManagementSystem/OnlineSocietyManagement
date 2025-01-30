@@ -3,6 +3,7 @@ package com.society.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,10 +25,14 @@ public class EventController {
 	
 	// admin should be able to add the events
 		@PostMapping("/add-event")
-		public  ResponseEntity<?> addEvent(@RequestBody @Valid EventDto eventDto) {
+		public  ResponseEntity<?> addEvent(@RequestBody @Valid EventDto eventDto, Authentication authentication) {
 			try {
-				return ResponseEntity.status(HttpStatus.CREATED)
-						.body(eventService.addEvent(eventDto));
+				
+				String email = authentication.getName();
+	            // Extract logged-in user's email
+	            System.out.println(eventDto);
+	           ApiResponse response = eventService.addEvent(eventDto, email);
+				return ResponseEntity.status(HttpStatus.CREATED).body(response);
 			}
 			catch(RuntimeException e) {
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));

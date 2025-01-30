@@ -7,6 +7,6 @@ import com.society.dtos.EventDto;
 
 public interface EventService {
 
-	ApiResponse addEvent( EventDto eventDto);
+	ApiResponse addEvent( EventDto eventDto,String email);
 
 }

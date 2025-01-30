@@ -3,6 +3,7 @@ package com.society.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import com.society.service.NoticeService;
 
 import jakarta.validation.Valid;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class NoticeController {
 	
@@ -19,7 +21,7 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 	
-	// admin should be able to add the events
+	// admin should be able to add the notices
 		@PostMapping("/add-notice")
 		public  ResponseEntity<?> addEvent(@RequestBody @Valid NoticeDto eventDto) {
 			try {
