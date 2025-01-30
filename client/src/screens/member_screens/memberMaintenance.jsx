@@ -1,8 +1,15 @@
 import React from "react";
 import Sidebar from "../../components/sidebar";
-import maintenance from "./memberMaintenance";
 
 function MemberMaintenance() {
+  // Sample static data
+  const maintenanceDue = { amount: 5000, dueDate: '2025-02-15' };
+  const paymentHistory = [
+    { date: '2025-01-01', amount: 5000, status: 'Paid' },
+    { date: '2024-12-01', amount: 5000, status: 'Paid' },
+    { date: '2024-11-01', amount: 5000, status: 'Paid' }
+  ];
+
   return (
     <div className="d-flex">
       <Sidebar />
@@ -28,7 +35,37 @@ function MemberMaintenance() {
             <span className="navbar-toggler-icon"></span>
           </button>
         </nav>
-        <p>Here will be your announcements content.</p>
+
+        <h2>Maintenance Due</h2>
+        <div className="card mb-3" style={{ backgroundColor: '#ffcccc', borderColor: '#ff9999' }}>
+          <div className="card-body">
+            <h5 className="card-title">Amount Due: ₹{maintenanceDue.amount}</h5>
+            <p className="card-text">Due Date: {maintenanceDue.dueDate}</p>
+            <button className="btn btn-primary">Pay Now</button>
+          </div>
+        </div>
+
+        <h2>Payment History</h2>
+        <div className="table-responsive mb-3">
+          <table className="table table-bordered ">
+            <thead style={{ backgroundColor: '#e3d5f5' }}>
+              <tr>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {paymentHistory.map((payment, index) => (
+                <tr key={index}>
+                  <td>{payment.date}</td>
+                  <td>₹{payment.amount}</td>
+                  <td>{payment.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
