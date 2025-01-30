@@ -34,9 +34,9 @@ public class SecurityConfiguration {
                 ).permitAll()
                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
                 // Endpoints accessible only to members
-                .requestMatchers("/member/dashboard", "/member/details/**","/payment","/addComplaint", "/add-feedback")
+                .requestMatchers("/member/dashboard", "/member/details/**","/payment","/addComplaint", "/add-feedback", "/all-feedbacks", "/delete-feedback")
                 .hasRole("MEMBER")
-                .requestMatchers("/admin/**","/add-event","/add-notice").hasRole("ADMIN")
+                .requestMatchers("/admin/**","/add-event","/add-notice", "/all-feedbacks").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
