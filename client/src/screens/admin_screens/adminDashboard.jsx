@@ -27,25 +27,33 @@ function AdminDashboard() {
             <span className="navbar-toggler-icon"></span>
           </button>
         </nav>
-        <p>Here will be your announcements content.</p>
-        <p>Added line to test from testBranch</p>
-
+      
         <div className="container">
           <div className="row">
-            <div className="col-md-6 mb-4">
-              <div className="box" style={{ backgroundColor: "#e0f7fa", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}></div>
+            <div className="col-md-6 mb-4 text-center">
+              <div className="box pt-2 fs-4 fw-bold" style={{ backgroundColor: "#f2f9fa", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}>
+                Announcements
+              </div>
             </div>
-            <div className="col-md-6 mb-4">
-              <div className="box" style={{ backgroundColor: "#e1bee7", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}></div>
+            <div className="col-md-6 mb-4 text-center">
+              <div className="box pt-2 fs-4 fw-bold" style={{ backgroundColor: "#f3e3f7", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}>
+                Maintenance
+              </div>
             </div>
-            <div className="col-md-6 mb-4">
-              <div className="box" style={{ backgroundColor: "#ffe0b2", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"}}></div>
+            <div className="col-md-6 mb-4 text-center">
+              <div className="box pt-2 fs-4 fw-bold" style={{ backgroundColor: "#fff3e0", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"}}>
+                Event Management
+              </div>
             </div>
-            <div className="col-md-6 mb-4">
-              <div className="box" style={{ backgroundColor: "#c8e6c9", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"}}></div>
+            <div className="col-md-6 mb-4 text-center">
+              <div className="box pt-2 fs-4 fw-bold" style={{ backgroundColor: "#e9f7ec", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"}}>
+                Complaints & Feedbacks
+              </div>
             </div>
-            <div className="col-md-6 mb-4">
-              <div className="box" style={{ backgroundColor: "#f3e5f5", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"}}></div>
+            <div className="col-md-6 mb-4 text-center">
+              <div className="box pt-2 fs-4 fw-bold" style={{ backgroundColor: "#f9ebf9", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"}}>
+                Facility Booking
+              </div>
             </div>
           </div>
         </div>
