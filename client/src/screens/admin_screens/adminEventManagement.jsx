@@ -13,7 +13,6 @@ function AdminEventManagement() {
   const [events, setEvents] = useState([]);
   // const [userId, setUserId] = useState("");
 
-
   const token = localStorage.getItem("token");
 
   // useEffect(() => {
@@ -30,25 +29,25 @@ function AdminEventManagement() {
   // }, []);
 
   // Fetch all events
-  // const fetchEvents = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:8080/events");
-  //     setEvents(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching events:", error);
-  //     // toast.error("Error fetching events");
-  //   }
-  // };
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/all-events");
+      setEvents(response.data);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      // toast.error("Error fetching events");
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchEvents();
-  // }, []);
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   // Add Event
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const eventData = { title, description, date, location, time, };
+    const eventData = { title, description, date, location, time };
 
     try {
       const response = await axios.post(
@@ -76,7 +75,13 @@ function AdminEventManagement() {
   // Delete Event
   const handleDelete = async (eventId) => {
     try {
-      await axios.delete(`http://localhost:8080/delete-event/${eventId}`);
+      await axios.delete(`http://localhost:8080/delete-event/${eventId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       toast.success("Event Deleted Successfully");
       fetchEvents(); // Refresh event list
     } catch (error) {
@@ -131,21 +136,20 @@ function AdminEventManagement() {
             />
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="date" className="form-label">
-              Date
-            </label>
-            <input
-              type="date"
-              className="form-control"
-              id="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-            />
-          </div>
-
           <div className="row mb-3">
+            <div className="col-md-6">
+              <label htmlFor="date" className="form-label">
+                Date
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                id="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+              />
+            </div>
             <div className="col-md-6">
               <label htmlFor="location" className="form-label">
                 Location
