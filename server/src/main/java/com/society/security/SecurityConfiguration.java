@@ -29,12 +29,12 @@ public class SecurityConfiguration {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/auth/register", "/auth/signin", 
-                    "/v*/api-doc*/**", "/swagger-ui/**", "/all-events"
+                    "/auth/register", "/auth/signin", "/all-complaints",
+                    "/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks"
                 ).permitAll()
                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
                 // Endpoints accessible only to members
-                .requestMatchers("/member/dashboard", "/member/details/**","/payment","/addComplaint", "/add-feedback")
+                .requestMatchers("/member/dashboard", "/member/details/**","/payment","/addComplaint", "/add-feedback", "/delete-feedback")
                 .hasRole("MEMBER")
                 .requestMatchers("/admin/**","/add-event","/add-notice").hasRole("ADMIN")
                 .anyRequest().authenticated()

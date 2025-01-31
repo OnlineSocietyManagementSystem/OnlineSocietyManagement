@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 function MemberComplaintsFeedbacks() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [feedbackContent, setFeedbackContent] = useState("");
+  const [feedbacks, setFeedbacks] = useState([]);
 
   const complaints = [
     {
@@ -22,30 +23,34 @@ function MemberComplaintsFeedbacks() {
     },
   ];
 
-  const feedbacks = [
-    {
-      id: 1,
-      memberName: "Alice Johnson",
-      title: "Great maintenance service",
-      description: "Great maintenance service, keep it up!",
-    },
-    {
-      id: 2,
-      memberName: "Bob Brown",
-      title: "Loved the recent event",
-      description: "Loved the recent community event.",
-    },
-  ];
+  const token = localStorage.getItem("token");
 
-  const handleSubmit = async (e) => {
+  useEffect(() => {
+    fetchFeedbacks();
+  }, []);
+
+  const fetchFeedbacks = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/all-feedbacks", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setFeedbacks(response.data);
+    } catch (error) {
+      console.error("Error fetching feedbacks:", error);
+    }
+  };
+
+  const handleComplaintSubmit = async (e) => {
     e.preventDefault();
-
-    const token = localStorage.getItem("token");
 
     const complaintData = { title, description };
 
     try {
-      const response = await axios.post("http://localhost:8080/add-complaint", complaintData,
+      const response = await axios.post(
+        "http://localhost:8080/add-complaint",
+        complaintData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -53,14 +58,38 @@ function MemberComplaintsFeedbacks() {
         }
       );
       console.log("Complaint added successfully:", response.data);
-      toast.success("Complaint Successfully Added");
       // Reset form fields
       setTitle("");
       setDescription("");
-      // Optionally, fetch updated complaints to display the new one
-      // fetchComplaints();
+      // Fetch updated complaints to display the new one
+      fetchComplaints();
     } catch (error) {
       console.error("Error adding complaint:", error);
+    }
+  };
+
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault();
+
+    const feedbackData = { content: feedbackContent };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/add-feedback",
+        feedbackData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Feedback added successfully:", response.data);
+      // Reset form field
+      setFeedbackContent("");
+      // Fetch updated feedbacks to display the new one
+      fetchFeedbacks();
+    } catch (error) {
+      console.error("Error adding feedback:", error);
     }
   };
 
@@ -91,9 +120,11 @@ function MemberComplaintsFeedbacks() {
         </nav>
 
         <h2 className="mb-4 fw-bold">Add Complaint</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleComplaintSubmit}>
           <div className="mb-3">
-            <label htmlFor="title" className="form-label">Title</label>
+            <label htmlFor="title" className="form-label">
+              Title
+            </label>
             <input
               type="text"
               className="form-control"
@@ -104,7 +135,9 @@ function MemberComplaintsFeedbacks() {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="description" className="form-label">Description</label>
+            <label htmlFor="description" className="form-label">
+              Description
+            </label>
             <textarea
               className="form-control"
               id="description"
@@ -113,7 +146,9 @@ function MemberComplaintsFeedbacks() {
               required
             ></textarea>
           </div>
-          <button type="submit" className="btn btn-danger btn-lg fw-bold">Add Complaint</button>
+          <button type="submit" className="btn btn-danger btn-lg fw-bold">
+            Add Complaint
+          </button>
         </form>
 
         <h2 className="mt-4 mb-4 fw-bold">Complaints</h2>
@@ -126,18 +161,38 @@ function MemberComplaintsFeedbacks() {
               >
                 <div className="card-body">
                   <h5 className="card-title fw-bold">{complaint.title}</h5>
-                  <p className="card-text fw-bold fs-5">{complaint.description}</p>
-                  <h6 className="card-subtitle mb-2 text-muted">Member: {complaint.memberName}</h6>
+                  <p className="card-text fw-bold fs-5">
+                    {complaint.description}
+                  </p>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                    Member: {complaint.memberName}
+                  </h6>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
+        <h2 className="mt-4 mb-4 fw-bold">Add Feedback</h2>
+        <form onSubmit={handleFeedbackSubmit}>
+          <div className="mb-3">
+            <label htmlFor="feedbackContent" className="form-label">
+              Content
+            </label>
+            <textarea
+              className="form-control"
+              id="feedbackContent"
+              value={feedbackContent}
+              onChange={(e) => setFeedbackContent(e.target.value)}
+              required
+            ></textarea>
+          </div>
+          <button type="submit" className="btn btn-success btn-lg fw-bold">
+            Add Feedback
+          </button>
+        </form>
+
         <h2 className="mt-4 mb-4 fw-bold">Feedbacks</h2>
-        <div>
-          <button className="btn btn-success btn-lg fw-bold mb-3" type="submit">Add Feedback</button>
-        </div>
         <div className="row">
           {feedbacks.map((feedback) => (
             <div className="col-md-6 mb-3" key={feedback.id}>
@@ -146,9 +201,7 @@ function MemberComplaintsFeedbacks() {
                 style={{ backgroundColor: "#d4edda", borderColor: "#c3e6cb" }}
               >
                 <div className="card-body">
-                  <h5 className="card-title fw-bold">{feedback.title}</h5>
-                  <p className="card-text fw-bold fs-5">{feedback.description}</p>
-                  <h6 className="card-subtitle mb-2 text-muted">Member: {feedback.memberName}</h6>
+                  <p className="card-text fw-bold fs-5">{feedback.content}</p>
                 </div>
               </div>
             </div>

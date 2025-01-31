@@ -1,6 +1,8 @@
 package com.society.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,18 @@ public class FeedbackServiceImpl implements FeedbackService {
 		
 		return new ApiResponse("Feedback send successfully");
 	
+	}
+
+	@Override
+	public List<FeedbackDto> getAllFeedbacks() {
+		return feedbackDao.findAll().stream()
+                .map(feedback -> mapper.map(feedback, FeedbackDto.class))
+                .collect(Collectors.toList());
+	}
+
+	@Override
+	public void deleteFeedback(Long id) {
+		feedbackDao.deleteById(id);
 	}
 
 }

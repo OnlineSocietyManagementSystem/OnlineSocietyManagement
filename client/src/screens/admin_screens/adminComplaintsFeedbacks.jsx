@@ -1,17 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar";
+import axios from "axios";
 
 function AdminComplaintsFeedbacks() {
-  // Sample static data
-  const complaints = [
-    { id: 1, memberName: 'John Doe', flatNo: '101', mobileNo: '1234567890', message: 'Water leakage issue in the bathroom.' },
-    { id: 2, memberName: 'Jane Smith', flatNo: '102', mobileNo: '0987654321', message: 'Elevator not working properly.' }
-  ];
+  const [feedbacks, setFeedbacks] = useState([]);
+  const [complaints, setComplaints] = useState([]);
 
-  const feedbacks = [
-    { id: 1, memberName: 'Alice Johnson', flatNo: '103', mobileNo: '1122334455', message: 'Great maintenance service, keep it up!' },
-    { id: 2, memberName: 'Bob Brown', flatNo: '104', mobileNo: '5566778899', message: 'Loved the recent community event.' }
-  ];
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    fetchFeedbacks();
+    fetchComplaints();
+  }, []);
+
+  const fetchFeedbacks = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/all-feedbacks", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setFeedbacks(response.data);
+    } catch (error) {
+      console.error("Error fetching feedbacks:", error);
+    }
+  };
+
+  const fetchComplaints = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/all-complaints", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setComplaints(response.data);
+    } catch (error) {
+      console.error("Error fetching complaints:", error);
+    }
+  };
 
   return (
     <div className="d-flex">
@@ -24,7 +50,7 @@ function AdminComplaintsFeedbacks() {
           style={{ backgroundColor: "#e3d5f5" }}
         >
           <a className="navbar-brand fw-bold fs-3 px-4" href="#">
-          Complaints & Feedbacks
+            Complaints & Feedbacks
           </a>
           <button
             className="navbar-toggler"
@@ -45,26 +71,23 @@ function AdminComplaintsFeedbacks() {
             <div className="col-md-6 mb-3" key={complaint.id}>
               <div className="card" style={{ backgroundColor: '#f8d7da', borderColor: '#f5c6cb' }}>
                 <div className="card-body">
-                  <h5 className="card-title fw-bold">{complaint.memberName}</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">Flat No: {complaint.flatNo}</h6>
-                  <h6 className="card-subtitle mb-2 text-muted">Mobile No: {complaint.mobileNo}</h6>
-                  <p className="card-text fw-bold fs-5">{complaint.message}</p>
+                  <h5 className="card-title fw-bold">Title: {complaint.title}</h5>
+                  <p className="card-text fw-bold fs-5">Description: {complaint.description}</p>
+                  <p className="card-text fw-bold fs-5">Id: {complaint.id}</p>
+                  <h6 className="card-subtitle mb-2 text-muted">Creation Date: {complaint.creationDate}</h6>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        <h2 className="mt-4 mb-4">Feedbacks</h2>
+        <h2 className="mt-4 mb-4 fw-bold">Feedbacks</h2>
         <div className="row">
           {feedbacks.map((feedback) => (
             <div className="col-md-6 mb-3" key={feedback.id}>
-              <div className="card" style={{ backgroundColor: '#d4edda', borderColor: '#c3e6cb' }}>
+              <div className="card" style={{ backgroundColor: "#d4edda", borderColor: "#c3e6cb" }}>
                 <div className="card-body">
-                  <h5 className="card-title fw-bold">{feedback.memberName}</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">Flat No: {feedback.flatNo}</h6>
-                  <h6 className="card-subtitle mb-2 text-muted">Mobile No: {feedback.mobileNo}</h6>
-                  <p className="card-text fw-bold fs-5">{feedback.message}</p>
+                  <p className="card-text fw-bold fs-5">{feedback.content}</p>
                 </div>
               </div>
             </div>
