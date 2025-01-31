@@ -1,6 +1,8 @@
 package com.society.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import com.society.daos.EventDao;
 import com.society.daos.UserDao;
 import com.society.dtos.ApiResponse;
 import com.society.dtos.EventDto;
+import com.society.dtos.EventResponseDto;
 import com.society.pojos.Events;
 import com.society.pojos.User;
 
@@ -54,6 +57,16 @@ public class EventServiceImpl implements EventService{
 		
 		eventDao.save(event);
 		return new ApiResponse("Event added successfully");
+	}
+
+	@Override
+	public List<EventResponseDto> getAllEvents() {
+		
+		return eventDao.findAll()
+				.stream()
+				.map(event -> 
+				mapper.map(event, EventResponseDto.class))
+				.collect(Collectors.toList());
 	}
 
 }
