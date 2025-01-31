@@ -1,6 +1,7 @@
 package com.society.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.society.dtos.ApiResponse;
+import com.society.dtos.ComplaintByIdDto;
 import com.society.dtos.ComplaintDto;
 import com.society.dtos.ComplaintResDto;
 import com.society.service.ComplaintService;
@@ -47,8 +49,24 @@ public class ComplaintController {
         List<ComplaintResDto> complaints = complaintService.getAllComplaints();
         return ResponseEntity.ok(complaints);
     }
-
+    
+    @GetMapping("/my-complaints")
+    public ResponseEntity<?> getUserComplaints(Authentication authentication) {
+      
+          try {
+    	       String email = authentication.getName();
+                List<ComplaintByIdDto> complaints = complaintService.getComplaintById(email);
+                return ResponseEntity.ok(complaints);
+            }
+          catch (Exception e) {
+              return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
+          }
+    }
 }
+
+
+
+
 		 
  
 	
