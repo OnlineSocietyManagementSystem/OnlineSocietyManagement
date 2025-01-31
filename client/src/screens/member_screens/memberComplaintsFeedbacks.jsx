@@ -173,6 +173,8 @@ function MemberComplaintsFeedbacks() {
           ))}
         </div>
 
+        <hr />
+
         <h2 className="mt-4 mb-4 fw-bold">Add Feedback</h2>
         <form onSubmit={handleFeedbackSubmit}>
           <div className="mb-3">

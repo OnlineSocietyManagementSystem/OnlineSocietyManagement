@@ -69,23 +69,37 @@ function AdminComplaintsFeedbacks() {
         <div className="row">
           {complaints.map((complaint) => (
             <div className="col-md-6 mb-3" key={complaint.id}>
-              <div className="card" style={{ backgroundColor: '#f8d7da', borderColor: '#f5c6cb' }}>
+              <div
+                className="card"
+                style={{ backgroundColor: "#f8d7da", borderColor: "#f5c6cb" }}
+              >
                 <div className="card-body">
-                  <h5 className="card-title fw-bold">Title: {complaint.title}</h5>
-                  <p className="card-text fw-bold fs-5">Description: {complaint.description}</p>
+                  <h5 className="card-title fw-bold">
+                    Title: {complaint.title}
+                  </h5>
+                  <p className="card-text fw-bold fs-5">
+                    Description: {complaint.description}
+                  </p>
                   <p className="card-text fw-bold fs-5">Id: {complaint.id}</p>
-                  <h6 className="card-subtitle mb-2 text-muted">Creation Date: {complaint.creationDate}</h6>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                    Creation Date: {complaint.creationDate}
+                  </h6>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
+        <hr />
+
         <h2 className="mt-4 mb-4 fw-bold">Feedbacks</h2>
         <div className="row">
           {feedbacks.map((feedback) => (
-            <div className="col-md-6 mb-3" key={feedback.id}>
-              <div className="card" style={{ backgroundColor: "#d4edda", borderColor: "#c3e6cb" }}>
+            <div className="col-12 mb-3" key={feedback.id}>
+              <div
+                className="card"
+                style={{ backgroundColor: "#d4edda", borderColor: "#c3e6cb" }}
+              >
                 <div className="card-body">
                   <p className="card-text fw-bold fs-5">{feedback.content}</p>
                 </div>

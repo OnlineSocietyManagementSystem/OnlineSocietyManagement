@@ -1,39 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar";
-
-// Sample static data
-const events = [
-  { 
-    title: 'Community Meeting', 
-    description: 'A monthly community meeting to discuss upcoming projects and issues.', 
-    location: 'Clubhouse', 
-    date: '2025-02-20', 
-    time: '18:00' 
-  },
-  { 
-    title: 'Yoga Class', 
-    description: 'Join us for a relaxing yoga session in the garden.', 
-    location: 'Community Garden', 
-    date: '2025-02-25', 
-    time: '07:00' 
-  },
-  { 
-    title: 'Pool Party', 
-    description: 'Fun and games at the pool. Refreshments will be provided.', 
-    location: 'Swimming Pool', 
-    date: '2025-03-05', 
-    time: '15:00' 
-  },
-  { 
-    title: 'Book Club Meeting', 
-    description: 'Discuss the book of the month with fellow book lovers.', 
-    location: 'Library', 
-    date: '2025-03-10', 
-    time: '17:00' 
-  }
-];
+import axios from "axios";
 
 function MemberEventManagement() {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/all-events");
+      setEvents(response.data);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
+
   return (
     <div className="d-flex">
       <Sidebar />
@@ -45,7 +29,7 @@ function MemberEventManagement() {
           style={{ backgroundColor: "#e3d5f5" }}
         >
           <a className="navbar-brand fw-bold fs-3 px-4" href="#">
-          Event Management
+            Event Management
           </a>
           <button
             className="navbar-toggler"
