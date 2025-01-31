@@ -1,6 +1,8 @@
 package com.society.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,10 @@ import com.society.custom_exception.ApiException;
 import com.society.daos.NoticeDao;
 import com.society.daos.UserDao;
 import com.society.dtos.ApiResponse;
+import com.society.dtos.ComplaintResDto;
 import com.society.dtos.NoticeDto;
-
+import com.society.dtos.NoticeRespDto;
+import com.society.pojos.Complaints;
 import com.society.pojos.Notices;
 import com.society.pojos.User;
 
@@ -54,6 +58,14 @@ public class NoticeServiceImpl implements NoticeService  {
 		noticeDao.save(notice);
 		return new ApiResponse("notice added successfully");
 		
+	}
+
+	
+	@Override
+	public List<NoticeRespDto> getAllNotices() {
+		 List<Notices> notices = noticeDao.findAll();
+		    return notices.stream().map(NoticeRespDto::new).collect(Collectors.toList());
+
 	}
 
 }

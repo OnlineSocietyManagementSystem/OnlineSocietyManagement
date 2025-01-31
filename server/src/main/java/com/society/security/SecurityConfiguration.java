@@ -18,8 +18,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-@Configuration 
-@EnableWebSecurity 
+@Configuration
+@EnableWebSecurity
 public class SecurityConfiguration {
 
     @Autowired
@@ -27,32 +27,31 @@ public class SecurityConfiguration {
 
     @Autowired
     private CustomJWTAuthenticationFilter customJWTAuthenticationFilter;
-    
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-        	.cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS globally
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/auth/register", "/auth/signin", "/all-complaints",
-                    "/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks"
-                ).permitAll()
-                .requestMatchers(HttpMethod.OPTIONS).permitAll()
-                // Endpoints accessible only to members
-                .requestMatchers("/member/dashboard", "/member/details/**","/payment","/addComplaint", "/add-feedback", "/delete-feedback")
-                .hasRole("MEMBER")
-                .requestMatchers("/admin/**","/add-event","/add-notice", "/delete-event").hasRole("ADMIN")
-                .anyRequest().authenticated()
-            )
-            .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
-            .addFilterBefore(customJWTAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS globally
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/auth/register", "/auth/signin", "/all-complaints",
+                                "/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks", "/all-notices")
+                        .permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS).permitAll()
+                        // Endpoints accessible only to members
+                        .requestMatchers("/member/dashboard", "/member/details/**", "/payment", "/addComplaint",
+                                "/add-feedback", "/delete-feedback")
+                        .hasRole("MEMBER")
+                        .requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**").hasRole("ADMIN")
+                        .anyRequest().authenticated())
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(customJWTAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-       return http.build();
-   }
-    
+        return http.build();
+    }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
