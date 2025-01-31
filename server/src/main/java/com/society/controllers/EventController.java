@@ -21,7 +21,7 @@ import com.society.service.EventService;
 
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:5173")
+
 @RestController
 public class EventController {
 
