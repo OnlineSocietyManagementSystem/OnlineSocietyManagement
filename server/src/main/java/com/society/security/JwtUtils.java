@@ -41,8 +41,7 @@ public class JwtUtils {
     public String generateJwtToken(Authentication authentication) {
         CustomUserDetailsImpl userPrincipal = (CustomUserDetailsImpl) authentication.getPrincipal();
         User user = userPrincipal.getUser();
-
-        return Jwts.builder()
+        String token=Jwts.builder()
                 .setSubject(user.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
@@ -50,6 +49,7 @@ public class JwtUtils {
                 .claim("user_id", user.getId())
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
+        return token;
     }
 
     public Claims validateJwtToken(String jwtToken) {

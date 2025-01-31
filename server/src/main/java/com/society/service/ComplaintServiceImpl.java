@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.society.daos.ComplaintDao;
 import com.society.daos.UserDao;
 import com.society.dtos.ApiResponse;
+import com.society.dtos.ComplaintByIdDto;
 import com.society.dtos.ComplaintDto;
 import com.society.dtos.ComplaintResDto;
 import com.society.pojos.ComplaintStatus;
@@ -65,13 +66,19 @@ public class ComplaintServiceImpl implements ComplaintService {
 		    List<Complaints> complaints = complaintDao.findAll();
 		    return complaints.stream().map(ComplaintResDto::new).collect(Collectors.toList());
 		}
-		//-------------------get complaints by ID-------------------------------------
+		//-------------------get complaints by ID------------------------
+
+
 		@Override
-		public Optional<ComplaintDto> getComplaintById(Long complaintId) {
-			// TODO Auto-generated method stub
-			return Optional.empty();
+		public List<ComplaintByIdDto> getComplaintById(String email) {
+			 Optional<User> optionalUser = userDao.findByEmail(email);
+		       User user = optionalUser.get();
+		       Long userId=user.getId();
+			List<Complaints> complaints = complaintDao.findByUserId(userId);
+		    return complaints.stream().map(ComplaintByIdDto::new).collect(Collectors.toList());
 		}
-}
+		}
+
 
 
 		

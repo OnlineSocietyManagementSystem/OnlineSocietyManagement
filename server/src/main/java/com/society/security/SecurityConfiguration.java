@@ -12,6 +12,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 
 @Configuration 
 @EnableWebSecurity 
@@ -34,14 +39,15 @@ public class SecurityConfiguration {
                 ).permitAll()
                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
                 // Endpoints accessible only to members
-                .requestMatchers("/member/dashboard", "/member/details/**","/make-payment","/add-complaint", "/add-feedback", "/delete-feedback")
+                .requestMatchers("/member/dashboard", "/member/details/**","/make-payment","/add-complaint", "/add-feedback", "/delete-feedback","/my-complaints")
                 .hasRole("MEMBER")
                 .requestMatchers("/admin/**","/add-event","/add-notice").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
+            )//.oauth2ResourceServer(oauth2 -> oauth2
+                   // .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
             .addFilterBefore(customJWTAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
        return http.build();
@@ -51,4 +57,7 @@ public class SecurityConfiguration {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+    
+   
+    
 }
