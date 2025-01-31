@@ -9,14 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.society.custom_exception.ApiException;
+
 import com.society.daos.NoticeDao;
 import com.society.daos.UserDao;
 import com.society.dtos.ApiResponse;
-import com.society.dtos.ComplaintResDto;
 import com.society.dtos.NoticeDto;
 import com.society.dtos.NoticeRespDto;
-import com.society.pojos.Complaints;
 import com.society.pojos.Notices;
 import com.society.pojos.User;
 
@@ -67,5 +65,16 @@ public class NoticeServiceImpl implements NoticeService  {
 		    return notices.stream().map(NoticeRespDto::new).collect(Collectors.toList());
 
 	}
+
+
+	@Override
+	public ApiResponse deleteNotice(Long id) {
+		noticeDao.deleteById(id);	
+		
+		return new ApiResponse("notice deleted successfully");
+		
+	}
+	
+	
 
 }

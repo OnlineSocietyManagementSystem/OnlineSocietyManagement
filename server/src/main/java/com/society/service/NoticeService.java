@@ -15,5 +15,7 @@ public interface NoticeService {
 	ApiResponse addNotice(@Valid NoticeDto noticeDto,String email);
 
 	List<NoticeRespDto> getAllNotices();
+	
+	ApiResponse deleteNotice(Long id);
 
 }

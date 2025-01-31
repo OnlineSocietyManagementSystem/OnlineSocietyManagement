@@ -44,7 +44,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/member/dashboard", "/member/details/**", "/payment", "/addComplaint","/my-complaints",
                                 "/add-feedback", "/delete-feedback")
                         .hasRole("MEMBER")
-                        .requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**","/delete-notice").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
