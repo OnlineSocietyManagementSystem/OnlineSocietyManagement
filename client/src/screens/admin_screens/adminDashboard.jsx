@@ -29,6 +29,26 @@ function AdminDashboard() {
         </nav>
         <p>Here will be your announcements content.</p>
         <p>Added line to test from testBranch</p>
+
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6 mb-4">
+              <div className="box" style={{ backgroundColor: "#e0f7fa", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}></div>
+            </div>
+            <div className="col-md-6 mb-4">
+              <div className="box" style={{ backgroundColor: "#e1bee7", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}></div>
+            </div>
+            <div className="col-md-6 mb-4">
+              <div className="box" style={{ backgroundColor: "#ffe0b2", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"}}></div>
+            </div>
+            <div className="col-md-6 mb-4">
+              <div className="box" style={{ backgroundColor: "#c8e6c9", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"}}></div>
+            </div>
+            <div className="col-md-6 mb-4">
+              <div className="box" style={{ backgroundColor: "#f3e5f5", height: "400px" , boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"}}></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
