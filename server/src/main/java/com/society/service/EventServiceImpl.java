@@ -69,4 +69,21 @@ public class EventServiceImpl implements EventService{
 				.collect(Collectors.toList());
 	}
 
+	  @Override
+	    public ApiResponse deleteEvent(Long eventId, String email) {
+	        Optional<User> optionalUser = userDao.findByEmail(email);
+
+	        if (!optionalUser.isPresent()) {
+	            return new ApiResponse("Unauthorized access!");
+	        }
+
+	        Optional<Events> optionalEvent = eventDao.findById(eventId);
+	        if (!optionalEvent.isPresent()) {
+	            return new ApiResponse("Event not found!");
+	        }
+
+	        eventDao.delete(optionalEvent.get());
+	        return new ApiResponse("Event deleted successfully");
+	    }
+
 }

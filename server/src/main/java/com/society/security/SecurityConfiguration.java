@@ -36,7 +36,7 @@ public class SecurityConfiguration {
                 // Endpoints accessible only to members
                 .requestMatchers("/member/dashboard", "/member/details/**","/payment","/addComplaint", "/add-feedback", "/delete-feedback")
                 .hasRole("MEMBER")
-                .requestMatchers("/admin/**","/add-event","/add-notice").hasRole("ADMIN")
+                .requestMatchers("/admin/**","/add-event","/add-notice", "/delete-event").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session

@@ -14,4 +14,6 @@ public interface EventService {
 
 	List<EventResponseDto> getAllEvents();
 
+	ApiResponse deleteEvent(Long eventId, String email);
+
 }
