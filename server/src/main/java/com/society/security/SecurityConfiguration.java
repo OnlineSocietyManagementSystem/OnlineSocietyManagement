@@ -41,10 +41,10 @@ public class SecurityConfiguration {
                         .permitAll()
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         // Endpoints accessible only to members
-                        .requestMatchers("/member/dashboard", "/member/details/**", "/payment", "/addComplaint","/my-complaints",
-                                "/add-feedback", "/delete-feedback")
+                        .requestMatchers("/member/dashboard", "/member/details/**", "/addComplaint","/my-complaints",
+                                "/add-feedback", "/delete-feedback","/update-profile","/get-unpaidpayemnt","/make-payment")
                         .hasRole("MEMBER")
-                        .requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**","/add-payment").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

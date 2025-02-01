@@ -3,22 +3,18 @@ package com.society.dtos;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.society.pojos.PaymentStatus;
 
 import lombok.*;
 
-
-@NoArgsConstructor
-@ToString
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
+public class PaymentResDto {
 
-public class PaymentDto{
-	
 	    private BigDecimal amount;
 	    private String paymentType;
 	    private LocalDate dueDate;
-	        
+	    private PaymentStatus status;
 }

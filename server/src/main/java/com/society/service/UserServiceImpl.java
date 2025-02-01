@@ -1,5 +1,7 @@
 package com.society.service;
 
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.society.custom_exception.ApiException;
 import com.society.daos.UserDao;
 import com.society.dtos.ApiResponse;
+import com.society.dtos.ProfileDto;
 import com.society.dtos.UserRegisterDto;
 import com.society.pojos.User;
 
@@ -36,4 +39,28 @@ public class UserServiceImpl implements UserService {
 		return new ApiResponse(dto.getRole()+" "+"registered with ID " + savedMember.getId());
 		
 	}
-}
+
+	@Override
+	public ApiResponse updateProfile(ProfileDto dto,String email) 
+	{
+	        Optional<User> optionalUser = userDao.findByEmail(email);
+	        
+	        if (optionalUser.isEmpty()) {
+	            return new ApiResponse("User not found");
+	        }
+
+	        User user = optionalUser.get();
+	        
+	        // Updating profile fields
+	        user.setBuilding(dto.getBuilding());
+	        user.setFlatNo(dto.getFlatNo());
+	        user.setFloor(dto.getFloor());
+	        user.setAddhar(dto.getAddhar());
+	        user.setPhone(dto.getPhone());
+	        user.setFamilyCount(dto.getFamilyCount());
+	        userDao.save(user); // Update user in database
+	        return new ApiResponse("Profile updated successfully");
+	    }
+		
+	}
+
