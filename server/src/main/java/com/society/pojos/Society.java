@@ -27,7 +27,20 @@ public class Society extends BaseEntity{
 		
 		@Column(length=50)
 		private String address;
-					
+		
+		@Column(length=10)
+		private String contact_no;
+		
+		@Column(name="building_count")
+		private int buildingCount;
+		
+		
+		@Column(name="floor_count")
+		private int floorCount;
+		
+		@Column(name="flat_count")
+		private int flatCount;
+		
 		
 		@ManyToOne
 		@JoinColumn(name = "user_id")

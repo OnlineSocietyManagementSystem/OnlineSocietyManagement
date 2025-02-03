@@ -38,6 +38,4 @@ public class Events extends BaseEntity{
 	@JoinColumn(name = "user_id")
 	private User user;
 	
-
-	
 }
