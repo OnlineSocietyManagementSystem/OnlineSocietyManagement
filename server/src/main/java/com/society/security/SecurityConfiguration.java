@@ -37,14 +37,14 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/auth/register", "/auth/signin", "/all-complaints",
-                                "/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks", "/all-notices")
+                                "/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks", "/all-notices","/get-society")
                         .permitAll()
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         // Endpoints accessible only to members
                         .requestMatchers("/member/dashboard", "/member/details/**", "/payment", "/addComplaint","/my-complaints",
                                 "/add-feedback", "/delete-feedback")
                         .hasRole("MEMBER")
-                        .requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**","/delete-notice").hasRole("ADMIN")
+                        .requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**","/delete-notice","/add-society","delete-society").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
