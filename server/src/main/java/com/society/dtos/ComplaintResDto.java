@@ -17,7 +17,7 @@ public class ComplaintResDto {
     private String title;
     private String description;
     private ComplaintStatus status;
-    private Long userId; // Make sure this is included
+    private String userName; // Make sure this is included
     private LocalDate creationDate;
     
     public ComplaintResDto(Complaints complaint) {
@@ -25,7 +25,8 @@ public class ComplaintResDto {
         this.title = complaint.getTitle();
         this.description = complaint.getDescription();
         this.status = complaint.getStatus();
-        this.userId = complaint.getUser() != null ? complaint.getUser().getId() : null; // Extract user ID
+        this.userName = complaint.getUser() != null 
+                ? complaint.getUser().getFirstName() + " " + complaint.getUser().getLastName() : "Unknown" ;
         this.creationDate = complaint.getCreatedOn();
     }
 

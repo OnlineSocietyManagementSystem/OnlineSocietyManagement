@@ -17,6 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.society.dtos.ApiResponse;
 import com.society.dtos.MakePaymentDto;
+import com.society.dtos.MyPaymentResDto;
 import com.society.dtos.PaymentDto;
 import com.society.dtos.PaymentResDto;
 import com.society.service.PaymentServiceImpl;
@@ -60,6 +61,18 @@ public class PaymentController {
              return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
          }
     }
+    
+      @GetMapping("/my-payments")
+      public ResponseEntity<List<MyPaymentResDto>> getMyPayment(Authentication authentication) 
+      {
+        		  String email = authentication.getName();
+                List<MyPaymentResDto> payments= paymentServiceImpl.getMyPayment(email);
+                return ResponseEntity.ok(payments);   
+  }
+      
+    
+    
+    
 }
 	
 	

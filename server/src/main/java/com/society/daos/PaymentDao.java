@@ -17,4 +17,6 @@ public interface PaymentDao extends JpaRepository<Payment, Long> {
 
 	Optional<Payment> findFirstByStatus(PaymentStatus unpaid);
 
+	List<Payment> findByUserId(Long id);
+
 }

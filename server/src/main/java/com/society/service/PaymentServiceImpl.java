@@ -13,6 +13,7 @@ import com.society.daos.PaymentDao;
 import com.society.daos.UserDao;
 import com.society.dtos.ApiResponse;
 import com.society.dtos.MakePaymentDto;
+import com.society.dtos.MyPaymentResDto;
 import com.society.dtos.PaymentDto;
 import com.society.dtos.PaymentResDto;
 import com.society.pojos.Complaints;
@@ -54,11 +55,6 @@ public class PaymentServiceImpl implements PaymentService{
 	public List<PaymentResDto> getPayment(String email) {
 		Optional<User> optionalUser = userDao.findByEmail(email);
 		 User user= optionalUser.get();
-//		     PaymentStatus unpaid;
-//		     {
-//		         unpaid = PaymentStatus.valueOf("UNPAID");
-//		     }
-		     // Enum names are usually uppercase
 		     List<Payment> payments=paymentDao.findByStatus(PaymentStatus.UNPAID);
 		     return payments.stream()
 		    	        .map(payment -> new PaymentResDto(payment.getAmount(),payment.getPaymentType(),payment.getDueDate(),payment.getStatus()))
@@ -84,11 +80,23 @@ public class PaymentServiceImpl implements PaymentService{
 	        payment.setUser(user);  // Assign the logged-in user
 	        payment.setPaymentDate(LocalDate.now()); // Set current date
 
-	        // ✅ Save the new payment record
+	        // Save the new payment record
 	        paymentDao.save(payment);
 		 return new ApiResponse("Payment Done Successfully..");
 	}
-		
+
+	@Override
+	public List<MyPaymentResDto> getMyPayment(String email) {
+		Optional<User> optionalUser = userDao.findByEmail(email);
+		 User user= optionalUser.get();
+		   List<Payment> payments=paymentDao.findByUserId(user.getId());
+		     return payments.stream()
+		    	        .map(payment -> new MyPaymentResDto(payment.getAmount(),payment.getPaymentType(),payment.getPaymentDate()))
+		    	        .collect(Collectors.toList());		
 	}
+
+	}
+		
+	
 	
 
