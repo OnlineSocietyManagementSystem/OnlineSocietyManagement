@@ -15,7 +15,7 @@ public class Bookings extends BaseEntity {
     
     @Enumerated(EnumType.STRING)
     @Column(length=15)
-    private BookingStatus status; // Enum for booking status
+    private BookingStatus status;
     
     @Column(nullable=false)
     private LocalDate bookingDate;
