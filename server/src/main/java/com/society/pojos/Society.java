@@ -42,7 +42,4 @@ public class Society extends BaseEntity{
 		private int flatCount;
 		
 		
-		@ManyToOne
-		@JoinColumn(name = "user_id")
-		private User user;
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,5 +26,11 @@ public class UserProfileController {
 	    return ResponseEntity.ok(response);
 	}
 
+	 @GetMapping("/my-profile")
+	    public ResponseEntity<?> getProfile(Authentication authentication) {
+	        String email = authentication.getName(); // Get logged-in user's email
+	        ProfileDto profileDto = userService.getProfile(email);
+	        return ResponseEntity.ok(profileDto);
+	    }
 
 }

@@ -31,7 +31,7 @@ public class Bookings extends BaseEntity {
     
     @Column(length=255)
     private String comments; // Optional field for additional notes
-
+    
     @ManyToOne
     @JoinColumn(name = "resource_id")
     private Resources resource;
@@ -39,7 +39,6 @@ public class Bookings extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    
     
 
 }
