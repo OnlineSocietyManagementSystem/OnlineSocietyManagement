@@ -37,7 +37,7 @@ public class User extends BaseEntity {
 	UserRole role;
 	
 	@Column(unique=true ,length=20)
-	private String  addhar;
+	private String  aadhar;
 	
 	@Column(unique=true ,length=10)
 	private String phone;
