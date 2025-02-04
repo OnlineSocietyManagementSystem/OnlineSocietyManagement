@@ -32,7 +32,8 @@ public class Payment extends BaseEntity{
 	@Column(name="payment_date")
 	private LocalDate paymentDate;
 	
-
+	@Column(name="due_date")
+    private LocalDate dueDate;
 	@Enumerated(EnumType.STRING)  // Store as String in DB
     private PaymentStatus status;
 	
