@@ -58,17 +58,6 @@ public class BookingServiceImpl implements BookingService {
 
 	@Override
 	public List<BookingRespDto> getAllBookings(String email) {
-		
-		 Optional<User> optionalUser = userDao.findByEmail(email);
-
-		 if (!optionalUser.isPresent()) {
-		        return (List<BookingRespDto>) new ApiResponse("Member not found!");
-		    }
-
-		 User user= optionalUser.get();
-		 Bookings event =mapper.map(bookingDto, Events.class);
-		   
-		   event.setUser(user);
 		return bookingDao.findAll()
 				.stream()
 				.map(booking -> 
