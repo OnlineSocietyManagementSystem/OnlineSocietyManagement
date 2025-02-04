@@ -23,63 +23,53 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-        @Autowired
-        private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-        @Autowired
-        private CustomJWTAuthenticationFilter customJWTAuthenticationFilter;
+	@Autowired
+	private CustomJWTAuthenticationFilter customJWTAuthenticationFilter;
 
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                http
-                                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS
-                                                                                                   // globally
-                                .csrf(csrf -> csrf.disable())
-                                .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers(
-                                                                "/auth/register", "/auth/signin", "/all-complaints",
-                                                                "/v*/api-doc*/**", "/swagger-ui/**", "/all-events",
-                                                                "/all-feedbacks", "/all-notices", "/get-society",
-                                                                "/all-resources")
-                                                .permitAll()
-                                                .requestMatchers(HttpMethod.OPTIONS).permitAll()
-                                                // Endpoints accessible only to members
-                                                .requestMatchers("/member/dashboard", "/member/details/**", "/payment",
-                                                                "/addComplaint", "/my-complaints",
-                                                                "/add-feedback", "/delete-feedback", "add-booking")
-                                                .hasRole("MEMBER")
-                                                .requestMatchers("/admin/**", "/add-event", "/add-notice",
-                                                                "/delete-event/**", "/delete-notice", "/add-society",
-                                                                "delete-society", "/all-bookings", "/add-resource",
-                                                                "/delete-resource")
-                                                .hasRole("ADMIN")
-                                                .anyRequest().authenticated())
-                                .sessionManagement(session -> session
-                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                                .addFilterBefore(customJWTAuthenticationFilter,
-                                                UsernamePasswordAuthenticationFilter.class);
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS
+																				// globally
+				.csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/auth/register", "/auth/signin", "/all-complaints", "/v*/api-doc*/**",
+								"/swagger-ui/**", "/all-events", "/all-feedbacks", "/all-notices", "/get-society",
+								"/all-resources")
+						.permitAll().requestMatchers(HttpMethod.OPTIONS).permitAll()
+						// Endpoints accessible only to members
+						.requestMatchers("/member/dashboard", "/member/details/**", "/payment", "/addComplaint",
+								"/my-complaints", "/add-feedback", "/delete-feedback", "add-booking")
+						.hasRole("MEMBER")
+						.requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**", "/delete-notice",
+								"/add-society", "delete-society", "/all-bookings", "/add-resource", "/delete-resource")
+						.hasRole("ADMIN").anyRequest().authenticated())
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.addFilterBefore(customJWTAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-                return http.build();
-        }
+		return http.build();
+	}
 
-        @Bean
-        public CorsConfigurationSource corsConfigurationSource() {
-                CorsConfiguration configuration = new CorsConfiguration();
-                configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:5174")); // Allow
-                                                                                                            // frontend
-                                                                                                            // origin
-                configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allowed methods
-                configuration.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Allowed headers
-                configuration.setAllowCredentials(true); // Allow cookies/auth headers
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:5174")); // Allow
+																									// frontend
+																									// origin
+		configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allowed methods
+		configuration.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Allowed headers
+		configuration.setAllowCredentials(true); // Allow cookies/auth headers
 
-                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                source.registerCorsConfiguration("/**", configuration);
-                return source;
-        }
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
 
-        @Bean
-        public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-                return config.getAuthenticationManager();
-        }
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+		return config.getAuthenticationManager();
+	}
 
 }

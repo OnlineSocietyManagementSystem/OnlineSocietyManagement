@@ -13,24 +13,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class NoticeRespDto {
-	
-		private String title;
-		
-		private String description;
-		
-		private LocalDate date_issued;
-		
-		  private Long userId;
-		  
-		  
-		  public NoticeRespDto(Notices notice) {
-		        this.title = notice.getTitle();
-		        this.description = notice.getDescription();
-		        this.date_issued = notice.getDate_issued();
-		        this.userId = (notice.getUser() != null) ? notice.getUser().getId() : null; // Assuming Notices has a User entity
-		    }
-		
-	}
+public class NoticeRespDto extends BaseDto{
 
+	private String title;
 
+	private String description;
+
+}
