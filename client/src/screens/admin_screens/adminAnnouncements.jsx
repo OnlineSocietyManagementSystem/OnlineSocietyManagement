@@ -1,59 +1,81 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Sidebar from "../../components/sidebar";
+import { toast } from "react-toastify";
 
 function AdminAnnouncements() {
   const [announcements, setAnnouncements] = useState([]);
+  const [newAnnouncement, setNewAnnouncement] = useState({
+    title: "",
+    description: "",
+  });
 
-  // Utility function to calculate relative date
-  const getRelativeDate = (dateString) => {
-    const today = new Date();
-    const announcementDate = new Date(dateString);
+  // Fetch announcements from the API
+  useEffect(() => {
+    fetchAnnouncements();
+  }, []);
 
-    const diffTime = today - announcementDate;
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays === 0) return "Today";
-    if (diffDays === 1) return "Yesterday";
-    return dateString; // Default format for older dates
+  const fetchAnnouncements = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/all-notices");
+      setAnnouncements(response.data);
+    } catch (error) {
+      console.error("Error fetching announcements:", error);
+    }
   };
 
-  // Mock fetch announcements
-  useEffect(() => {
-    const fetchedAnnouncements = [
-      {
-        id: 1,
-        title: "Water Supply Disruption",
-        description:
-          "Water supply will be disrupted on 25th Dec from 9 AM to 5 PM due to maintenance.",
-        date: "2024-12-24", // Today's date
-        category: "Maintenance",
-      },
-      {
-        id: 2,
-        title: "Diwali Celebration",
-        description:
-          "Join us for the Diwali celebration on 31st Oct at 7 PM in the community hall.",
-        date: "2024-12-23", // Yesterday
-        category: "Event",
-      },
-      {
-        id: 3,
-        title: "Fire Drill Notice",
-        description:
-          "Fire drill will be conducted on 28th Dec at 3 PM in Block A.",
-        date: "2024-12-20", // Older date
-        category: "Safety",
-      },
-    ];
-    setAnnouncements(fetchedAnnouncements);
-  }, []);
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewAnnouncement({
+      ...newAnnouncement,
+      [name]: value,
+    });
+  };
+
+  // Handle form submission to add a new announcement
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    try {
+      await axios.post("http://localhost:8080/add-notice", newAnnouncement, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setNewAnnouncement({ title: "", description: "" });
+      fetchAnnouncements();
+      toast.success("Notice added successfully.");
+    } catch (error) {
+      console.error("Error adding announcement:", error);
+      toast.error("Error adding notice.");
+    }
+  };
+
+  const handleDelete = async (noticeId) => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(
+        `http://localhost:8080/delete-notice/${noticeId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("notice Deleted Successfully");
+      fetchAnnouncements(); 
+    } catch (error) {
+      toast.error("Error Deleting notice");
+      console.error("Error deleting notice :", error);
+    }
+  };
 
   return (
     <div className="d-flex">
       <Sidebar />
 
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
-        
         {/* Add Navbar at the top using Bootstrap classes */}
         <nav
           className="navbar navbar-expand-lg navbar-light mb-4"
@@ -75,12 +97,44 @@ function AdminAnnouncements() {
           </button>
         </nav>
 
-        <h2
-          className="mb-4 text-dark"
-          style={{ fontWeight: "bold", color: "#23044a" }}
-        >
+        {/* <h2 className="mb-4 text-dark" style={{ fontWeight: "bold", color: "#23044a" }}>
           Announcements
-        </h2>
+        </h2> */}
+
+        {/* Announcement Form */}
+        <div className="card mb-4">
+          <div className="card-header">
+            <strong>Add New Announcement</strong>
+          </div>
+          <div className="card-body">
+            <form onSubmit={handleFormSubmit}>
+              <div className="mb-3">
+                <label className="form-label">Title</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="title"
+                  value={newAnnouncement.title}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Description</label>
+                <textarea
+                  className="form-control"
+                  name="description"
+                  value={newAnnouncement.description}
+                  onChange={handleInputChange}
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" className="btn btn-primary">
+                Add Announcement
+              </button>
+            </form>
+          </div>
+        </div>
 
         {announcements.length > 0 ? (
           <div className="row row-cols-1 row-cols-md-2 g-4">
@@ -101,7 +155,7 @@ function AdminAnnouncements() {
                         className="badge"
                         style={{ backgroundColor: "#23044a", color: "#ffffff" }}
                       >
-                        {getRelativeDate(announcement.date)}
+                        {announcement.date}
                       </span>
                     </div>
                   </div>
@@ -114,11 +168,17 @@ function AdminAnnouncements() {
                     </p>
                   </div>
                   <div className="card-footer text-muted">
-                    <small>
-                      <span className="fw-bold">Category:</span>{" "}
-                      {announcement.category} |{" "}
-                      <span className="fw-bold">Date:</span> {announcement.date}
-                    </small>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <p className="mb-0 fw-bold">
+                        Date: {announcement.createdOn}
+                      </p>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => handleDelete(announcement.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
