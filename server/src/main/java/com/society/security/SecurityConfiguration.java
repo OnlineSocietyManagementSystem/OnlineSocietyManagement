@@ -29,25 +29,28 @@ public class SecurityConfiguration {
 	@Autowired
 	private CustomJWTAuthenticationFilter customJWTAuthenticationFilter;
 
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS
-																				// globally
-				.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/auth/register", "/auth/signin", "/all-complaints", "/v*/api-doc*/**",
-								"/swagger-ui/**", "/all-events", "/all-feedbacks", "/all-notices", "/get-society",
-								"/all-resources")
-						.permitAll().requestMatchers(HttpMethod.OPTIONS).permitAll()
-						// Endpoints accessible only to members
-						.requestMatchers("/member/dashboard", "/member/details/**", "/payment", "/addComplaint",
-								"/my-complaints", "/add-feedback", "/delete-feedback", "add-booking")
-						.hasRole("MEMBER")
-						.requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**", "/delete-notice",
-								"/add-society", "delete-society", "/all-bookings", "/add-resource", "/delete-resource")
-						.hasRole("ADMIN").anyRequest().authenticated())
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.addFilterBefore(customJWTAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+   @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS globally
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/auth/register", "/auth/signin", "/all-complaints",
+                                "/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks","/all-notices", "/get-society")
+                        .permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS).permitAll()
+                        // Endpoints accessible only to members
+                        .requestMatchers("/member/dashboard", "/member/details/**", "/addComplaint","/my-complaints",
+                                "/add-feedback", "/delete-feedback","/update-profile","/get-unpaidpayemnt","/make-payment","/my-payments",  "/add-booking")
+                        .hasRole("MEMBER")
+                        .requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**", "/delete-notice",
+								"/add-society", "delete-society", "/all-bookings", "/add-resource", "/delete-resource","/add-payment").hasRole("ADMIN")
+                        .anyRequest().authenticated())
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(customJWTAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
 
 		return http.build();
 	}
