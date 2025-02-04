@@ -1,19 +1,9 @@
 package com.society.pojos;
 
 import java.time.LocalDate;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.time.LocalTime;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Getter
@@ -22,23 +12,33 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name="bookings")
 public class Bookings extends BaseEntity {
-	
+    
+    @Enumerated(EnumType.STRING)
+    @Column(length=15)
+    private BookingStatus status;
+    
+    @Column(nullable=false)
+    private LocalDate bookingDate;
+    
+    @Column(nullable=false)
+    private LocalTime startTime;
+    
+    @Column(nullable=false)
+    private LocalTime endTime;
+    
+    @Column(length=50)
+    private String purpose;
 
-	private boolean status;
-	
-	@Column(nullable=false)
-	private LocalDate bookingDate;
-	
-	@Column(length=25)
-	private String resourceType;
-	
-	@Column(length=50)
-	private String purpose;
-	
-
-
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
+    @ManyToOne
+    @JoinColumn(name = "resource_id", nullable = false)
+    private Resources resource;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+    
+    @Column(length=255)
+    private String comments; // Optional field for additional notes
 
 }
+

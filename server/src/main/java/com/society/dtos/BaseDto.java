@@ -17,9 +17,9 @@ public class BaseDto {
 	@JsonProperty(access = Access.READ_ONLY)
 	private Long id;
 	@JsonProperty(access = Access.READ_ONLY)
-	private LocalDate creationDate;
+	private LocalDate createdOn;
 	@JsonProperty(access = Access.READ_ONLY)
-	private LocalDateTime updationTimeStamp;
+	private LocalDateTime updatedOn;
 
 }
 

@@ -1,15 +1,8 @@
 package com.society.pojos;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.time.LocalTime;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Getter
@@ -19,19 +12,32 @@ import lombok.Setter;
 @Table(name="resources")
 public class Resources extends BaseEntity{
 
-	
-	@Column(length=25)
-	private String resource_type;
-	
-	@Column(length=50)
-	private String description;
+    @Column(length=25)
+    private String resourceType;
 
+    @Column(length=50)
+    private String description;
+    
+    @Column(length=50)
+    private String name;
+    
+    private boolean availability;
+    
+    private int capacity;
+    
+    private double bookingFee;
+    
+    @Column(name="open_hours")
+    private LocalTime openHours;
+    
+    @Column(length=255)
+    private String amenities;
+    
+    @ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
-
-	@ManyToOne
-	@JoinColumn(name = "society_id",nullable = false)
-	private Society society;
-	
-	
-
+    @ManyToOne
+    @JoinColumn(name = "society_id",nullable = false)
+    private Society society;
 }
