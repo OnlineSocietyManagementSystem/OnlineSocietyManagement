@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function MemberComplaintsFeedbacks() {
   const [title, setTitle] = useState("");
@@ -90,6 +91,24 @@ function MemberComplaintsFeedbacks() {
       fetchFeedbacks();
     } catch (error) {
       console.error("Error adding feedback:", error);
+    }
+  };
+
+  const handleDelete = async (feedbackId) => {
+    try {
+      await axios.delete(
+        `http://localhost:8080/delete-feedback/${feedbackId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Feedback Deleted Successfully");
+      fetchFeedbacks(); // Refresh event list
+    } catch (error) {
+      toast.error("Error Deleting feedback");
+      console.error("Error deleting feedback :", error);
     }
   };
 
@@ -203,7 +222,17 @@ function MemberComplaintsFeedbacks() {
                 style={{ backgroundColor: "#d4edda", borderColor: "#c3e6cb" }}
               >
                 <div className="card-body">
-                  <p className="card-text fw-bold fs-5">{feedback.content}</p>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p className="card-text fw-bold fs-5 mb-0">
+                      {feedback.content}
+                    </p>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDelete(feedback.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

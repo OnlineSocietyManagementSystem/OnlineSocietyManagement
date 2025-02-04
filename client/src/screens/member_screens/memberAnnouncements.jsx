@@ -1,52 +1,23 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Sidebar from "../../components/sidebar";
 
 function MemberAnnouncements() {
   const [announcements, setAnnouncements] = useState([]);
 
-  // Utility function to calculate relative date
-  const getRelativeDate = (dateString) => {
-    const today = new Date();
-    const announcementDate = new Date(dateString);
-
-    const diffTime = today - announcementDate;
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays === 0) return "Today";
-    if (diffDays === 1) return "Yesterday";
-    return dateString; // Default format for older dates
-  };
-
-  // Mock fetch announcements
+  // Fetch announcements from the API
   useEffect(() => {
-    const fetchedAnnouncements = [
-      {
-        id: 1,
-        title: "Water Supply Disruption",
-        description:
-          "Water supply will be disrupted on 25th Dec from 9 AM to 5 PM due to maintenance.",
-        date: "2024-12-24", // Today's date
-        category: "Maintenance",
-      },
-      {
-        id: 2,
-        title: "Diwali Celebration",
-        description:
-          "Join us for the Diwali celebration on 31st Oct at 7 PM in the community hall.",
-        date: "2024-12-23", // Yesterday
-        category: "Event",
-      },
-      {
-        id: 3,
-        title: "Fire Drill Notice",
-        description:
-          "Fire drill will be conducted on 28th Dec at 3 PM in Block A.",
-        date: "2024-12-20", // Older date
-        category: "Safety",
-      },
-    ];
-    setAnnouncements(fetchedAnnouncements);
+    fetchAnnouncements();
   }, []);
+
+  const fetchAnnouncements = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/all-notices");
+      setAnnouncements(response.data);
+    } catch (error) {
+      console.error("Error fetching announcements:", error);
+    }
+  };
 
   return (
     <div className="d-flex">
@@ -59,7 +30,7 @@ function MemberAnnouncements() {
           style={{ backgroundColor: "#e3d5f5" }}
         >
           <a className="navbar-brand fw-bold fs-3 px-4" href="#">
-          Announcements
+            Announcements
           </a>
           <button
             className="navbar-toggler"
@@ -100,7 +71,7 @@ function MemberAnnouncements() {
                         className="badge"
                         style={{ backgroundColor: "#23044a", color: "#ffffff" }}
                       >
-                        {getRelativeDate(announcement.date)}
+                        {announcement.date}
                       </span>
                     </div>
                   </div>
@@ -114,8 +85,6 @@ function MemberAnnouncements() {
                   </div>
                   <div className="card-footer text-muted">
                     <small>
-                      <span className="fw-bold">Category:</span>{" "}
-                      {announcement.category} |{" "}
                       <span className="fw-bold">Date:</span> {announcement.date}
                     </small>
                   </div>
