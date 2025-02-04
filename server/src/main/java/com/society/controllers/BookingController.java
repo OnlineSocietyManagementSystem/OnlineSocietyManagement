@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.society.dtos.ApiResponse;
 import com.society.dtos.BookingDto;
 import com.society.dtos.BookingRespDto;
-import com.society.dtos.EventResponseDto;
 import com.society.service.BookingService;
 
 import jakarta.validation.Valid;
@@ -42,10 +41,10 @@ public class BookingController {
 	}
 	
 	@GetMapping("/all-bookings")
-	public ResponseEntity<?> getAllBookings(Authentication authentication) {
+	public ResponseEntity<?> getAllBookings() {
 		try {
-			String email = authentication.getName();
-			List<BookingRespDto> bookings = bookingService.getAllBookings(email);
+			
+			List<BookingRespDto> bookings = bookingService.getAllBookings();
 			if (bookings.isEmpty()) {
 				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 			} else {

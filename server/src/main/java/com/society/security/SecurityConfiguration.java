@@ -37,7 +37,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/auth/register", "/auth/signin", "/all-complaints",
-                                "/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks","/all-notices", "/get-society")
+                                "/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks","/all-notices", "/get-society","/my-profile")
                         .permitAll()
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         // Endpoints accessible only to members

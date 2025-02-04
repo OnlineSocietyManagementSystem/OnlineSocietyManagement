@@ -61,6 +61,20 @@ public class UserServiceImpl implements UserService {
 	        userDao.save(user); // Update user in database
 	        return new ApiResponse("Profile updated successfully");
 	    }
+
+	@Override
+    public ProfileDto getProfile(String email) {
+        Optional<User> optionalUser = userDao.findByEmail(email);
+
+        if (optionalUser.isEmpty()) {
+            throw new ApiException("User not found");
+        }
+
+        User user = optionalUser.get();
+        
+        // Convert User to ProfileDto using ModelMapper
+        return modelMapper.map(user, ProfileDto.class);
+    }
 		
 	}
 
