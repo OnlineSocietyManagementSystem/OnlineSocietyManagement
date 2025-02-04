@@ -8,31 +8,18 @@ function MemberComplaintsFeedbacks() {
   const [description, setDescription] = useState("");
   const [feedbackContent, setFeedbackContent] = useState("");
   const [feedbacks, setFeedbacks] = useState([]);
-
-  const complaints = [
-    {
-      id: 1,
-      memberName: "John Doe",
-      title: "Water leakage issue",
-      description: "Water leakage issue in the bathroom.",
-    },
-    {
-      id: 2,
-      memberName: "Jane Smith",
-      title: "Elevator issue",
-      description: "Elevator not working properly.",
-    },
-  ];
+  const [complaints, setComplaints] = useState([]);
 
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchFeedbacks();
+    fetchComplaints();
   }, []);
 
   const fetchFeedbacks = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/all-feedbacks", {
+      const response = await axios.get("http://localhost:8080/all-feedbacks", { // here we have to add my -feedbacks
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -40,6 +27,19 @@ function MemberComplaintsFeedbacks() {
       setFeedbacks(response.data);
     } catch (error) {
       console.error("Error fetching feedbacks:", error);
+    }
+  };
+
+  const fetchComplaints = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/my-complaints", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setComplaints(response.data);
+    } catch (error) {
+      console.error("Error fetching complaints:", error);
     }
   };
 
@@ -63,9 +63,28 @@ function MemberComplaintsFeedbacks() {
       setTitle("");
       setDescription("");
       // Fetch updated complaints to display the new one
+      toast.success("Complaint added successfully.");
       fetchComplaints();
     } catch (error) {
       console.error("Error adding complaint:", error);
+    }
+  };
+
+  const handleDeleteComplaints = async (complaintId) => {
+    try {
+      await axios.delete(
+        `http://localhost:8080/delete-complaint/${complaintId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Complaint Deleted Successfully");
+      fetchComplaints(); // Refresh feedback list
+    } catch (error) {
+      toast.error("Error Deleting complaint");
+      console.error("Error deleting complaint:", error);
     }
   };
 
@@ -94,7 +113,7 @@ function MemberComplaintsFeedbacks() {
     }
   };
 
-  const handleDelete = async (feedbackId) => {
+  const handleDeleteFeedback = async (feedbackId) => {
     try {
       await axios.delete(
         `http://localhost:8080/delete-feedback/${feedbackId}`,
@@ -105,10 +124,10 @@ function MemberComplaintsFeedbacks() {
         }
       );
       toast.success("Feedback Deleted Successfully");
-      fetchFeedbacks(); // Refresh event list
+      fetchFeedbacks(); // Refresh feedback list
     } catch (error) {
       toast.error("Error Deleting feedback");
-      console.error("Error deleting feedback :", error);
+      console.error("Error deleting feedback:", error);
     }
   };
 
@@ -183,9 +202,12 @@ function MemberComplaintsFeedbacks() {
                   <p className="card-text fw-bold fs-5">
                     {complaint.description}
                   </p>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    Member: {complaint.memberName}
-                  </h6>
+                  <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDeleteComplaints(complaint.id)}
+                    >
+                      Delete
+                    </button>
                 </div>
               </div>
             </div>
@@ -228,7 +250,7 @@ function MemberComplaintsFeedbacks() {
                     </p>
                     <button
                       className="btn btn-danger btn-sm"
-                      onClick={() => handleDelete(feedback.id)}
+                      onClick={() => handleDeleteFeedback(feedback.id)}
                     >
                       Delete
                     </button>
