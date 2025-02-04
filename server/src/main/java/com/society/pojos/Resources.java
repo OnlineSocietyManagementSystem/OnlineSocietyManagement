@@ -18,10 +18,8 @@ public class Resources extends BaseEntity{
     @Column(length=50)
     private String description;
     
-    @Column(length=50)
-    private String name;
-    
-    private boolean availability;
+    @Enumerated(EnumType.STRING)
+    private availabilityStatus status;
     
     private int capacity;
     
@@ -30,14 +28,7 @@ public class Resources extends BaseEntity{
     @Column(name="open_hours")
     private LocalTime openHours;
     
-    @Column(length=255)
-    private String amenities;
-    
     @ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "society_id",nullable = false)
+    @JoinColumn(name = "society_id")
     private Society society;
 }

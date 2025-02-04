@@ -2,10 +2,14 @@ package com.society.pojos;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,6 +44,12 @@ public class Society extends BaseEntity{
 		
 		@Column(name="flat_count")
 		private int flatCount;
+		
+		
+//		@OneToMany(mappedBy="society",cascade=CascadeType.ALL,orphanRemoval=true)
+//		private List<User> users=new ArrayList<>();
+		
+		
 		
 		
 }

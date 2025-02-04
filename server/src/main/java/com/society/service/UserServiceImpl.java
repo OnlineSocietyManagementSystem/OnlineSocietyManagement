@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.society.custom_exception.ApiException;
+import com.society.daos.SocietyDao;
 import com.society.daos.UserDao;
 import com.society.dtos.ApiResponse;
 import com.society.dtos.ProfileDto;
 import com.society.dtos.UserRegisterDto;
+import com.society.pojos.Society;
 import com.society.pojos.User;
 
 @Service
@@ -21,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private SocietyDao societyDao;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -32,9 +37,11 @@ public class UserServiceImpl implements UserService {
 	public ApiResponse registerMemeber(UserRegisterDto dto) {
 		if(userDao.existsByEmail(dto.getEmail()))
 			throw new ApiException("User email already exists!!!");
-		
+	   // Society societyId = societyDao.findBySocietyId(1L);
 		User memberEntity = modelMapper.map(dto, User.class);
 		memberEntity.setPassword(passwordEncoder.encode(memberEntity.getPassword()));
+		//memberEntity.setSociety(societyId);
+		
 		User savedMember= userDao.save(memberEntity);
 		return new ApiResponse(dto.getRole()+" "+"registered with ID " + savedMember.getId());
 		
@@ -44,6 +51,8 @@ public class UserServiceImpl implements UserService {
 	public ApiResponse updateProfile(ProfileDto dto,String email) 
 	{
 	        Optional<User> optionalUser = userDao.findByEmail(email);
+	        
+	        Society society = societyDao.findById(dto.getSocietyId()).orElseThrow(() -> new ApiException("No society with given id"));
 	        
 	        if (optionalUser.isEmpty()) {
 	            return new ApiResponse("User not found");
@@ -58,6 +67,7 @@ public class UserServiceImpl implements UserService {
 	        user.setAddhar(dto.getAddhar());
 	        user.setPhone(dto.getPhone());
 	        user.setFamilyCount(dto.getFamilyCount());
+	        user.setSociety(society);
 	        userDao.save(user); // Update user in database
 	        return new ApiResponse("Profile updated successfully");
 	    }
