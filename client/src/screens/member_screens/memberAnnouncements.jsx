@@ -85,7 +85,8 @@ function MemberAnnouncements() {
                   </div>
                   <div className="card-footer text-muted">
                     <small>
-                      <span className="fw-bold">Date:</span> {announcement.date}
+                      <span className="fw-bold">Date:</span> {announcement.createdOn}
+                      
                     </small>
                   </div>
                 </div>

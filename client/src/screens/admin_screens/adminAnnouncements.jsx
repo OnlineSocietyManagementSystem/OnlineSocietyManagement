@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../../components/sidebar";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 function AdminAnnouncements() {
   const [announcements, setAnnouncements] = useState([]);
@@ -52,12 +52,30 @@ function AdminAnnouncements() {
     }
   };
 
+  const handleDelete = async (noticeId) => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(
+        `http://localhost:8080/delete-notice/${noticeId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("notice Deleted Successfully");
+      fetchAnnouncements(); 
+    } catch (error) {
+      toast.error("Error Deleting notice");
+      console.error("Error deleting notice :", error);
+    }
+  };
+
   return (
     <div className="d-flex">
       <Sidebar />
 
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
-        
         {/* Add Navbar at the top using Bootstrap classes */}
         <nav
           className="navbar navbar-expand-lg navbar-light mb-4"
@@ -92,26 +110,28 @@ function AdminAnnouncements() {
             <form onSubmit={handleFormSubmit}>
               <div className="mb-3">
                 <label className="form-label">Title</label>
-                <input 
-                  type="text" 
-                  className="form-control" 
-                  name="title" 
-                  value={newAnnouncement.title} 
-                  onChange={handleInputChange} 
-                  required 
+                <input
+                  type="text"
+                  className="form-control"
+                  name="title"
+                  value={newAnnouncement.title}
+                  onChange={handleInputChange}
+                  required
                 />
               </div>
               <div className="mb-3">
                 <label className="form-label">Description</label>
-                <textarea 
-                  className="form-control" 
-                  name="description" 
-                  value={newAnnouncement.description} 
-                  onChange={handleInputChange} 
-                  required 
+                <textarea
+                  className="form-control"
+                  name="description"
+                  value={newAnnouncement.description}
+                  onChange={handleInputChange}
+                  required
                 ></textarea>
               </div>
-              <button type="submit" className="btn btn-primary">Add Announcement</button>
+              <button type="submit" className="btn btn-primary">
+                Add Announcement
+              </button>
             </form>
           </div>
         </div>
@@ -148,9 +168,17 @@ function AdminAnnouncements() {
                     </p>
                   </div>
                   <div className="card-footer text-muted">
-                    <small>
-                      <span className="fw-bold">Date:</span> {announcement.date}
-                    </small>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <p className="mb-0 fw-bold">
+                        Date: {announcement.createdOn}
+                      </p>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => handleDelete(announcement.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
