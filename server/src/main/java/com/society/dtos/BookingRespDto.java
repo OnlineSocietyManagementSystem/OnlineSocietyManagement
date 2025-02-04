@@ -1,6 +1,9 @@
 package com.society.dtos;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+
+import com.society.pojos.BookingStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,9 +17,17 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BookingRespDto extends BaseDto {
 
-	
-	private LocalDate bookingDate;
-	private String resourceType;
-	private String purpose;
-	private Long userId;
+	    private BookingStatus status;
+	    
+	    private LocalDate bookingDate;
+	    
+	    private LocalTime startTime;
+	    
+	    private LocalTime endTime;
+	    
+	    private String purpose;
+	    
+	    private String comments;
+	    
+	    private Long resourceId;
 }

@@ -15,9 +15,9 @@ import com.society.daos.UserDao;
 import com.society.dtos.ApiResponse;
 import com.society.dtos.BookingDto;
 import com.society.dtos.BookingRespDto;
-import com.society.dtos.EventResponseDto;
+
 import com.society.pojos.Bookings;
-import com.society.pojos.Events;
+
 import com.society.pojos.User;
 
 import jakarta.validation.Valid;
@@ -57,7 +57,7 @@ public class BookingServiceImpl implements BookingService {
 
 
 	@Override
-	public List<BookingRespDto> getAllBookings(String email) {
+	public List<BookingRespDto> getAllBookings() {
 		return bookingDao.findAll()
 				.stream()
 				.map(booking -> 

@@ -17,28 +17,30 @@ public class Bookings extends BaseEntity {
     @Column(length=15)
     private BookingStatus status;
     
-    @Column(nullable=false)
+    @Column()
     private LocalDate bookingDate;
     
-    @Column(nullable=false)
+    @Column(name="start_time")
     private LocalTime startTime;
     
-    @Column(nullable=false)
+    @Column(name="end_time")
     private LocalTime endTime;
     
     @Column(length=50)
     private String purpose;
-
-    @ManyToOne
-    @JoinColumn(name = "resource_id", nullable = false)
-    private Resources resource;
-    
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
     
     @Column(length=255)
     private String comments; // Optional field for additional notes
+
+    @ManyToOne
+    @JoinColumn(name = "resource_id")
+    private Resources resource;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    
+    
 
 }
 
