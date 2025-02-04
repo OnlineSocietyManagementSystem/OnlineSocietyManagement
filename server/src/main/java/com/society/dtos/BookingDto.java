@@ -14,16 +14,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingDto {
-
-	private LocalDate bookingDate;
-
-	private LocalTime startTime;
-
-	private LocalTime endTime;
-
-	private String purpose;
-
-	private Long resourceId;
 	
-	private String comments;
+	    private LocalDate bookingDate;
+	    
+	    private LocalTime startTime;
+	    
+	    private LocalTime endTime;
+	    
+	    private String purpose;
+	    
+	    private String comments;
+	    
+	    private Long resourceId;
 }

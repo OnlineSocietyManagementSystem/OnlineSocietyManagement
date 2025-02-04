@@ -1,7 +1,16 @@
 package com.society.dtos;
 
-import jakarta.persistence.Column;
+
 import lombok.AllArgsConstructor;
+
+import com.society.pojos.Society;
+import com.society.pojos.UserRole;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.*;
 
 @Getter
@@ -10,11 +19,28 @@ import lombok.*;
 @AllArgsConstructor
 public class ProfileDto extends BaseDto {
 	
-    private String building;	
+	private String firstName;
+	
+	private String lastName;
+	
+	private String email;
+
+
+	private String building;
+	
 	private int flatNo;
+	
 	private int floor;
-    private String  addhar;
+	
+	UserRole role;
+	
+	private String  aadhar;
+
 	private String phone;
+
 	private int familyCount;
+
+	
+
 
 }

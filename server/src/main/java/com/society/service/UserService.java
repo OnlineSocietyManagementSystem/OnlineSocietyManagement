@@ -10,4 +10,6 @@ public interface UserService {
 
 	ApiResponse updateProfile(ProfileDto dto,String email);
 
+	ProfileDto getProfile(String email);
+
 }
