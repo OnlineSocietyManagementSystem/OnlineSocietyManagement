@@ -34,12 +34,14 @@ public class ProfileDto extends BaseDto {
 	
 	UserRole role;
 	
-	private String  addhar;
+	private String  aadhar;
 
 	private String phone;
 
 	private int familyCount;
 	private Long societyId;
+
+	
 
 
 }

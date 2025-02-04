@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 	        user.setBuilding(dto.getBuilding());
 	        user.setFlatNo(dto.getFlatNo());
 	        user.setFloor(dto.getFloor());
-	        user.setAddhar(dto.getAddhar());
+	        user.setAadhar(dto.getAadhar());
 	        user.setPhone(dto.getPhone());
 	        user.setFamilyCount(dto.getFamilyCount());
 	        user.setSociety(society);

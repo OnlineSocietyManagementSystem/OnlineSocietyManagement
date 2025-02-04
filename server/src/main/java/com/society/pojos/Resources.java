@@ -29,6 +29,10 @@ public class Resources extends BaseEntity{
     private LocalTime openHours;
     
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    
+    @ManyToOne
     @JoinColumn(name = "society_id")
     private Society society;
 }
