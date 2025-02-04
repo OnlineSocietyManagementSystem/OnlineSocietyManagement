@@ -15,14 +15,8 @@ import lombok.ToString;
 @ToString
 public class NoticeDto extends BaseDto{
 		
-	
 		private String title;
 		
 		private String description;
-		
-		private LocalDate date_issued;
-		
-		private Long userId;
-		
 		
 }

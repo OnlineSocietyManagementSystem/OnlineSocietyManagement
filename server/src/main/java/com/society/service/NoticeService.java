@@ -16,6 +16,6 @@ public interface NoticeService {
 
 	List<NoticeRespDto> getAllNotices();
 	
-	ApiResponse deleteNotice(Long id);
+	ApiResponse deleteNotice(Long id, String email);
 
 }
