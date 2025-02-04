@@ -2,20 +2,20 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../../components/sidebar";
 
-function MemberAnnouncements() {
-  const [announcements, setAnnouncements] = useState([]);
+function MemberNotices() {
+  const [notices, setNotices] = useState([]);
 
-  // Fetch announcements from the API
+  // Fetch notices from the API
   useEffect(() => {
-    fetchAnnouncements();
+    fetchNotices();
   }, []);
 
-  const fetchAnnouncements = async () => {
+  const fetchNotices = async () => {
     try {
       const response = await axios.get("http://localhost:8080/all-notices");
-      setAnnouncements(response.data);
+      setNotices(response.data);
     } catch (error) {
-      console.error("Error fetching announcements:", error);
+      console.error("Error fetching notices:", error);
     }
   };
 
@@ -30,7 +30,7 @@ function MemberAnnouncements() {
           style={{ backgroundColor: "#e3d5f5" }}
         >
           <a className="navbar-brand fw-bold fs-3 px-4" href="#">
-            Announcements
+            Notices
           </a>
           <button
             className="navbar-toggler"
@@ -49,13 +49,13 @@ function MemberAnnouncements() {
           className="mb-4 text-dark"
           style={{ fontWeight: "bold", color: "#23044a" }}
         >
-          Announcements
+          Notices
         </h2>
 
-        {announcements.length > 0 ? (
+        {notices.length > 0 ? (
           <div className="row row-cols-1 row-cols-md-2 g-4">
-            {announcements.map((announcement) => (
-              <div key={announcement.id} className="col">
+            {notices.map((notice) => (
+              <div key={notice.id} className="col">
                 <div className="card border-0 shadow">
                   <div
                     className="card-header"
@@ -66,12 +66,12 @@ function MemberAnnouncements() {
                     }}
                   >
                     <div className="d-flex justify-content-between">
-                      <span>{announcement.title}</span>
+                      <span>{notice.title}</span>
                       <span
                         className="badge"
                         style={{ backgroundColor: "#23044a", color: "#ffffff" }}
                       >
-                        {announcement.date}
+                        {notice.date}
                       </span>
                     </div>
                   </div>
@@ -80,13 +80,12 @@ function MemberAnnouncements() {
                     style={{ backgroundColor: "#f6edf9" }}
                   >
                     <p className="card-text text-dark">
-                      {announcement.description}
+                      {notice.description}
                     </p>
                   </div>
                   <div className="card-footer text-muted">
                     <small>
-                      <span className="fw-bold">Date:</span> {announcement.createdOn}
-                      
+                      <span className="fw-bold">Date:</span> {notice.createdOn}
                     </small>
                   </div>
                 </div>
@@ -95,7 +94,7 @@ function MemberAnnouncements() {
           </div>
         ) : (
           <div className="alert alert-info text-center" role="alert">
-            No announcements available.
+            No notices available.
           </div>
         )}
       </div>
@@ -103,4 +102,4 @@ function MemberAnnouncements() {
   );
 }
 
-export default MemberAnnouncements;
+export default MemberNotices;

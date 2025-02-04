@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         // Endpoints accessible only to members
                         .requestMatchers("/member/dashboard", "/member/details/**", "/addComplaint","/my-complaints",
-                                "/add-feedback", "/delete-feedback","/update-profile","/get-unpaidpayemnt","/make-payment","/my-payments",  "/add-booking")
+                                "/add-feedback", "/delete-feedback","/update-profile","/get-unpaidpayment","/make-payment","/my-payments",  "/add-booking")
                         .hasRole("MEMBER")
                         .requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**", "/delete-notice",
 								"/add-society", "delete-society", "/all-bookings", "/add-resource", "/delete-resource","/add-payment").hasRole("ADMIN")

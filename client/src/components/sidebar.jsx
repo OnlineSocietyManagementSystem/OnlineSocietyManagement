@@ -67,7 +67,7 @@ function Sidebar() {
                       isActive ? "nav-link active-link" : "nav-link"
                     }
                   >
-                    Announcements
+                    Notices
                   </NavLink>
                 </li>
                 <li className="nav-item">
@@ -130,7 +130,7 @@ function Sidebar() {
                       isActive ? "nav-link active-link" : "nav-link"
                     }
                   >
-                    Announcements
+                    Notices
                   </NavLink>
                 </li>
                 <li className="nav-item">

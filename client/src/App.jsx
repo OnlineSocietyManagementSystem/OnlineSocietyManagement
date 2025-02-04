@@ -9,7 +9,6 @@ import Register from './screens/auth_screens/Register';
 import Login from './screens/auth_screens/Login';
 
 import MemberDashboard from './screens/member_screens/memberDashboard';
-import MemberAnnouncements from './screens/member_screens/memberAnnouncements';
 import MemberMaintenance from './screens/member_screens/memberMaintenance';
 import MemberEventManagement from './screens/member_screens/memberEventManagement';
 import MemberComplaintsFeedbacks from './screens/member_screens/memberComplaintsFeedbacks';
@@ -17,12 +16,13 @@ import MemberFacilityBooking from './screens/member_screens/memberFacilityBookin
 import MemberProfile from './screens/member_screens/memberProfile';
 
 import AdminDashboard from './screens/admin_screens/adminDashboard';
-import AdminAnnouncements from './screens/admin_screens/adminAnnouncements';
 import AdminMaintenance from './screens/admin_screens/adminMaintenance';
 import AdminEventManagement from './screens/admin_screens/adminEventManagement';
 import AdminComplaintsFeedbacks from './screens/admin_screens/adminComplaintsFeedbacks';
 import AdminFacilityBooking from './screens/admin_screens/adminFacilityBooking';
 import AdminProfile from './screens/admin_screens/adminProfile';
+import AdminNotices from './screens/admin_screens/adminNotices';
+import MemberNotices from './screens/member_screens/memberNotices';
 
 
 
@@ -36,7 +36,7 @@ function App() {
         <Route path='/signin' element={<Login/>} />
 
         <Route path='/member-dashboard' element={<MemberDashboard/>} />
-        <Route path='/member-announcements' element={<MemberAnnouncements/>} />
+        <Route path='/member-announcements' element={<MemberNotices/>} />
         <Route path='/member-maintenance' element={<MemberMaintenance/>} />
         <Route path='/member-event-management' element={<MemberEventManagement/>} />
         <Route path='/member-complaints-feedbacks' element={<MemberComplaintsFeedbacks/>} />
@@ -44,7 +44,7 @@ function App() {
         <Route path='/member-profile' element={<MemberProfile/>} />
 
         <Route path='/admin-dashboard' element={<AdminDashboard/>} />
-        <Route path='/admin-announcements' element={<AdminAnnouncements/>} />
+        <Route path='/admin-announcements' element={<AdminNotices/>} />
         <Route path='/admin-maintenance' element={<AdminMaintenance/>} />
         <Route path='/admin-event-management' element={<AdminEventManagement/>} />
         <Route path='/admin-complaints-feedbacks' element={<AdminComplaintsFeedbacks/>} />
