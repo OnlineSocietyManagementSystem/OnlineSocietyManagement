@@ -12,6 +12,7 @@ public interface ComplaintService {
 	ApiResponse addComplaint(ComplaintDto dto,String email);
 	List<ComplaintResDto> getAllComplaints();
 	List<ComplaintByIdDto> getComplaintById(String email);
+	ApiResponse deleteComplaint(Long complaintId, String email);
 
 
 }

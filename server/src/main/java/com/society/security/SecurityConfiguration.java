@@ -41,11 +41,11 @@ public class SecurityConfiguration {
 						.permitAll().requestMatchers(HttpMethod.OPTIONS).permitAll()
 						// Endpoints accessible only to members
 						.requestMatchers("/member/dashboard", "/member/details/**", "/payment", "/addComplaint",
-								"/my-complaints", "/add-feedback", "/delete-feedback", "add-booking")
-						.hasRole("MEMBER")
+								"/my-complaints", "/add-feedback", "/delete-feedback", "/add-booking", "/delete-complaint")
+						.hasAuthority("ROLE_MEMBER")
 						.requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**", "/delete-notice",
 								"/add-society", "delete-society", "/all-bookings", "/add-resource", "/delete-resource")
-						.hasRole("ADMIN").anyRequest().authenticated())
+						.hasAuthority("ROLE_ADMIN").anyRequest().authenticated())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(customJWTAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

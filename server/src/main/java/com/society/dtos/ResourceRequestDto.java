@@ -1,8 +1,5 @@
 package com.society.dtos;
 
-import java.time.LocalTime;
-
-import com.society.pojos.Society;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,13 +14,9 @@ public class ResourceRequestDto extends BaseDto {
 
     private String name;
     
-    private boolean availability;
-    
     private int capacity;
        
     private double bookingFee;
-
-    private LocalTime openHours;
 
     private String amenities;
 
