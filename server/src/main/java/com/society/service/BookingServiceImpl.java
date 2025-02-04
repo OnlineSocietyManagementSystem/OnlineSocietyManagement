@@ -21,47 +21,42 @@ import com.society.pojos.Events;
 import com.society.pojos.User;
 
 import jakarta.validation.Valid;
+
 @Service
 @Transactional
 public class BookingServiceImpl implements BookingService {
-	
+
 	@Autowired
 	private BookingDao bookingDao;
-	
+
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private ModelMapper mapper;
 
-
 	@Override
 	public ApiResponse addBooking(@Valid BookingDto bookingDto, String email) {
-		 Optional<User> optionalUser = userDao.findByEmail(email);
+		Optional<User> optionalUser = userDao.findByEmail(email);
 
-		 if (!optionalUser.isPresent()) {
-		        return new ApiResponse("Member not found!");
-		    }
+		if (!optionalUser.isPresent()) {
+			return new ApiResponse("Member not found!");
+		}
 
-		   User user= optionalUser.get();
-		   
-		   Bookings booking =mapper.map(bookingDto, Bookings.class);
-		   
-		   booking.setUser(user);
-		
+		User user = optionalUser.get();
 
-		
+		Bookings booking = mapper.map(bookingDto, Bookings.class);
+
+		booking.setUser(user);
+
 		bookingDao.save(booking);
+		
 		return new ApiResponse("Booking request send successfully");
 	}
 
-
 	@Override
 	public List<BookingRespDto> getAllBookings(String email) {
-		return bookingDao.findAll()
-				.stream()
-				.map(booking -> 
-				mapper.map(booking, BookingRespDto.class))
+		return bookingDao.findAll().stream().map(booking -> mapper.map(booking, BookingRespDto.class))
 				.collect(Collectors.toList());
 	}
 
