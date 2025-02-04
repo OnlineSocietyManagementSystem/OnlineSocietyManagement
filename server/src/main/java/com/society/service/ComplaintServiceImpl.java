@@ -22,65 +22,73 @@ import com.society.pojos.User;
 @Service
 @Transactional
 public class ComplaintServiceImpl implements ComplaintService {
-	  @Autowired
-	    private ComplaintDao complaintDao;
+	@Autowired
+	private ComplaintDao complaintDao;
 
-	    @Autowired
-	    private UserDao userDao;
+	@Autowired
+	private UserDao userDao;
 
-	    @Autowired
-	    private ModelMapper modelMapper; // Inject ModelMapper
-	    
-	    //------------------add complaint API-------------------------------------
+	@Autowired
+	private ModelMapper modelMapper; // Inject ModelMapper
 
-		@Override
-		public ApiResponse addComplaint(ComplaintDto dto, String email) {
-			 Optional<User> optionalUser = userDao.findByEmail(email);
-		        if (!optionalUser.isPresent()) {
-		            return new ApiResponse("User not found!");
-		        }
+	// ------------------add complaint API-------------------------------------
 
-		       User user = optionalUser.get();
-
-		        // Convert DTO to Entity using ModelMapper
-		        Complaints complaint= modelMapper.map(dto, Complaints.class);
-		        
-		        // Manually set properties that are not in DTO
-		      
-		        complaint.setStatus(ComplaintStatus.PENDING); // Automatically set status
-		        complaint.setUser(user); // Set the user entity (foreign key)
-
-		        // Save to the database
-		        complaintDao.save(complaint);
-
-		        return new ApiResponse("Complaint issued Successfully: " + email);
-		    }	
-	
-
-		
-
-		//-----------------------get all complaints API--------------------------------
-		
-		@Override
-		public List<ComplaintResDto> getAllComplaints() {
-		    List<Complaints> complaints = complaintDao.findAll();
-		    return complaints.stream().map(ComplaintResDto::new).collect(Collectors.toList());
-		}
-		//-------------------get complaints by ID------------------------
-
-
-		@Override
-		public List<ComplaintByIdDto> getComplaintById(String email) {
-			 Optional<User> optionalUser = userDao.findByEmail(email);
-		       User user = optionalUser.get();
-		       Long userId=user.getId();
-			List<Complaints> complaints = complaintDao.findByUserId(userId);
-		    return complaints.stream().map(ComplaintByIdDto::new).collect(Collectors.toList());
-		}
+	@Override
+	public ApiResponse addComplaint(ComplaintDto dto, String email) {
+		Optional<User> optionalUser = userDao.findByEmail(email);
+		if (!optionalUser.isPresent()) {
+			return new ApiResponse("User not found!");
 		}
 
+		User user = optionalUser.get();
 
+		// Convert DTO to Entity using ModelMapper
+		Complaints complaint = modelMapper.map(dto, Complaints.class);
 
+		// Manually set properties that are not in DTO
+
+		complaint.setStatus(ComplaintStatus.PENDING); // Automatically set status
+		complaint.setUser(user); // Set the user entity (foreign key)
+
+		// Save to the database
+		complaintDao.save(complaint);
+
+		return new ApiResponse("Complaint issued Successfully: " + email);
+	}
+
+	// -----------------------get all complaints API--------------------------------
+
+	@Override
+	public List<ComplaintResDto> getAllComplaints() {
+		List<Complaints> complaints = complaintDao.findAll();
+		return complaints.stream().map(ComplaintResDto::new).collect(Collectors.toList());
+	}
+	// -------------------get complaints by ID------------------------
+
+	@Override
+	public List<ComplaintByIdDto> getComplaintById(String email) {
+		Optional<User> optionalUser = userDao.findByEmail(email);
+		User user = optionalUser.get();
+		Long userId = user.getId();
+		List<Complaints> complaints = complaintDao.findByUserId(userId);
+		return complaints.stream().map(ComplaintByIdDto::new).collect(Collectors.toList());
+	}
+
+	@Override
+	public ApiResponse deleteComplaint(Long complaintId, String email) {
+		Optional<User> optionalUser = userDao.findByEmail(email);
 		
+		if(!optionalUser.isPresent()) {
+			return new ApiResponse("Unauthorized access !");
+		}
 		
+		Optional<Complaints> optionalComplaint = complaintDao.findById(complaintId);
 		
+		if(!optionalComplaint.isPresent()) {
+			return new ApiResponse("Complaint not found");
+		}
+		
+		complaintDao.delete(optionalComplaint.get());
+		return new ApiResponse("Complaint deleted successfully");
+	}
+}

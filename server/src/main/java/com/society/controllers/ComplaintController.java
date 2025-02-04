@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,6 +63,17 @@ public class ComplaintController {
           catch (Exception e) {
               return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
           }
+    }
+    
+    @DeleteMapping("/delete-complaint/{complaintId}")
+    public ResponseEntity<?> deleteComplaint(@PathVariable Long complaintId, Authentication authentication) {
+    	try {
+			String email = authentication.getName();
+			ApiResponse response = complaintService.deleteComplaint(complaintId, email);
+			return ResponseEntity.ok(response);
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
+		}
     }
 }
 

@@ -14,7 +14,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -37,12 +36,12 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/auth/register", "/auth/signin", "/all-complaints",
-                                "/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks","/all-notices", "/get-society","/my-profile","/update-profile")
+                                "/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks","/all-notices", "/get-society","/my-profile","/update-profile", "/all-resources")
                         .permitAll()
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         // Endpoints accessible only to members
                         .requestMatchers("/member/dashboard", "/member/details/**", "/addComplaint","/my-complaints",
-                                "/add-feedback", "/delete-feedback","/update-profile","/get-unpaidpayment","/make-payment","/my-payments",  "/add-booking")
+                                "/add-feedback", "/delete-feedback","/update-profile","/get-unpaidpayment","/make-payment","/my-payments",  "/add-booking", "/delete-complaint")
                         .hasRole("MEMBER")
                         .requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**", "/delete-notice",
 								"/add-society", "delete-society", "/all-bookings", "/add-resource", "/delete-resource","/add-payment").hasRole("ADMIN")
