@@ -31,8 +31,6 @@ public class Notices extends BaseEntity {
 	@Column(length=100)
 	private String description;
 	
-	private LocalDate date_issued;
-	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;

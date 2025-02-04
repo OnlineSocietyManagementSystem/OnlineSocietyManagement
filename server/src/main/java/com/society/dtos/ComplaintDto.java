@@ -21,6 +21,7 @@ public class ComplaintDto extends BaseDto{
 	private ComplaintStatus status;
     
 	private Long userId;
+	
 
 	public ComplaintDto(String title, String description, ComplaintStatus status, Long userId) {
 		super();
