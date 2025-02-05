@@ -13,16 +13,21 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ComplaintByIdDto {
+	private Long id;
+	private LocalDate createdOn;
+	private LocalDateTime updatedOn;
 	private String title;
-    private String description;
-    private ComplaintStatus status;
-    private LocalDateTime creationDate;
-    
-    public ComplaintByIdDto(Complaints complaint) {
-    
-        this.title = complaint.getTitle();
-        this.description = complaint.getDescription();
-        this.status = complaint.getStatus();
-        this.creationDate = complaint.getUpdatedOn();    
-}
+	private String description;
+	private ComplaintStatus status;
+	private LocalDateTime creationDate;
+
+	public ComplaintByIdDto(Complaints complaint) {
+	    this.id = complaint.getId();  // Set ID
+	    this.createdOn = complaint.getCreatedOn();  // Set createdOn
+	    this.updatedOn = complaint.getUpdatedOn();  // Set updatedOn
+	    this.title = complaint.getTitle();
+	    this.description = complaint.getDescription();
+	    this.status = complaint.getStatus();
+	    this.creationDate = complaint.getUpdatedOn();    
+	}
 }

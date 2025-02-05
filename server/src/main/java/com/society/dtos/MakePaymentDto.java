@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MakePaymentDto extends PaymentDto {
-	private LocalDate paymentDto;
+	private LocalDate paymentDate;
 	private Long userId;
 
 }

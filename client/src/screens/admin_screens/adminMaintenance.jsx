@@ -1,30 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import Sidebar from "../../components/sidebar";
+import { toast } from "react-toastify";
 
 function AdminMaintenance() {
-  // Sample static data
-  const maintenanceData = [
-    { name: "John Doe", flatNo: "101", mobileNo: "1234567890", status: "Paid" },
-    {
-      name: "Jane Smith",
-      flatNo: "102",
-      mobileNo: "0987654321",
-      status: "Unpaid",
-    },
-    {
-      name: "Alice Johnson",
-      flatNo: "103",
-      mobileNo: "1122334455",
-      status: "Paid",
-    },
-    {
-      name: "Bob Brown",
-      flatNo: "104",
-      mobileNo: "5566778899",
-      status: "Unpaid",
-    },
-    // Add more rows as needed
-  ];
+  const [amount, setAmount] = useState("");
+  const [paymentType, setPaymentType] = useState("");
+  const [dueDate, setDueDate] = useState("");
+
+  // Handle form submission to add a new payment
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    const newPayment = { amount, paymentType, dueDate };
+    try {
+      await axios.post("http://localhost:8080/add-payment", newPayment, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setAmount("");
+      setPaymentType("");
+      setDueDate("");
+      toast.success("Payment added successfully.");
+      console.log("Payment added successfully.");
+    } catch (error) {
+      console.error("Error adding payment:", error);
+      toast.error("Error adding payment.");
+    }
+  };
 
   return (
     <div className="d-flex">
@@ -53,32 +57,51 @@ function AdminMaintenance() {
         </nav>
 
         <h2>Maintenance Payment Status</h2>
-        <div className="table-responsive">
-          <table className="table table-bordered">
-            <thead style={{ backgroundColor: "#e3d5f5" }}>
-              <tr>
-                <th scope="col">Member Name</th>
-                <th scope="col">Flat No</th>
-                <th scope="col">Mobile No</th>
-                <th scope="col">Payment Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {maintenanceData.map((data, index) => (
-                <tr
-                  key={index}
-                  className={
-                    data.status === "Paid" ? "table-success" : "table-danger"
-                  }
-                >
-                  <td>{data.name}</td>
-                  <td>{data.flatNo}</td>
-                  <td>{data.mobileNo}</td>
-                  <td>{data.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+
+        {/* Payment Form */}
+        <div className="card mb-4">
+          <div className="card-header">
+            <strong>Add New Payment</strong>
+          </div>
+          <div className="card-body">
+            <form onSubmit={handleFormSubmit}>
+              <div className="row">
+                <div className="col-md-4 mb-3">
+                  <label className="form-label">Amount</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="col-md-4 mb-3">
+                  <label className="form-label">Payment Type</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={paymentType}
+                    onChange={(e) => setPaymentType(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="col-md-4 mb-3">
+                  <label className="form-label">Due Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={dueDate}
+                    onChange={(e) => setDueDate(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <button type="submit" className="btn btn-primary">
+                Add Payment
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

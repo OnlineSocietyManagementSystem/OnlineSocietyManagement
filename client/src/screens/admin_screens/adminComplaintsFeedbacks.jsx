@@ -65,7 +65,7 @@ function AdminComplaintsFeedbacks() {
           </button>
         </nav>
 
-        <h2 className="mb-4">Complaints</h2>
+        <h2 className="mb-4 fw-bold">Complaints</h2>
         <div className="row">
           {complaints.map((complaint) => (
             <div className="col-md-6 mb-3" key={complaint.id}>

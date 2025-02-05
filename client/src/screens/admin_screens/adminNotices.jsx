@@ -3,51 +3,51 @@ import axios from "axios";
 import Sidebar from "../../components/sidebar";
 import { toast } from "react-toastify";
 
-function AdminAnnouncements() {
-  const [announcements, setAnnouncements] = useState([]);
-  const [newAnnouncement, setNewAnnouncement] = useState({
+function AdminNotices() {
+  const [notices, setNotices] = useState([]);
+  const [newNotice, setNewNotice] = useState({
     title: "",
     description: "",
   });
 
-  // Fetch announcements from the API
+  // Fetch notices from the API
   useEffect(() => {
-    fetchAnnouncements();
+    fetchNotices();
   }, []);
 
-  const fetchAnnouncements = async () => {
+  const fetchNotices = async () => {
     try {
       const response = await axios.get("http://localhost:8080/all-notices");
-      setAnnouncements(response.data);
+      setNotices(response.data);
     } catch (error) {
-      console.error("Error fetching announcements:", error);
+      console.error("Error fetching notices:", error);
     }
   };
 
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewAnnouncement({
-      ...newAnnouncement,
+    setNewNotice({
+      ...newNotice,
       [name]: value,
     });
   };
 
-  // Handle form submission to add a new announcement
+  // Handle form submission to add a new notice
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     try {
-      await axios.post("http://localhost:8080/add-notice", newAnnouncement, {
+      await axios.post("http://localhost:8080/add-notice", newNotice, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setNewAnnouncement({ title: "", description: "" });
-      fetchAnnouncements();
+      setNewNotice({ title: "", description: "" });
+      fetchNotices();
       toast.success("Notice added successfully.");
     } catch (error) {
-      console.error("Error adding announcement:", error);
+      console.error("Error adding notice:", error);
       toast.error("Error adding notice.");
     }
   };
@@ -63,11 +63,11 @@ function AdminAnnouncements() {
           },
         }
       );
-      toast.success("notice Deleted Successfully");
-      fetchAnnouncements(); 
+      toast.success("Notice deleted successfully.");
+      fetchNotices(); 
     } catch (error) {
-      toast.error("Error Deleting notice");
-      console.error("Error deleting notice :", error);
+      toast.error("Error deleting notice.");
+      console.error("Error deleting notice:", error);
     }
   };
 
@@ -82,7 +82,7 @@ function AdminAnnouncements() {
           style={{ backgroundColor: "#e3d5f5" }}
         >
           <a className="navbar-brand fw-bold fs-3 px-4" href="#">
-            Announcements
+            Notices
           </a>
           <button
             className="navbar-toggler"
@@ -97,14 +97,10 @@ function AdminAnnouncements() {
           </button>
         </nav>
 
-        {/* <h2 className="mb-4 text-dark" style={{ fontWeight: "bold", color: "#23044a" }}>
-          Announcements
-        </h2> */}
-
-        {/* Announcement Form */}
+        {/* Notice Form */}
         <div className="card mb-4">
           <div className="card-header">
-            <strong>Add New Announcement</strong>
+            <strong>Add New Notice</strong>
           </div>
           <div className="card-body">
             <form onSubmit={handleFormSubmit}>
@@ -114,7 +110,7 @@ function AdminAnnouncements() {
                   type="text"
                   className="form-control"
                   name="title"
-                  value={newAnnouncement.title}
+                  value={newNotice.title}
                   onChange={handleInputChange}
                   required
                 />
@@ -124,22 +120,22 @@ function AdminAnnouncements() {
                 <textarea
                   className="form-control"
                   name="description"
-                  value={newAnnouncement.description}
+                  value={newNotice.description}
                   onChange={handleInputChange}
                   required
                 ></textarea>
               </div>
               <button type="submit" className="btn btn-primary">
-                Add Announcement
+                Add Notice
               </button>
             </form>
           </div>
         </div>
 
-        {announcements.length > 0 ? (
+        {notices.length > 0 ? (
           <div className="row row-cols-1 row-cols-md-2 g-4">
-            {announcements.map((announcement) => (
-              <div key={announcement.id} className="col">
+            {notices.map((notice) => (
+              <div key={notice.id} className="col">
                 <div className="card border-0 shadow">
                   <div
                     className="card-header"
@@ -150,12 +146,12 @@ function AdminAnnouncements() {
                     }}
                   >
                     <div className="d-flex justify-content-between">
-                      <span>{announcement.title}</span>
+                      <span>{notice.title}</span>
                       <span
                         className="badge"
                         style={{ backgroundColor: "#23044a", color: "#ffffff" }}
                       >
-                        {announcement.date}
+                        {notice.date}
                       </span>
                     </div>
                   </div>
@@ -164,17 +160,17 @@ function AdminAnnouncements() {
                     style={{ backgroundColor: "#f6edf9" }}
                   >
                     <p className="card-text text-dark">
-                      {announcement.description}
+                      {notice.description}
                     </p>
                   </div>
                   <div className="card-footer text-muted">
                     <div className="d-flex justify-content-between align-items-center">
                       <p className="mb-0 fw-bold">
-                        Date: {announcement.createdOn}
+                        Date: {notice.createdOn}
                       </p>
                       <button
                         className="btn btn-danger btn-sm"
-                        onClick={() => handleDelete(announcement.id)}
+                        onClick={() => handleDelete(notice.id)}
                       >
                         Delete
                       </button>
@@ -186,7 +182,7 @@ function AdminAnnouncements() {
           </div>
         ) : (
           <div className="alert alert-info text-center" role="alert">
-            No announcements available.
+            No notices available.
           </div>
         )}
       </div>
@@ -194,4 +190,4 @@ function AdminAnnouncements() {
   );
 }
 
-export default AdminAnnouncements;
+export default AdminNotices;

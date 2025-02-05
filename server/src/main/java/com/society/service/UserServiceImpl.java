@@ -37,11 +37,8 @@ public class UserServiceImpl implements UserService {
 	public ApiResponse registerMemeber(UserRegisterDto dto) {
 		if(userDao.existsByEmail(dto.getEmail()))
 			throw new ApiException("User email already exists!!!");
-	   // Society societyId = societyDao.findBySocietyId(1L);
 		User memberEntity = modelMapper.map(dto, User.class);
-		memberEntity.setPassword(passwordEncoder.encode(memberEntity.getPassword()));
-		//memberEntity.setSociety(societyId);
-		
+		memberEntity.setPassword(passwordEncoder.encode(memberEntity.getPassword()));		
 		User savedMember= userDao.save(memberEntity);
 		return new ApiResponse(dto.getRole()+" "+"registered with ID " + savedMember.getId());
 		
