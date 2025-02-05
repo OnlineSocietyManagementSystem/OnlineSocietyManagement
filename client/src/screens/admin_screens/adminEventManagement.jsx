@@ -65,7 +65,7 @@ function AdminEventManagement() {
       setLocation("");
       setTime("");
       toast.success("Event Added Successfully");
-      // fetchEvents(); // Refresh event list
+      fetchEvents(); 
     } catch (error) {
       toast.error("Error Adding Event");
       console.error("Error adding event:", error);

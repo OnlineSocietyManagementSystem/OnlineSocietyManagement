@@ -64,22 +64,28 @@ function MemberProfile() {
   const handleUpdateClick = async () => {
     if (isEditing) {
       try {
-        const token = localStorage.getItem("token"); // Assuming the token is stored after login
-        await axios.put("http://localhost:8080/update-profile", profileData, {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token not found in localStorage");
+        }
+        console.log("Token retrieved:", token);
+        console.log("Profile data to be sent:", profileData);
+        
+        const response = await axios.put("http://localhost:8080/update-profile", profileData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         toast.success("Profile updated successfully.");
-        console.log("Profile updated successfully.");
+        console.log("Profile updated successfully:", response.data);
       } catch (error) {
-        console.error("Error updating profile:", error);
+        console.error("Error updating profile:", error.response ? error.response.data : error.message);
         toast.error("Error updating profile.");
       }
     }
     setIsEditing(!isEditing);
   };
-
+  
   return (
     <div className="d-flex">
       <Sidebar />

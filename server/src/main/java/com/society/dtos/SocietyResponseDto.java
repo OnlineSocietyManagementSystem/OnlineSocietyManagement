@@ -11,7 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class SocietyResponseDto {
+public class SocietyResponseDto extends BaseDto {
 	
 		private String name;
 		
