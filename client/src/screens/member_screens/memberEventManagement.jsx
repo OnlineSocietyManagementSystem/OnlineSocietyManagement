@@ -46,19 +46,39 @@ function MemberEventManagement() {
 
         <h2 className="mb-4">Upcoming Events</h2>
         <div className="row">
-          {events.map((event, index) => (
-            <div className="col-md-6 mb-3" key={index}>
-              <div className="card" style={{ backgroundColor: '#f3edfa', borderColor: '#0f0f0f' }}>
-                <div className="card-body">
-                  <h5 className="card-title fw-bold">{event.title}</h5>
-                  <p className="card-text"><strong>Description:</strong> {event.description}</p>
-                  <p className="card-text"><strong>Location:</strong> {event.location}</p>
-                  <p className="card-text"><strong>Date:</strong> {new Date(event.date).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
-                  <p className="card-text"><strong>Time:</strong> {event.time}</p>
+          {Array.isArray(events) ? (
+            events.map((event, index) => (
+              <div className="col-md-6 mb-3" key={index}>
+                <div
+                  className="card"
+                  style={{ backgroundColor: "#f3edfa", borderColor: "#0f0f0f" }}
+                >
+                  <div className="card-body">
+                    <h5 className="card-title fw-bold">{event.title}</h5>
+                    <p className="card-text">
+                      <strong>Description:</strong> {event.description}
+                    </p>
+                    <p className="card-text">
+                      <strong>Location:</strong> {event.location}
+                    </p>
+                    <p className="card-text">
+                      <strong>Date:</strong>{" "}
+                      {new Date(event.date).toLocaleDateString("en-US", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </p>
+                    <p className="card-text">
+                      <strong>Time:</strong> {event.time}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div>No events available</div>
+          )}
         </div>
       </div>
     </div>
