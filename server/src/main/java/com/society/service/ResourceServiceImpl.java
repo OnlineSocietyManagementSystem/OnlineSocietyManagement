@@ -38,8 +38,8 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public ApiResponse addResource(ResourceRequestDto dto, String email) {
 		Optional<User> optionalUser = userDao.findByEmail(email);
-		Society society = societyDao.findById(dto.getSocietyId())
-				.orElseThrow(() -> new ResourceNotFoundException("no society present with given id"));
+//		Society society = societyDao.findById(dto.getSocietyId())
+//				.orElseThrow(() -> new ResourceNotFoundException("no society present with given id"));
 
 		if (!optionalUser.isPresent()) {
 			return new ApiResponse("Member not found!");
@@ -49,7 +49,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 		Resources resource = mapper.map(dto, Resources.class);
 		resource.setUser(user);
-		resource.setSociety(society);
+//		resource.setSociety(society);
 
 		resourceDao.save(resource);
 

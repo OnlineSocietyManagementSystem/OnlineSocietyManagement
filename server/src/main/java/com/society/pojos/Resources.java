@@ -29,7 +29,7 @@ public class Resources extends BaseEntity{
     @JoinColumn(name = "user_id")
     private User user;
     
-    @ManyToOne
-    @JoinColumn(name = "society_id")
-    private Society society;
+//    @ManyToOne
+//    @JoinColumn(name = "society_id")
+//    private Society society;
 }

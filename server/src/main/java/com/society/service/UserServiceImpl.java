@@ -24,8 +24,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
 	
-	@Autowired
-	private SocietyDao societyDao;
+//	@Autowired
+//	private SocietyDao societyDao;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 	{
 	        Optional<User> optionalUser = userDao.findByEmail(email);
 	        
-	        Society society = societyDao.findById(dto.getSocietyId()).orElseThrow(() -> new ApiException("No society with given id"));
+//	        Society society = societyDao.findById(dto.getSocietyId()).orElseThrow(() -> new ApiException("No society with given id"));
 	        
 	        if (optionalUser.isEmpty()) {
 	            return new ApiResponse("User not found");
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 	        user.setAadhar(dto.getAadhar());
 	        user.setPhone(dto.getPhone());
 	        user.setFamilyCount(dto.getFamilyCount());
-	        user.setSociety(society);
+//	        user.setSociety(society);
 	        userDao.save(user); // Update user in database
 	        return new ApiResponse("Profile updated successfully");
 	    }
@@ -81,7 +81,6 @@ public class UserServiceImpl implements UserService {
         
         // Convert User to ProfileDto using ModelMapper
         return modelMapper.map(user, ProfileDto.class);
-    }
-		
-	}
+    }		
+}
 

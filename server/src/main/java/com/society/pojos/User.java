@@ -45,9 +45,9 @@ public class User extends BaseEntity {
 	@Column(name="family_count")
 	private int familyCount;
 
-	@ManyToOne
-    @JoinColumn(name="society_id")
-    private Society society;
+//	@ManyToOne
+//    @JoinColumn(name="society_id")
+//    private Society society;
 
 	
 }
