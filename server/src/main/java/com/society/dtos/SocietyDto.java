@@ -27,8 +27,4 @@ public class SocietyDto {
 	
 	private int flatCount;
 	
-	private Long userId;
-	
-	
-
 }

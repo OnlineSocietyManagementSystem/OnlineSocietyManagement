@@ -3,14 +3,8 @@ package com.society.dtos;
 
 import lombok.AllArgsConstructor;
 
-import com.society.pojos.Society;
 import com.society.pojos.UserRole;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import lombok.*;
 
 @Getter

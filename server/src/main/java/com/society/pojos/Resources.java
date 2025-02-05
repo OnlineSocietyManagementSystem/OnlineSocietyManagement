@@ -19,15 +19,12 @@ public class Resources extends BaseEntity{
     private String description;
     
     @Enumerated(EnumType.STRING)
-    private availabilityStatus status;
+    private AvailabilityStatus status = AvailabilityStatus.AVAILABLE; 
     
     private int capacity;
     
     private double bookingFee;
-    
-    @Column(name="open_hours")
-    private LocalTime openHours;
-    
+      
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

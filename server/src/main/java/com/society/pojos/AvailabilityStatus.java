@@ -1,6 +1,6 @@
 package com.society.pojos;
 
-public enum availabilityStatus {
+public enum AvailabilityStatus {
 	AVAILABLE,UNAVAILABLE
 
 }

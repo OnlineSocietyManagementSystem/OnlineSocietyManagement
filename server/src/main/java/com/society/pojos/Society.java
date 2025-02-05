@@ -1,7 +1,5 @@
 package com.society.pojos;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,35 +19,28 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="society")
+@Table(name = "society")
+public class Society extends BaseEntity {
 
-public class Society extends BaseEntity{
-	
-	
-		@Column(length=25)
-		private String name;
-		
-		@Column(length=50)
-		private String address;
-		
-		@Column(length=10)
-		private String contact_no;
-		
-		@Column(name="building_count")
-		private int buildingCount;
-		
-		
-		@Column(name="floor_count")
-		private int floorCount;
-		
-		@Column(name="flat_count")
-		private int flatCount;
-		
-		
-//		@OneToMany(mappedBy="society",cascade=CascadeType.ALL,orphanRemoval=true)
-//		private List<User> users=new ArrayList<>();
-		
-		
-		
-		
+	@Column(length = 25)
+	private String name;
+
+	@Column(length = 50)
+	private String address;
+
+	@Column(length = 10)
+	private String contact_no;
+
+	@Column(name = "building_count")
+	private int buildingCount;
+
+	@Column(name = "floor_count")
+	private int floorCount;
+
+	@Column(name = "flat_count")
+	private int flatCount;
+
+	@OneToMany(mappedBy = "society", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<User> users = new ArrayList<>();
+
 }

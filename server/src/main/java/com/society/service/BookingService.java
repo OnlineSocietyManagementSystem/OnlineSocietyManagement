@@ -13,6 +13,10 @@ public interface BookingService {
 
 	ApiResponse addBooking(@Valid BookingDto bookingDto, String email);
 
-	List<BookingRespDto> getAllBookings();
+	ApiResponse confirmBooking(Long bookingId);
+
+	List<BookingRespDto> getBookingsByRole(String email);
+
+	ApiResponse cancelBooking(Long bookingId, String email);
 
 }

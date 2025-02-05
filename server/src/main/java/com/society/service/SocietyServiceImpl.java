@@ -48,7 +48,9 @@ public class SocietyServiceImpl implements SocietyService {
 		   
 		   Society society =mapper.map(societyDto, Society.class);
 		   
-//		   society.setUser(user);
+		   society.getUsers().add(user);
+		   
+		   user.setSociety(society);
 		   
 		   societyDao.save(society);
 			return new ApiResponse("Society added successfully");

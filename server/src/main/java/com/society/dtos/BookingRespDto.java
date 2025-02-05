@@ -29,5 +29,7 @@ public class BookingRespDto extends BaseDto {
 	    
 	    private String comments;
 	    
-	    private Long resourceId;
+	    private String resourceName;  
+	    
+	    private String userEmail;
 }
