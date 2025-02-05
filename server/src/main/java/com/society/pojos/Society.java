@@ -46,8 +46,8 @@ public class Society extends BaseEntity{
 		private int flatCount;
 		
 		
-//		@OneToMany(mappedBy="society",cascade=CascadeType.ALL,orphanRemoval=true)
-//		private List<User> users=new ArrayList<>();
+		@OneToMany(mappedBy="society",cascade=CascadeType.ALL,orphanRemoval=true)
+		private List<User> users=new ArrayList<>();
 		
 		
 		
