@@ -33,7 +33,7 @@ public class ProfileDto extends BaseDto {
 	private String phone;
 
 	private int familyCount;
-	private Long societyId;
+//	private Long societyId;
 
 	
 

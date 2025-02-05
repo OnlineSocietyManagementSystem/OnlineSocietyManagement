@@ -6,7 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ResourceRequestDto extends BaseDto {
+public class ResourceRequestDto extends BaseDto
+{
 
     private String resourceType;
 
@@ -20,5 +21,5 @@ public class ResourceRequestDto extends BaseDto {
 
     private String amenities;
 
-    private Long societyId;
+//    private Long societyId;
 }
