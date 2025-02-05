@@ -1,139 +1,140 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/sidebar";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function MemberFacilityBooking() {
-  const [selectedFacility, setSelectedFacility] = useState("");
-  const [bookerName, setBookerName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [resources, setResources] = useState([]);
+  const [bookedResources, setBookedResources] = useState([]);
+  const [selectedResource, setSelectedResource] = useState(null);
+  const [bookingDate, setBookingDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [purpose, setPurpose] = useState("");
+  const [comment, setComment] = useState("");
 
-  // Sample static data for available facilities
-  const availableFacilities = [
-    { name: 'Hall' },
-    { name: 'Swimming Pool' },
-    { name: 'Clubhouse' },
-    { name: 'Tennis Court' },
-    { name: 'Gym' }
-  ];
+  useEffect(() => {
+    fetchResources();
+    fetchBookedResources();
+  }, []);
 
-  const handleSubmit = (e) => {
+  const fetchResources = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get("http://localhost:8080/all-resources", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setResources(response.data);
+    } catch (error) {
+      console.error("Error fetching resources:", error);
+    }
+  };
+
+  const fetchBookedResources = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get("http://localhost:8080/all-bookings", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setBookedResources(response.data);
+    } catch (error) {
+      console.error("Error fetching booked resources:", error);
+    }
+  };
+
+  const handleBookNow = (resource) => {
+    if (resource.status === "Unavailable") return;
+    setSelectedResource(resource);
+  };
+
+  const handleBookingSubmit = async (e) => {
     e.preventDefault();
-    console.log("Booking Details:", { selectedFacility, bookerName, phone, startDate, endDate });
-    // Reset form fields
-    setSelectedFacility("");
-    setBookerName("");
-    setPhone("");
-    setStartDate("");
-    setEndDate("");
+    try {
+      const token = localStorage.getItem("token");
+      const bookingData = { bookingDate, startTime, endTime, purpose, comment, resourceId: selectedResource.id };
+      await axios.post("http://localhost:8080/add-booking", bookingData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      toast.success("Booking successful");
+      setSelectedResource(null);
+      fetchResources();
+      fetchBookedResources();
+    } catch (error) {
+      toast.error("Error booking resource");
+      console.error("Error booking resource:", error);
+    }
+  };
+
+  const handleDeleteBooking = async (bookingId) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`http://localhost:8080/cancel-booking/${bookingId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      toast.success("Booking deleted successfully");
+      fetchBookedResources();
+    } catch (error) {
+      toast.error("Error deleting booking");
+      console.error("Error deleting booking:", error);
+    }
   };
 
   return (
     <div className="d-flex">
       <Sidebar />
-
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
-        {/* Add Navbar at the top using Bootstrap classes */}
-        <nav
-          className="navbar navbar-expand-lg navbar-light mb-4"
-          style={{ backgroundColor: "#e3d5f5" }}
-        >
-          <a className="navbar-brand fw-bold fs-3 px-4" href="#">
-          Facility Booking
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+        <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#e3d5f5" }}>
+          <a className="navbar-brand fw-bold fs-3 px-4" href="#">Facility Booking</a>
         </nav>
 
-        <h2>Available Facilities</h2>
-        <div className="row mb-3">
-          {availableFacilities.map((facility, index) => (
-            <div className="col-md-4 mb-3" key={index}>
-              <div className="card" style={{ backgroundColor: '#f8f9fa', borderColor: '#dee2e6' }}>
+        <h2>Existing Resources</h2>
+        <div className="row">
+          {resources.map((resource, index) => (
+            <div className="col-md-6 mb-3" key={index}>
+              <div
+                className="card"
+                style={{ backgroundColor: resource.status === "Unavailable" ? "#f8d7da" : "#dfe6e9", borderColor: "#b2bec3", cursor: resource.status !== "Unavailable" ? "pointer" : "not-allowed" }}
+                onClick={() => handleBookNow(resource)}
+              >
                 <div className="card-body">
-                  <h5 className="card-title">{facility.name}</h5>
+                  <h5 className="card-title fw-bold fs-4">{resource.resourceType}</h5>
+                  <h6 className="card-subtitle mb-2 text-muted">Description: {resource.description}</h6>
+                  <h6 className="card-subtitle mb-2 text-muted">Capacity: {resource.capacity}</h6>
+                  <h6 className="card-subtitle mb-2 text-muted">Booking Fee: {resource.bookingFee}</h6>
+                  <h6 className="card-subtitle mb-2 text-muted">Availability: {resource.status}</h6>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        <h2>Book a Facility</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="selectedFacility" className="form-label">Facility</label>
-            <select 
-              className="form-control" 
-              id="selectedFacility" 
-              value={selectedFacility} 
-              onChange={(e) => setSelectedFacility(e.target.value)} 
-              required
-            >
-              <option value="">Select a Facility</option>
-              {availableFacilities.map((facility, index) => (
-                <option key={index} value={facility.name}>{facility.name}</option>
-              ))}
-            </select>
+        <h2>Booked Resources</h2>
+        <div className="row">
+          {bookedResources.map((booking, index) => (
+            <div className="col-md-6 mb-3" key={index}>
+              <div className="card p-3">
+                <h5 className="fw-bold">{booking.resourceName}</h5>
+                <p>Date: {booking.bookingDate}</p>
+                <p>Time: {booking.startTime} - {booking.endTime}</p>
+                <button className="btn btn-danger" onClick={() => handleDeleteBooking(booking.id)}>Cancel Booking</button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {selectedResource && (
+          <div className="card p-4 mt-4">
+            <h3>Book Resource: {selectedResource.resourceType}</h3>
+            <form onSubmit={handleBookingSubmit}>
+              <input type="date" placeholder="Booking Date" onChange={(e) => setBookingDate(e.target.value)} required />
+              <input type="time" placeholder="Start Time" onChange={(e) => setStartTime(e.target.value)} required />
+              <input type="time" placeholder="End Time" onChange={(e) => setEndTime(e.target.value)} required />
+              <input type="text" placeholder="Purpose" onChange={(e) => setPurpose(e.target.value)} required />
+              <textarea placeholder="Comment" onChange={(e) => setComment(e.target.value)}></textarea>
+              <button type="submit">Confirm Booking</button>
+            </form>
           </div>
-          <div className="row mb-3">
-            <div className="col-md-6">
-              <label htmlFor="bookerName" className="form-label">Name</label>
-              <input
-                type="text"
-                className="form-control"
-                id="bookerName"
-                value={bookerName}
-                onChange={(e) => setBookerName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="col-md-6">
-              <label htmlFor="phone" className="form-label">Phone</label>
-              <input
-                type="tel"
-                className="form-control"
-                id="phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-          <div className="row mb-3">
-            <div className="col-md-6">
-              <label htmlFor="startDate" className="form-label">Start Date and Time</label>
-              <input
-                type="datetime-local"
-                className="form-control"
-                id="startDate"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                required
-              />
-            </div>
-            <div className="col-md-6">
-              <label htmlFor="endDate" className="form-label">End Date and Time</label>
-              <input
-                type="datetime-local"
-                className="form-control"
-                id="endDate"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-          <button type="submit" className="btn btn-primary">Book Facility</button>
-        </form>
+        )}
       </div>
     </div>
   );
