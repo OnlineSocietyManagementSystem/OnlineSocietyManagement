@@ -11,7 +11,7 @@ function MemberFacilityBooking() {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [purpose, setPurpose] = useState("");
-  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState("");
 
   useEffect(() => {
     fetchResources();
@@ -36,6 +36,7 @@ function MemberFacilityBooking() {
       const response = await axios.get("http://localhost:8080/all-bookings", {
         headers: { Authorization: `Bearer ${token}` },
       });
+      console.log(response);
       setBookedResources(response.data);
     } catch (error) {
       console.error("Error fetching booked resources:", error);
@@ -51,7 +52,8 @@ function MemberFacilityBooking() {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      const bookingData = { bookingDate, startTime, endTime, purpose, comment, resourceId: selectedResource.id };
+      const bookingData = { resourceId: selectedResource.id, bookingDate, startTime, endTime, purpose, comments};
+      console.log("resourceName : " , selectedResource.resourceType);
       await axios.post("http://localhost:8080/add-booking", bookingData, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -110,7 +112,7 @@ function MemberFacilityBooking() {
 
         <h2>Booked Resources</h2>
         <div className="row">
-          {bookedResources.map((booking, index) => (
+          {Array.isArray(bookedResources) && bookedResources.map((booking, index) => (
             <div className="col-md-6 mb-3" key={index}>
               <div className="card p-3">
                 <h5 className="fw-bold">{booking.resourceName}</h5>
@@ -124,13 +126,13 @@ function MemberFacilityBooking() {
 
         {selectedResource && (
           <div className="card p-4 mt-4">
-            <h3>Book Resource: {selectedResource.resourceType}</h3>
+            <h3>Book Resource: {selectedResource.resourceName}</h3>
             <form onSubmit={handleBookingSubmit}>
               <input type="date" placeholder="Booking Date" onChange={(e) => setBookingDate(e.target.value)} required />
               <input type="time" placeholder="Start Time" onChange={(e) => setStartTime(e.target.value)} required />
               <input type="time" placeholder="End Time" onChange={(e) => setEndTime(e.target.value)} required />
               <input type="text" placeholder="Purpose" onChange={(e) => setPurpose(e.target.value)} required />
-              <textarea placeholder="Comment" onChange={(e) => setComment(e.target.value)}></textarea>
+              <textarea placeholder="Comment" onChange={(e) => setComments(e.target.value)}></textarea>
               <button type="submit">Confirm Booking</button>
             </form>
           </div>

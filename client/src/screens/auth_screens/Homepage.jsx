@@ -12,7 +12,7 @@ const Homepage = () => {
       backgroundSize: "cover",
       backgroundPosition: "center",
     }}>
-      {/* Overlay */}
+
       <div style={{
         position: "absolute",
         top: 0,

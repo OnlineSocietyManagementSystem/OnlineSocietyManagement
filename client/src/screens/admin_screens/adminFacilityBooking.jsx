@@ -66,7 +66,8 @@ function AdminFacilityBooking() {
   const handleDelete = async (resourceId) => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`http://localhost:8080/delete-resource/${resourceId}`,
+      await axios.delete(
+        `http://localhost:8080/delete-resource/${resourceId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -74,8 +75,8 @@ function AdminFacilityBooking() {
         }
       );
       toast.success("Resource Deleted Successfully");
-      console.log("Resource Deleted Successfully")
-      fetchResources(); 
+      console.log("Resource Deleted Successfully");
+      fetchResources();
     } catch (error) {
       toast.error("Error Deleting Resource");
       console.error("Error deleting Resource:", error);
@@ -161,25 +162,39 @@ function AdminFacilityBooking() {
 
         <h2>Existing Resources</h2>
         <div className="row">
-          {resources.map((resource, index) => (
-            <div className="col-md-6 mb-3" key={index}>
-              <div className="card" style={{ backgroundColor: '#dfe6e9', borderColor: '#b2bec3' }}>
-                <div className="card-body">
-                  <h5 className="card-title fw-bold fs-4">{resource.resourceType}</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">Description: {resource.description}</h6>
-                  <h6 className="card-subtitle mb-2 text-muted">Capacity: {resource.capacity}</h6>
-                  <h6 className="card-subtitle mb-2 text-muted">Booking Fee: {resource.bookingFee}</h6>
-                  <h6 className="card-subtitle mb-2 text-muted">Availability: {resource.status}</h6>
-                  <button
+          {Array.isArray(resources) &&
+            resources.map((resource, index) => (
+              <div className="col-md-6 mb-3" key={index}>
+                <div
+                  className="card"
+                  style={{ backgroundColor: "#dfe6e9", borderColor: "#b2bec3" }}
+                >
+                  <div className="card-body">
+                    <h5 className="card-title fw-bold fs-4">
+                      {resource.resourceType}
+                    </h5>
+                    <h6 className="card-subtitle mb-2 text-muted">
+                      Description: {resource.description}
+                    </h6>
+                    <h6 className="card-subtitle mb-2 text-muted">
+                      Capacity: {resource.capacity}
+                    </h6>
+                    <h6 className="card-subtitle mb-2 text-muted">
+                      Booking Fee: {resource.bookingFee}
+                    </h6>
+                    <h6 className="card-subtitle mb-2 text-muted">
+                      Availability: {resource.status}
+                    </h6>
+                    <button
                       className="btn btn-danger btn-sm"
                       onClick={() => handleDelete(resource.id)}
                     >
                       Delete
                     </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </div>
