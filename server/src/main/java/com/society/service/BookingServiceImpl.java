@@ -98,18 +98,24 @@ public class BookingServiceImpl implements BookingService {
 	    User user = userDao.findByEmail(email)
 	        .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
 
+	    List<Bookings> bookings;
+	    
 	    if (user.getRole().equals(UserRole.ROLE_ADMIN)) {
-	        // Admin sees all bookings
-	        return bookingDao.findAll().stream()
-	                .map(booking -> mapper.map(booking, BookingRespDto.class))
-	                .collect(Collectors.toList());
+	        bookings = bookingDao.findAll();
 	    } else {
-	        // Members see only their own bookings
-	        return bookingDao.findByUser(user).stream()
-	                .map(booking -> mapper.map(booking, BookingRespDto.class))
-	                .collect(Collectors.toList());
+	        bookings = bookingDao.findByUser(user);
 	    }
+
+	    return bookings.stream()
+	        .map(booking -> {
+	            BookingRespDto dto = mapper.map(booking, BookingRespDto.class);
+	            dto.setResourceType(booking.getResource().getResourceType()); 
+	            dto.setUserEmail(booking.getUser().getEmail());
+	            return dto;
+	        })
+	        .collect(Collectors.toList());
 	}
+
 
 
 
