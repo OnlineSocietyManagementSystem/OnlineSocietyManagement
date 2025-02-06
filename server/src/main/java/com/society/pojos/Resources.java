@@ -15,7 +15,7 @@ public class Resources extends BaseEntity{
     @Column(length=25)
     private String resourceType;
 
-    @Column(length=50)
+    @Column(length=500)
     private String description;
     
     @Enumerated(EnumType.STRING)

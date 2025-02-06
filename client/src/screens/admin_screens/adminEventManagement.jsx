@@ -15,18 +15,6 @@ function AdminEventManagement() {
 
   const token = localStorage.getItem("token");
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     try {
-  //       const decoded = jwtDecode(token);
-  //       console.log("Decoded JWT: ", decoded);
-  //       setUserId(decoded.user_id);
-  //     } catch (error) {
-  //       console.error("Invalid token:", error);
-  //     }
-  //   }
-  // }, []);
 
   // Fetch all events
   const fetchEvents = async () => {
@@ -65,7 +53,7 @@ function AdminEventManagement() {
       setLocation("");
       setTime("");
       toast.success("Event Added Successfully");
-      // fetchEvents(); // Refresh event list
+      fetchEvents(); 
     } catch (error) {
       toast.error("Error Adding Event");
       console.error("Error adding event:", error);

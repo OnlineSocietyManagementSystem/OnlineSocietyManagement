@@ -1,5 +1,7 @@
 package com.society.dtos;
 
+import com.society.pojos.AvailabilityStatus;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +13,7 @@ public class ResourceResponseDto extends BaseDto {
 
     private String description;
     
-    private boolean availability;
+    private AvailabilityStatus status;
     
     private int capacity;
     

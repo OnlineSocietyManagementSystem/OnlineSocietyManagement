@@ -8,12 +8,16 @@ function Sidebar() {
   if (token) {
     try {
       const decoded = jwtDecode(token);
-    //   console.log("Decoded JWT: ", decoded);
       role = decoded.authorities;
     } catch (error) {
       console.error("Invalid token:", error);
     }
   }
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Clear the token from localStorage
+    window.location.href = "/signin"; // Redirect to the login page
+  };
 
   return (
     <div className="d-flex">
@@ -186,6 +190,11 @@ function Sidebar() {
               </>
             )}
           </ul>
+          <div>
+            <button onClick={handleLogout} className="btn btn-danger mt-4">
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </div>
