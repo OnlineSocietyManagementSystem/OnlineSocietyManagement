@@ -39,7 +39,7 @@ public class User extends BaseEntity {
 	@Column(unique=true ,length=20)
 	private String  aadhar;
 	
-	@Column(unique=true ,length=10)
+	@Column(unique=true ,length=13)
 	private String phone;
 	
 	@Column(name="family_count")
