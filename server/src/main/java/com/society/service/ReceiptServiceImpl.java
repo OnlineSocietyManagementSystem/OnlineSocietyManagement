@@ -42,7 +42,7 @@ public class ReceiptServiceImpl implements ReceiptService {
         contentStream.showText("Receipt");
         contentStream.newLine();
         contentStream.setFont(PDType1Font.HELVETICA, 12);
-        contentStream.showText("Amount: $" + amount);
+        contentStream.showText("Amount: rs" + amount);
         contentStream.newLine();
         contentStream.showText("Date: " + LocalDate.now());
         contentStream.endText();
