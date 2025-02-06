@@ -110,7 +110,8 @@ public class BookingServiceImpl implements BookingService {
 	        .map(booking -> {
 	            BookingRespDto dto = mapper.map(booking, BookingRespDto.class);
 	            dto.setResourceType(booking.getResource().getResourceType()); 
-	            dto.setUserEmail(booking.getUser().getEmail());
+	            dto.setFirstName(booking.getUser().getFirstName());
+	            dto.setLastName(booking.getUser().getLastName());
 	            return dto;
 	        })
 	        .collect(Collectors.toList());
