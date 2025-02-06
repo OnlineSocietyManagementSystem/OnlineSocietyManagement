@@ -63,8 +63,8 @@ public class PaymentServiceImpl implements PaymentService {
 
 		List<Payment> payments = paymentDao.findByUserIdAndStatus(user.getId(), PaymentStatus.UNPAID);
 
-		return payments.stream().map(payment -> modelMapper.map(payment, PaymentResDto.class)) // Using ModelMapper to
-																								// map Payment to DTO
+		return payments.stream().map(payment -> modelMapper.map(payment, PaymentResDto.class)) 
+																								
 				.collect(Collectors.toList());
 
 	}
