@@ -60,7 +60,7 @@ function MemberMaintenance() {
         dueDate: dueDate,
         paymentType: paymentType,
       };
-      await axios.post("http://localhost:8080/make-payment", paymentData, {
+      await axios.put("http://localhost:8080/make-payment", paymentData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

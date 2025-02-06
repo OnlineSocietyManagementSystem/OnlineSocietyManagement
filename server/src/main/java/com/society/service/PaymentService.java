@@ -13,6 +13,7 @@ public interface PaymentService {
 	List<PaymentResDto> getPayment(String email);
 	ApiResponse makePayment(String email);
 	List<MyPaymentResDto> getMyPayment(String email);
+	List<PaymentResDto> getAllPayments(String adminEmail);
 	
 
 }
