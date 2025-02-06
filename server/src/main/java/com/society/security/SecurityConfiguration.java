@@ -36,12 +36,12 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/auth/register", "/auth/signin", "/all-complaints",
-                                "/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks","/all-notices", "/get-society","/my-profile","/update-profile", "/all-resources", "/all-bookings", "/cancel-booking")
+                                "/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks","/all-notices", "/get-society","/my-profile","/update-profile", "/all-resources", "/all-bookings", "/cancel-booking","/add-guest","/request-approval")
                         .permitAll()
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         // Endpoints accessible only to members
                         .requestMatchers("/member/dashboard", "/member/details/**", "/addComplaint","/my-complaints",
-                                "/add-feedback", "/delete-feedback","/update-profile","/get-unpaidpayemnt","/make-payment","/my-payments",  "/add-booking", "/delete-complaint", "/add-booking")
+                                "/add-feedback", "/delete-feedback","/update-profile","/get-unpaidpayemnt","/make-payment","/my-payments",  "/add-booking", "/delete-complaint", "/add-booking","/approve-entry/{entryId}")
                         .hasRole("MEMBER")
                         .requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**", "/delete-notice",
 								"/add-society", "delete-society", "/all-bookings", "/add-resource", "/delete-resource","/add-payment", "/confirm-booking").hasRole("ADMIN")
