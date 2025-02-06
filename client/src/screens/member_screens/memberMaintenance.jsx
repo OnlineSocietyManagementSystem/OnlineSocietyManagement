@@ -80,27 +80,32 @@ function MemberMaintenance() {
         </nav>
 
         <h2>Maintenance Due</h2>
-        {unpaidPayments.map((payment, index) => (
-          <div
-            className="card mb-3"
-            style={{ backgroundColor: "#ffcccc", borderColor: "#ff9999" }}
-            key={index}
-          >
-            <div className="card-body">
-              <h5 className="card-title">Amount Due: ₹{payment.amount}</h5>
-              <p className="card-text">Due Date: {payment.dueDate}</p>
-              <p className="card-text">Payment Type: {payment.paymentType}</p>
-              {payment.status === "UNPAID" && (
-                <button
-                  className="btn btn-primary"
-                  onClick={() => handleMakePayment(payment.id)}
-                >
-                  Pay Now
-                </button>
-              )}
+        <div className="row">
+          {unpaidPayments.map((payment, index) => (
+            <div className="col-md-4 mb-3" key={index}>
+              <div
+                className="card h-100 shadow-sm"
+                style={{ backgroundColor: "#ffcccc", borderColor: "#ff9999" }}
+              >
+                <div className="card-body">
+                  <h5 className="card-title">Amount Due: ₹{payment.amount}</h5>
+                  <p className="card-text">Due Date: {payment.dueDate}</p>
+                  <p className="card-text">
+                    Payment Type: {payment.paymentType}
+                  </p>
+                  {payment.status === "UNPAID" && (
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => handleMakePayment(payment.id)}
+                    >
+                      Pay Now
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
 
         <h2>Payment History</h2>
         <div className="table-responsive mb-3">
@@ -114,14 +119,16 @@ function MemberMaintenance() {
               </tr>
             </thead>
             <tbody>
-              {paymentHistory.map((payment, index) => (
-                <tr key={index}>
-                  <td>{payment.paymentDate}</td>
-                  <td>₹{payment.amount}</td>
-                  {/* <td>{payment.status}</td> */}
-                  <td>{payment.paymentType}</td>
-                </tr>
-              ))}
+              {paymentHistory
+                .filter((payment) => payment.paymentDate !== null)
+                .map((payment, index) => (
+                  <tr key={index}>
+                    <td>{payment.paymentDate}</td>
+                    <td>₹{payment.amount}</td>
+                    {/* <td>{payment.status}</td> */}
+                    <td>{payment.paymentType}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

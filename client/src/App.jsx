@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -24,36 +23,33 @@ import AdminProfile from './screens/admin_screens/adminProfile';
 import AdminNotices from './screens/admin_screens/adminNotices';
 import MemberNotices from './screens/member_screens/memberNotices';
 
-
+import ProtectedRoute from './screens/auth_screens/ProtectedRoute';
 
 function App() {
   return (
     <div className="App">
-       <Routes>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/signin" element={<Login />} />
 
-        <Route path='/' element={<Homepage/>} />
-        <Route path='/register' element={<Register/>} />
-        <Route path='/signin' element={<Login/>} />
+        <Route path="/member-dashboard" element={<ProtectedRoute element={MemberDashboard} />} />
+        <Route path="/member-announcements" element={<ProtectedRoute element={MemberNotices} />} />
+        <Route path="/member-maintenance" element={<ProtectedRoute element={MemberMaintenance} />} />
+        <Route path="/member-event-management" element={<ProtectedRoute element={MemberEventManagement} />} />
+        <Route path="/member-complaints-feedbacks" element={<ProtectedRoute element={MemberComplaintsFeedbacks} />} />
+        <Route path="/member-facility-booking" element={<ProtectedRoute element={MemberFacilityBooking} />} />
+        <Route path="/member-profile" element={<ProtectedRoute element={MemberProfile} />} />
 
-        <Route path='/member-dashboard' element={<MemberDashboard/>} />
-        <Route path='/member-announcements' element={<MemberNotices/>} />
-        <Route path='/member-maintenance' element={<MemberMaintenance/>} />
-        <Route path='/member-event-management' element={<MemberEventManagement/>} />
-        <Route path='/member-complaints-feedbacks' element={<MemberComplaintsFeedbacks/>} />
-        <Route path='/member-facility-booking' element={<MemberFacilityBooking/>} />
-        <Route path='/member-profile' element={<MemberProfile/>} />
-
-        <Route path='/admin-dashboard' element={<AdminDashboard/>} />
-        <Route path='/admin-announcements' element={<AdminNotices/>} />
-        <Route path='/admin-maintenance' element={<AdminMaintenance/>} />
-        <Route path='/admin-event-management' element={<AdminEventManagement/>} />
-        <Route path='/admin-complaints-feedbacks' element={<AdminComplaintsFeedbacks/>} />
-        <Route path='/admin-facility-booking' element={<AdminFacilityBooking/>} />
-        <Route path='/admin-profile' element={<AdminProfile/>} />
-
-       </Routes>
-       
-       <ToastContainer/>
+        <Route path="/admin-dashboard" element={<ProtectedRoute element={AdminDashboard} />} />
+        <Route path="/admin-announcements" element={<ProtectedRoute element={AdminNotices} />} />
+        <Route path="/admin-maintenance" element={<ProtectedRoute element={AdminMaintenance} />} />
+        <Route path="/admin-event-management" element={<ProtectedRoute element={AdminEventManagement} />} />
+        <Route path="/admin-complaints-feedbacks" element={<ProtectedRoute element={AdminComplaintsFeedbacks} />} />
+        <Route path="/admin-facility-booking" element={<ProtectedRoute element={AdminFacilityBooking} />} />
+        <Route path="/admin-profile" element={<ProtectedRoute element={AdminProfile} />} />
+      </Routes>
+      <ToastContainer />
     </div>
   );
 }
