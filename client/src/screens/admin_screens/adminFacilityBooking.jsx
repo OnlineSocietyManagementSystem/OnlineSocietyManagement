@@ -12,9 +12,11 @@ function AdminFacilityBooking() {
   });
 
   const [resources, setResources] = useState([]);
+  const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
     fetchResources();
+    fetchBookings();
   }, []);
 
   const fetchResources = async () => {
@@ -28,6 +30,20 @@ function AdminFacilityBooking() {
       setResources(response.data);
     } catch (error) {
       console.error("Error fetching resources:", error);
+    }
+  };
+
+  const fetchBookings = async () => {
+    try {
+      const token = localStorage.getItem("token"); // Assuming the token is stored after login
+      const response = await axios.get("http://localhost:8080/all-bookings", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setBookings(response.data);
+    } catch (error) {
+      console.error("Error fetching bookings:", error);
     }
   };
 
@@ -83,118 +99,221 @@ function AdminFacilityBooking() {
     }
   };
 
+  // API to confirm a booking
+  const confirmBooking = async (bookingId) => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.put(
+        `http://localhost:8080/confirm-booking/${bookingId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Booking Confirmed Successfully");
+      console.log("Booking Confirmed Successfully");
+      fetchBookings();
+    } catch (error) {
+      toast.error("Error Confirming Booking");
+      console.error("Error confirming booking:", error);
+    }
+  };
+
+  // API to cancel a booking
+  const cancelBooking = async (bookingId) => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(
+        `http://localhost:8080/cancel-booking/${bookingId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Booking Cancelled Successfully");
+      console.log("Booking Cancelled Successfully");
+      fetchBookings();
+    } catch (error) {
+      toast.error("Error Cancelling Booking");
+      console.error("Error cancelling booking:", error);
+    }
+  };
+
   return (
     <div className="d-flex">
       <Sidebar />
 
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
-        {/* Add Navbar at the top using Bootstrap classes */}
-        <nav
-          className="navbar navbar-expand-lg navbar-light mb-4"
-          style={{ backgroundColor: "#e3d5f5" }}
-        >
-          <a className="navbar-brand fw-bold fs-3 px-4" href="#">
-            Add Facility Resource
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+      <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#e3d5f5" }}>
+          <span className="navbar-brand fw-bold fs-3 px-4" >Facility Booking</span>
         </nav>
 
         <h2>Add New Resource</h2>
         <form onSubmit={handleAddResource}>
-          <div className="form-group">
-            <label>Resource Type</label>
-            <input
-              type="text"
-              className="form-control"
-              name="resourceType"
-              value={newResource.resourceType}
-              onChange={handleInputChange}
-              required
-            />
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group mb-3">
+                <label>
+                  <strong>Resource Type</strong>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="resourceType"
+                  value={newResource.resourceType}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="form-group mb-3">
+                <label>
+                  <strong>Description</strong>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="description"
+                  value={newResource.description}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            </div>
           </div>
-          <div className="form-group">
-            <label>Description</label>
-            <input
-              type="text"
-              className="form-control"
-              name="description"
-              value={newResource.description}
-              onChange={handleInputChange}
-              required
-            />
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group mb-2">
+                <label>
+                  <strong>Capacity</strong>
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="capacity"
+                  value={newResource.capacity}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="form-group mb-2">
+                <label>
+                  <strong>Booking Fee</strong>
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="bookingFee"
+                  value={newResource.bookingFee}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            </div>
           </div>
-          <div className="form-group">
-            <label>Capacity</label>
-            <input
-              type="number"
-              className="form-control"
-              name="capacity"
-              value={newResource.capacity}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Booking Fee</label>
-            <input
-              type="number"
-              className="form-control"
-              name="bookingFee"
-              value={newResource.bookingFee}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <button type="submit" className="btn btn-primary mt-3">
+          <button type="submit" className="btn btn-primary mt-2 mb-3">
             Add Resource
           </button>
         </form>
 
         <h2>Existing Resources</h2>
+<div className="row">
+  {Array.isArray(resources) &&
+    resources.map((resource, index) => (
+      <div className="col-md-4 mb-3" key={index}>
+        <div className="card shadow-sm border-0">
+          <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 className="mb-0">{resource.resourceType}</h5>
+            <button
+              className="btn btn-sm btn-danger"
+              onClick={() => handleDelete(resource.id)}
+            >
+              Delete
+            </button>
+          </div>
+          <div className="card-body">
+            <p className="mb-1">
+              <strong>Description:</strong> {resource.description}
+            </p>
+            <p className="mb-1">
+              <strong>Capacity:</strong> {resource.capacity}
+            </p>
+            <p className="mb-1">
+              <strong>Booking Fee:</strong> ₹{resource.bookingFee}
+            </p>
+            <p className={`mb-1 fw-bold ${resource.status === "Unavailable" ? "text-danger" : "text-success"}`}>
+              <strong>Availability:</strong> {resource.status}
+            </p>
+          </div>
+        </div>
+      </div>
+    ))}
+</div>
+
+
+        <h2>All Bookings</h2>
         <div className="row">
-          {Array.isArray(resources) &&
-            resources.map((resource, index) => (
-              <div className="col-md-6 mb-3" key={index}>
-                <div
-                  className="card"
-                  style={{ backgroundColor: "#dfe6e9", borderColor: "#b2bec3" }}
-                >
-                  <div className="card-body">
-                    <h5 className="card-title fw-bold fs-4">
-                      {resource.resourceType}
-                    </h5>
-                    <h6 className="card-subtitle mb-2 text-muted">
-                      Description: {resource.description}
-                    </h6>
-                    <h6 className="card-subtitle mb-2 text-muted">
-                      Capacity: {resource.capacity}
-                    </h6>
-                    <h6 className="card-subtitle mb-2 text-muted">
-                      Booking Fee: {resource.bookingFee}
-                    </h6>
-                    <h6 className="card-subtitle mb-2 text-muted">
-                      Availability: {resource.status}
-                    </h6>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => handleDelete(resource.id)}
-                    >
-                      Delete
-                    </button>
+          {Array.isArray(bookings) &&
+            bookings
+              .filter(
+                (booking) =>
+                  booking.status === "PENDING" || booking.status === "CONFIRMED"
+              )
+              .map((booking, index) => (
+                <div className="col-md-6 mb-3" key={index}>
+                  <div
+                    className="card"
+                    style={{
+                      backgroundColor: "#dfe6e9",
+                      borderColor: "#b2bec3",
+                    }}
+                  >
+                    <div className="card-body">
+                      <h5 className="card-title fw-bold fs-4">
+                        {booking.resourceType}
+                      </h5>
+                      <h6 className="card-subtitle mb-2 text-muted">
+                        Booker Name: {booking.firstName} {booking.lastName}
+                      </h6>
+                      <h6 className="card-subtitle mb-2 text-muted">
+                        Booking Date: {booking.bookingDate}
+                      </h6>
+                      <h6 className="card-subtitle mb-2 text-muted">
+                        Start Time: {booking.startTime}
+                      </h6>
+                      <h6 className="card-subtitle mb-2 text-muted">
+                        End Time: {booking.endTime}
+                      </h6>
+                      <h6 className="card-subtitle mb-2 text-muted">
+                        Status: {booking.status}
+                      </h6>
+                      {booking.status === "PENDING" && (
+                        <div>
+                          <button
+                            className="btn btn-success btn-sm mr-2"
+                            onClick={() => confirmBooking(booking.id)}
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            className="btn btn-danger btn-sm"
+                            onClick={() => cancelBooking(booking.id)}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
         </div>
       </div>
     </div>
