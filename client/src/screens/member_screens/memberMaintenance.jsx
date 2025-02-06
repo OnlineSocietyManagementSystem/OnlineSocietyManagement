@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../../components/sidebar";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
 
 function MemberMaintenance() {
   const [unpaidPayments, setUnpaidPayments] = useState([]);
@@ -45,10 +46,16 @@ function MemberMaintenance() {
     }
   };
 
-  const handleMakePayment = async (paymentId) => {
+  const handleMakePayment = async (paymentId, amount) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.put(
+
+      // Decode the token to extract the email
+      const decodedToken = jwtDecode(token);
+      const email = decodedToken.sub; // Assuming email is stored in the "sub" field
+
+      // Make the payment
+      const paymentResponse = await axios.put(
         `http://localhost:8080/make-payment/${paymentId}`,
         {},
         {
@@ -57,7 +64,33 @@ function MemberMaintenance() {
           },
         }
       );
-      toast.success("Payment made successfully.");
+      console.log("Payment added successfully");
+
+
+      if (paymentResponse.status === 200) {
+        // Send the receipt
+        const receiptResponse = await axios.post(
+          "http://localhost:8080/generate-receipt",
+          {
+            email: email,
+            amount: amount,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (receiptResponse.status === 200) {
+          toast.success("Payment made successfully and receipt sent.");
+        } else {
+          toast.error("Payment made but failed to send receipt.");
+        }
+      } else {
+        toast.error("Failed to make payment.");
+      }
+
       fetchUnpaidPayments(); // Refresh unpaid payments
       fetchPaymentHistory(); // Refresh payment history
     } catch (error) {
@@ -96,7 +129,7 @@ function MemberMaintenance() {
                   {payment.status === "UNPAID" && (
                     <button
                       className="btn btn-primary"
-                      onClick={() => handleMakePayment(payment.id)}
+                      onClick={() => handleMakePayment(payment.id, payment.amount)}
                     >
                       Pay Now
                     </button>
@@ -114,7 +147,6 @@ function MemberMaintenance() {
               <tr>
                 <th>Date</th>
                 <th>Amount</th>
-                {/* <th>Status</th> */}
                 <th>Payment Type</th>
               </tr>
             </thead>
@@ -125,13 +157,14 @@ function MemberMaintenance() {
                   <tr key={index}>
                     <td>{payment.paymentDate}</td>
                     <td>₹{payment.amount}</td>
-                    {/* <td>{payment.status}</td> */}
                     <td>{payment.paymentType}</td>
                   </tr>
                 ))}
             </tbody>
           </table>
         </div>
+
+        <ToastContainer />
       </div>
     </div>
   );
