@@ -11,7 +11,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentResDto {
+public class PaymentResDto extends BaseDto{
 
 	    private BigDecimal amount;
 	    private String paymentType;
