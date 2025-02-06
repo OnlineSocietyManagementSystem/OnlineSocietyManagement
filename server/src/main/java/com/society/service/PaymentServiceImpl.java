@@ -18,6 +18,7 @@ import com.society.dtos.PaymentResDto;
 import com.society.pojos.Payment;
 import com.society.pojos.PaymentStatus;
 import com.society.pojos.User;
+import com.society.pojos.UserRole;
 
 import jakarta.transaction.Transactional;
 
@@ -25,92 +26,102 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class PaymentServiceImpl implements PaymentService {
 
-    @Autowired
-    private PaymentDao paymentDao;
+	@Autowired
+	private PaymentDao paymentDao;
 
-    @Autowired
-    private UserDao userDao;
+	@Autowired
+	private UserDao userDao;
 
-    @Autowired
-    private ModelMapper modelMapper;
+	@Autowired
+	private ModelMapper modelMapper;
 
-    @Override
-    public ApiResponse addPayment(PaymentDto dto, String adminEmail) {
-        List<User> users = userDao.findAll();
+	@Override
+	public ApiResponse addPayment(PaymentDto dto, String email) {
+		List<User> users = userDao.findByRole(UserRole.ROLE_MEMBER);
 
-        if (users.isEmpty()) {
-            return new ApiResponse("No members found in the society!");
-        }
+		if (users.isEmpty()) {
+			return new ApiResponse("No members found in the society!");
+		}
 
-        users.forEach(user -> {
-            Payment payment = modelMapper.map(dto, Payment.class);
-            payment.setStatus(PaymentStatus.UNPAID);
-            payment.setUser(user);
-            paymentDao.save(payment);
-        });
+		users.forEach(user -> {
+			Payment payment = modelMapper.map(dto, Payment.class);
+			payment.setStatus(PaymentStatus.UNPAID);
+			payment.setUser(user);
+			paymentDao.save(payment);
+		});
 
-        return new ApiResponse("Payment entries created successfully for all members.");
-    }
+		return new ApiResponse("Payment entries created successfully for all members.");
+	}
 
-    @Override
-    public List<PaymentResDto> getPayment(String email) {
-        Optional<User> optionalUser = userDao.findByEmail(email);
-        if (optionalUser.isEmpty()) {
-            throw new RuntimeException("User not found!");
-        }
-        User user = optionalUser.get();
+	@Override
+	public List<PaymentResDto> getPayment(String email) {
+		Optional<User> optionalUser = userDao.findByEmail(email);
+		if (optionalUser.isEmpty()) {
+			throw new RuntimeException("User not found!");
+		}
+		User user = optionalUser.get();
 
-        List<Payment> payments = paymentDao.findByUserIdAndStatus(user.getId(), PaymentStatus.UNPAID);
-        
-        return payments.stream()
-                .map(payment -> modelMapper.map(payment, PaymentResDto.class)) // Using ModelMapper to map Payment to DTO
-                .collect(Collectors.toList());
-    }
+		List<Payment> payments = paymentDao.findByUserIdAndStatus(user.getId(), PaymentStatus.UNPAID);
 
-    @Override
-    public ApiResponse makePayment(String email) {
-        Optional<User> optionalUser = userDao.findByEmail(email);
-        if (optionalUser.isEmpty()) {
-            throw new RuntimeException("User not found!");
-        }
+		return payments.stream().map(payment -> modelMapper.map(payment, PaymentResDto.class)) // Using ModelMapper to
+																								// map Payment to DTO
+				.collect(Collectors.toList());
 
-        User user = optionalUser.get();
-        List<Payment> unpaidPayments = paymentDao.findByUserIdAndStatus(user.getId(), PaymentStatus.UNPAID);
+	}
 
-        if (unpaidPayments.isEmpty()) {
-            return new ApiResponse("No unpaid payments found!");
-        }
+	@Override
+	public List<MyPaymentResDto> getMyPayment(String email) {
+		Optional<User> optionalUser = userDao.findByEmail(email);
+		if (optionalUser.isEmpty()) {
+			throw new RuntimeException("User not found!");
+		}
+		User user = optionalUser.get();
 
-        unpaidPayments.forEach(payment -> {
-            payment.setStatus(PaymentStatus.PAID);
-            payment.setPaymentDate(LocalDate.now());
-        });
+		List<Payment> payments = paymentDao.findByUserId(user.getId());
 
-        paymentDao.saveAll(unpaidPayments);
+		return payments.stream().map(payment -> modelMapper.map(payment, MyPaymentResDto.class))
+				.collect(Collectors.toList());
+	}
 
-        return new ApiResponse("Payment successful for all pending dues.");
-    }
+	@Override
+	public List<PaymentResDto> getAllPayments(String adminEmail) {
+		List<Payment> payments = paymentDao.findAll();
 
-    @Override
-    public List<MyPaymentResDto> getMyPayment(String email) {
-        Optional<User> optionalUser = userDao.findByEmail(email);
-        if (optionalUser.isEmpty()) {
-            throw new RuntimeException("User not found!");
-        }
-        User user = optionalUser.get();
+		return payments.stream().map(payment -> modelMapper.map(payment, PaymentResDto.class))
+				.collect(Collectors.toList());
 
-        List<Payment> payments = paymentDao.findByUserId(user.getId());
+	}
 
-        return payments.stream()
-                .map(payment -> modelMapper.map(payment, MyPaymentResDto.class)) 
-                .collect(Collectors.toList());
-    }
+	@Override
+	public ApiResponse makePayment(Long id, String email) {
+		Optional<User> optionalUser = userDao.findByEmail(email);
+		if (optionalUser.isEmpty()) {
+			throw new RuntimeException("User not found!");
+		}
 
-    public List<PaymentResDto> getAllPayments(String adminEmail) {
-        List<Payment> payments = paymentDao.findAll();
+		User user = optionalUser.get();
+		Optional<Payment> optionalPayment = paymentDao.findById(id);
 
-        return payments.stream()
-                .map(payment -> modelMapper.map(payment, PaymentResDto.class))
-                .collect(Collectors.toList());
-    }
+		if (optionalPayment.isEmpty()) {
+			throw new RuntimeException("Payment not found!");
+		}
+
+		Payment payment = optionalPayment.get();
+
+		if (!payment.getUser().getId().equals(user.getId())) {
+			throw new RuntimeException("This payment does not belong to the logged-in user.");
+		}
+
+		if (payment.getStatus() == PaymentStatus.PAID) {
+			return new ApiResponse("This payment has already been processed.");
+		}
+
+		payment.setStatus(PaymentStatus.PAID);
+		payment.setPaymentDate(LocalDate.now());
+		paymentDao.save(payment);
+
+		return new ApiResponse("Payment successfully made for the specified due.");
+
+	}
+
 }

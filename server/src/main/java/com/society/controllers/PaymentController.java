@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,12 +51,11 @@ public class PaymentController {
 		List<PaymentResDto> payments = paymentService.getPayment(email);
 		return ResponseEntity.ok(payments);
 	}
-
-	@PutMapping("/make-payment")
-	public ResponseEntity<?> makePayment(Authentication authentication) {
+	@PutMapping("/make-payment/{id}")
+	public ResponseEntity<?> makePayment(@PathVariable Long id, Authentication authentication) {
 	    try {
 	        String email = authentication.getName();
-	        ApiResponse response = paymentService.makePayment(email);
+	        ApiResponse response = paymentService.makePayment(id, email);
 	        return ResponseEntity.ok(response);
 	    } catch (RuntimeException e) {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));

@@ -11,9 +11,9 @@ import com.society.dtos.PaymentResDto;
 public interface PaymentService {
 	ApiResponse addPayment(PaymentDto dto,String email);
 	List<PaymentResDto> getPayment(String email);
-	ApiResponse makePayment(String email);
 	List<MyPaymentResDto> getMyPayment(String email);
 	List<PaymentResDto> getAllPayments(String adminEmail);
+	ApiResponse makePayment(Long id, String email);
 	
 
 }

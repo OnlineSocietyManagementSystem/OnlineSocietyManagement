@@ -16,4 +16,6 @@ public interface PaymentDao extends JpaRepository<Payment, Long> {
 
     // Get all payments (paid/unpaid) for a specific user
     List<Payment> findByUserId(Long userId);
+    
+    
 }
