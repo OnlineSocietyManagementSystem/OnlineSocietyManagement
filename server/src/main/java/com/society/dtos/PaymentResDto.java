@@ -16,5 +16,8 @@ public class PaymentResDto extends BaseDto{
 	    private BigDecimal amount;
 	    private String paymentType;
 	    private LocalDate dueDate;
+	    private LocalDate paymentDate;
 	    private PaymentStatus status;
+	    private String firstName;
+	    private String lastName;
 }

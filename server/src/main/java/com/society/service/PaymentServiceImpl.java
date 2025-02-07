@@ -63,8 +63,8 @@ public class PaymentServiceImpl implements PaymentService {
 
 		List<Payment> payments = paymentDao.findByUserIdAndStatus(user.getId(), PaymentStatus.UNPAID);
 
-		return payments.stream().map(payment -> modelMapper.map(payment, PaymentResDto.class)) // Using ModelMapper to
-																								// map Payment to DTO
+		return payments.stream().map(payment -> modelMapper.map(payment, PaymentResDto.class)) 
+																								
 				.collect(Collectors.toList());
 
 	}
@@ -87,8 +87,12 @@ public class PaymentServiceImpl implements PaymentService {
 	public List<PaymentResDto> getAllPayments(String adminEmail) {
 		List<Payment> payments = paymentDao.findAll();
 
-		return payments.stream().map(payment -> modelMapper.map(payment, PaymentResDto.class))
-				.collect(Collectors.toList());
+		return payments.stream().map(payment -> {
+			PaymentResDto dto = modelMapper.map(payment, PaymentResDto.class);
+			dto.setFirstName(payment.getUser().getFirstName());
+			dto.setLastName(payment.getUser().getLastName());
+			return dto;
+		}).collect(Collectors.toList());
 
 	}
 
