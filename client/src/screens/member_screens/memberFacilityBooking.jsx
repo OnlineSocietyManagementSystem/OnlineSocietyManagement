@@ -109,41 +109,42 @@ function MemberFacilityBooking() {
 
         <h2>Existing Resources</h2>
         <div className="row">
-          {resources.map((resource, index) => (
-            <div className="col-md-6 mb-3" key={index}>
-              <div
-                className="card"
-                style={{
-                  backgroundColor:
-                    resource.status === "Unavailable" ? "#f8d7da" : "#dfe6e9",
-                  borderColor: "#b2bec3",
-                  cursor:
-                    resource.status !== "Unavailable"
-                      ? "pointer"
-                      : "not-allowed",
-                }}
-                onClick={() => handleBookNow(resource)}
-              >
-                <div className="card-body">
-                  <h5 className="card-title fw-bold fs-4">
-                    {resource.resourceType}
-                  </h5>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    Description: {resource.description}
-                  </h6>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    Capacity: {resource.capacity}
-                  </h6>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    Booking Fee: {resource.bookingFee}
-                  </h6>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    Availability: {resource.status}
-                  </h6>
+          {Array.isArray(bookedResources) &&
+            resources.map((resource, index) => (
+              <div className="col-md-6 mb-3" key={index}>
+                <div
+                  className="card"
+                  style={{
+                    backgroundColor:
+                      resource.status === "Unavailable" ? "#f8d7da" : "#dfe6e9",
+                    borderColor: "#b2bec3",
+                    cursor:
+                      resource.status !== "Unavailable"
+                        ? "pointer"
+                        : "not-allowed",
+                  }}
+                  onClick={() => handleBookNow(resource)}
+                >
+                  <div className="card-body">
+                    <h5 className="card-title fw-bold fs-4">
+                      {resource.resourceType}
+                    </h5>
+                    <h6 className="card-subtitle mb-2 text-muted">
+                      Description: {resource.description}
+                    </h6>
+                    <h6 className="card-subtitle mb-2 text-muted">
+                      Capacity: {resource.capacity}
+                    </h6>
+                    <h6 className="card-subtitle mb-2 text-muted">
+                      Booking Fee: {resource.bookingFee}
+                    </h6>
+                    <h6 className="card-subtitle mb-2 text-muted">
+                      Availability: {resource.status}
+                    </h6>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
 
         <h2>Booked Resources</h2>
