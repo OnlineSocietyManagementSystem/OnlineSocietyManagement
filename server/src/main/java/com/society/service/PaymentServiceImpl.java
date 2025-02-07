@@ -46,7 +46,7 @@ public class PaymentServiceImpl implements PaymentService{
 		      Payment payment = modelMapper.map(dto, Payment.class);
 	        // Manually set properties that are not in DTO
 	       // payment.setPaymentDate(dto.getDueDate()!= null ? dto.getDueDate(): LocalDate.now());
-	        payment.setStatus(PaymentStatus.PAID);
+	        payment.setStatus(PaymentStatus.UNPAID);
 	        paymentDao.save(payment);
 		    return new ApiResponse("Payment Posted Successfully..");
 	}
