@@ -46,6 +46,7 @@ public class GuestNotificationServiceImpl implements GuestNotificationService {
 				.orElseThrow(() -> new RuntimeException("Notification not found"));
 		notification.setStatus(NotificationStatus.APPROVED);
 		guestNotificationDao.save(notification);
+		
 	}
 
 	@Override
