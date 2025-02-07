@@ -108,7 +108,7 @@ function MemberFacilityBooking() {
 
         <h2>Existing Resources</h2>
         <div className="row">
-          {Array.isArray(bookedResources) &&
+          {Array.isArray(resources) &&
             resources.map((resource, index) => (
               <div className="col-md-6 mb-3" key={index}>
                 <div
