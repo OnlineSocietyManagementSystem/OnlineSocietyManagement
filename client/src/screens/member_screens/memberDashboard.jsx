@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 import Sidebar from "../../components/sidebar";
 
 function MemberDashboard() {
@@ -9,7 +9,13 @@ function MemberDashboard() {
 
   const fetchNotifications = async (id) => {
     try {
-      const response = await axios.get("/pending/${id}");
+      const token = localStorage.getItem("token");
+      const response = await axios.get(`http://localhost:8080/pending/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       console.log("API Response:", response.data);
       if (Array.isArray(response.data)) {
         setNotifications(response.data);
@@ -21,32 +27,43 @@ function MemberDashboard() {
     }
   };
 
-  // const handleAccept = async (notificationId) => {
-  //   try {
-  //     // Add your accept notification API call here
-  //     console.log("Accepted notification:", notificationId);
-  //   } catch (error) {
-  //     console.error("Error accepting notification:", error);
-  //   }
-  // };
+  const handleAccept = async (notificationId) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(`http://localhost:8080/approve/${notificationId}`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-  // const handleReject = async (notificationId) => {
-  //   try {
-  //     // Add your reject notification API call here
-  //     console.log("Rejected notification:", notificationId);
-  //   } catch (error) {
-  //     console.error("Error rejecting notification:", error);
-  //   }
-  // };
+      console.log("Accepted notification:", notificationId);
+      fetchNotifications(userId); // Refresh notifications after accepting
+    } catch (error) {
+      console.error("Error accepting notification:", error);
+    }
+  };
+
+  const handleReject = async (notificationId) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(`http://localhost:8080/reject/${notificationId}`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Rejected notification:", notificationId);
+      fetchNotifications(userId); // Refresh notifications after rejecting
+    } catch (error) {
+      console.error("Error rejecting notification:", error);
+    }
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Adjust the key name as needed
+    const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwtDecode(token);
-      console.log(decodedToken);
-      const memberId = decodedToken.user_id; // Adjust the key name based on your token structure
+      const memberId = decodedToken.user_id;
       setUserId(memberId);
-      console.log(memberId);
       fetchNotifications(memberId);
     }
   }, []);
@@ -54,7 +71,6 @@ function MemberDashboard() {
   return (
     <div className="d-flex">
       <Sidebar />
-
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
         <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#e3d5f5" }}>
           <span className="navbar-brand fw-bold fs-3 px-4">Dashboard</span>
@@ -65,17 +81,24 @@ function MemberDashboard() {
             <div className="col-12">
               <h4>Pending Notifications</h4>
               {Array.isArray(notifications) && notifications.length > 0 ? (
-                <ul className="list-group">
+                <div className="row">
                   {notifications.map((notification, index) => (
-                    <li className="list-group-item d-flex justify-content-between align-items-center" key={index}>
-                      {notification.guestName} is arriving at {notification.arrivalTime}. Status: {notification.status}
-                      <div>
-                        <button className="btn btn-success mr-2" onClick={() => handleAccept(notification.id)}>Accept</button>
-                        <button className="btn btn-danger" onClick={() => handleReject(notification.id)}>Reject</button>
+                    <div className="col-md-4 mb-4" key={index}>
+                      <div className="card">
+                        <div className="card-body">
+                          <h5 className="card-title">{notification.guestName}</h5>
+                          <p className="card-text">
+                            Arrival Time: {new Date(notification.arrivalTime).toLocaleString()}
+                          </p>
+                          <div className="d-flex justify-content-between">
+                            <button className="btn btn-success" onClick={() => handleAccept(notification.userId)}>Accept</button>
+                            <button className="btn btn-danger" onClick={() => handleReject(notification.userId)}>Reject</button>
+                          </div>
+                        </div>
                       </div>
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               ) : (
                 <p>No pending notifications available.</p>
               )}
