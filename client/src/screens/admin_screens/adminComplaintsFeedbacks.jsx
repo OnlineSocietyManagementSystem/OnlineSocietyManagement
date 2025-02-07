@@ -64,7 +64,7 @@ function AdminComplaintsFeedbacks() {
                   <p className="card-text fw-bold fs-5">
                     Description: {complaint.description}
                   </p>
-                  <p className="card-text fw-bold fs-5">Id: {complaint.id}</p>
+                  <p className="card-text fw-bold fs-5">Name: {complaint.userName}</p>
                   <h6 className="card-subtitle mb-2 text-muted">
                     Creation Date: {complaint.creationDate}
                   </h6>

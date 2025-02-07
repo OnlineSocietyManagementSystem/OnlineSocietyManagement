@@ -46,7 +46,11 @@ function MemberFacilityBooking() {
 
   const handleBookNow = (resource) => {
     if (resource.status === "Unavailable") return;
-    setSelectedResource(resource);
+    if (selectedResource && selectedResource.id === resource.id) {
+      setSelectedResource(null);
+    } else {
+      setSelectedResource(resource);
+    }
   };
 
   const handleBookingSubmit = async (e) => {
@@ -94,8 +98,13 @@ function MemberFacilityBooking() {
     <div className="d-flex">
       <Sidebar />
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
-      <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#e3d5f5" }}>
-          <span className="navbar-brand fw-bold fs-3 px-4" >Facility Booking</span>
+        <nav
+          className="navbar navbar-expand-lg navbar-light mb-4"
+          style={{ backgroundColor: "#e3d5f5" }}
+        >
+          <span className="navbar-brand fw-bold fs-3 px-4">
+            Facility Booking
+          </span>
         </nav>
 
         <h2>Existing Resources</h2>
@@ -167,35 +176,73 @@ function MemberFacilityBooking() {
           <div className="card p-4 mt-4">
             <h3>Book Resource: {selectedResource.resourceType}</h3>
             <form onSubmit={handleBookingSubmit}>
-              <input
-                type="date"
-                placeholder="Booking Date"
-                onChange={(e) => setBookingDate(e.target.value)}
-                required
-              />
-              <input
-                type="time"
-                placeholder="Start Time"
-                onChange={(e) => setStartTime(e.target.value)}
-                required
-              />
-              <input
-                type="time"
-                placeholder="End Time"
-                onChange={(e) => setEndTime(e.target.value)}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Purpose"
-                onChange={(e) => setPurpose(e.target.value)}
-                required
-              />
-              <textarea
-                placeholder="Comment"
-                onChange={(e) => setComments(e.target.value)}
-              ></textarea>
-              <button type="submit">Confirm Booking</button>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label htmlFor="bookingDate" className="form-label">
+                    Booking Date
+                  </label>
+                  <input
+                    type="date"
+                    id="bookingDate"
+                    className="form-control"
+                    onChange={(e) => setBookingDate(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="purpose" className="form-label">
+                    Purpose
+                  </label>
+                  <input
+                    type="text"
+                    id="purpose"
+                    className="form-control"
+                    placeholder="Purpose"
+                    onChange={(e) => setPurpose(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label htmlFor="startTime" className="form-label">
+                    Start Time
+                  </label>
+                  <input
+                    type="time"
+                    id="startTime"
+                    className="form-control"
+                    onChange={(e) => setStartTime(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="endTime" className="form-label">
+                    End Time
+                  </label>
+                  <input
+                    type="time"
+                    id="endTime"
+                    className="form-control"
+                    onChange={(e) => setEndTime(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="comments" className="form-label">
+                  Comment
+                </label>
+                <textarea
+                  id="comments"
+                  className="form-control"
+                  placeholder="Comment"
+                  onChange={(e) => setComments(e.target.value)}
+                ></textarea>
+              </div>
+              <button type="submit" className="btn btn-primary">
+                Confirm Booking
+              </button>
             </form>
           </div>
         )}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../../components/sidebar";
 import { toast } from "react-toastify";
@@ -7,6 +7,27 @@ function AdminMaintenance() {
   const [amount, setAmount] = useState("");
   const [paymentType, setPaymentType] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const [payments, setPayments] = useState([]);
+
+  // Fetch all payments
+  useEffect(() => {
+    const fetchPayments = async () => {
+      const token = localStorage.getItem("token");
+      try {
+        const response = await axios.get("http://localhost:8080/all-payments", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setPayments(response.data);
+      } catch (error) {
+        console.error("Error fetching payments:", error);
+        toast.error("Error fetching payments.");
+      }
+    };
+
+    fetchPayments();
+  }, []);
 
   // Handle form submission to add a new payment
   const handleFormSubmit = async (e) => {
@@ -24,11 +45,16 @@ function AdminMaintenance() {
       setDueDate("");
       toast.success("Payment added successfully.");
       console.log("Payment added successfully.");
+      fetchPayments(); // Refresh the payments list
     } catch (error) {
       console.error("Error adding payment:", error);
       toast.error("Error adding payment.");
     }
   };
+
+  // Filter payments based on status
+  const paidPayments = payments.filter(payment => payment.status === "PAID");
+  const unpaidPayments = payments.filter(payment => payment.status !== "PAID");
 
   return (
     <div className="d-flex">
@@ -37,7 +63,7 @@ function AdminMaintenance() {
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
         {/* Add Navbar at the top using Bootstrap classes */}
         <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#e3d5f5" }}>
-          <span className="navbar-brand fw-bold fs-3 px-4" >Maintainance</span>
+          <span className="navbar-brand fw-bold fs-3 px-4">Maintenance</span>
         </nav>
 
         <h2>Maintenance Payment Status</h2>
@@ -85,6 +111,64 @@ function AdminMaintenance() {
                 Add Payment
               </button>
             </form>
+          </div>
+        </div>
+
+        {/* Paid Payments Table */}
+        <div className="card mb-4">
+          <div className="card-header">
+            <strong>Paid Payments</strong>
+          </div>
+          <div className="card-body">
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Amount</th>
+                  <th>Payment Type</th>
+                  <th>Due Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paidPayments.map((payment) => (
+                  <tr key={payment.id}>
+                    <td>{payment.id}</td>
+                    <td>{payment.amount}</td>
+                    <td>{payment.paymentType}</td>
+                    <td>{payment.dueDate}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Unpaid Payments Table */}
+        <div className="card">
+          <div className="card-header">
+            <strong>Unpaid Payments</strong>
+          </div>
+          <div className="card-body">
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Amount</th>
+                  <th>Payment Type</th>
+                  <th>Due Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {unpaidPayments.map((payment) => (
+                  <tr key={payment.id}>
+                    <td>{payment.id}</td>
+                    <td>{payment.amount}</td>
+                    <td>{payment.paymentType}</td>
+                    <td>{payment.dueDate}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

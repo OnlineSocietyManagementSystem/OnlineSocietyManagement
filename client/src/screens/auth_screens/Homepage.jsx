@@ -5,6 +5,7 @@ import gym from "../../images/gym.jpg";
 import clubHouse from "../../images/clubhouse.jpg";
 import tennisCourt from "../../images/tennisCourt.jpg";
 import garden from "../../images/garden.jpg";
+import library from "../../images/library.jpg";
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -15,7 +16,9 @@ const Homepage = () => {
     { title: "Clubhouse", description: "Spacious clubhouse for events and gatherings.", image: clubHouse },
     { title: "Tennis Court", description: "Professional grade tennis court with coaching.", image: tennisCourt },
     { title: "Garden", description: "Beautiful garden with walking paths and benches.", image: garden },
-  ];
+    { title: "Library", description: "Quiet library with a wide collection of books and study areas.", image: library }
+];
+
 
   const testimonials = [
     { name: "John Doe", feedback: "This system has improved our community's efficiency." },

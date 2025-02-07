@@ -44,7 +44,7 @@ public class SecurityConfiguration {
                                 "/add-feedback", "/delete-feedback","/update-profile","/get-unpaidpayemnt","/make-payment","/my-payments",  "/add-booking", "/delete-complaint", "/add-booking")
                         .hasRole("MEMBER")
                         .requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**", "/delete-notice",
-								"/add-society", "delete-society", "/all-bookings", "/add-resource", "/delete-resource","/add-payment", "/confirm-booking").hasRole("ADMIN")
+								"/add-society", "delete-society", "/all-bookings", "/add-resource", "/delete-resource","/add-payment", "/confirm-booking", "/all-payments").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
