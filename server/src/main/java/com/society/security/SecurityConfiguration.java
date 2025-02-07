@@ -28,28 +28,32 @@ public class SecurityConfiguration {
 	@Autowired
 	private CustomJWTAuthenticationFilter customJWTAuthenticationFilter;
 
-   @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS globally
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/auth/register", "/auth/signin", "/all-complaints",
-                                "/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks","/all-notices", "/get-society","/my-profile","/update-profile", "/all-resources", "/all-bookings", "/cancel-booking")
-                        .permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS).permitAll()
-                        // Endpoints accessible only to members
-                        .requestMatchers("/member/dashboard", "/member/details/**", "/addComplaint","/my-complaints",
-                                "/add-feedback", "/delete-feedback","/update-profile","/get-unpaidpayemnt","/make-payment","/my-payments",  "/add-booking", "/delete-complaint", "/add-booking")
-                        .hasRole("MEMBER")
-                        .requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**", "/delete-notice",
-								"/add-society", "delete-society", "/all-bookings", "/add-resource", "/delete-resource","/add-payment", "/confirm-booking", "/all-payments").hasRole("ADMIN")
-                        .anyRequest().authenticated())
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(customJWTAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http
+				.cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS globally
+				.csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers(
+								"/auth/register", "/auth/signin", "/all-complaints",
+								"/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks", "/all-notices", "/get-society",
+								"/my-profile", "/update-profile", "/all-resources", "/all-bookings", "/cancel-booking", "/add-guest",
+								"/request-approval", "/notify", "/pending", "/approve", "/reject")
+						.permitAll()
+						.requestMatchers(HttpMethod.OPTIONS).permitAll()
+						// Endpoints accessible only to members
+						.requestMatchers("/member/dashboard", "/member/details/**", "/addComplaint", "/my-complaints",
+								"/add-feedback", "/delete-feedback", "/update-profile", "/get-unpaidpayemnt", "/make-payment",
+								"/my-payments", "/add-booking", "/delete-complaint", "/add-booking")
+						.hasRole("MEMBER")
+						.requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**", "/delete-notice",
+								"/add-society", "delete-society", "/all-bookings", "/add-resource", "/delete-resource", "/add-payment",
+								"/confirm-booking", "/all-payments")
+						.hasRole("ADMIN")
+						.anyRequest().authenticated())
+				.sessionManagement(session -> session
+						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.addFilterBefore(customJWTAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}
@@ -58,8 +62,8 @@ public class SecurityConfiguration {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:5174")); // Allow
-																									// frontend
-																									// origin
+		// frontend
+		// origin
 		configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allowed methods
 		configuration.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Allowed headers
 		configuration.setAllowCredentials(true); // Allow cookies/auth headers
