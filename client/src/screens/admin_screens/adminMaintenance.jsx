@@ -13,25 +13,27 @@ function AdminMaintenance() {
   const [currentUnpaidPage, setCurrentUnpaidPage] = useState(0);
   const paymentsPerPage = 10;
 
+
+  const fetchPayments = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.get("http://localhost:8080/all-payments", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setPayments(response.data);
+    } catch (error) {
+      console.error("Error fetching payments:", error);
+      toast.error("Error fetching payments.");
+    }
+  };
   // Fetch all payments
   useEffect(() => {
-    const fetchPayments = async () => {
-      const token = localStorage.getItem("token");
-      try {
-        const response = await axios.get("http://localhost:8080/all-payments", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setPayments(response.data);
-      } catch (error) {
-        console.error("Error fetching payments:", error);
-        toast.error("Error fetching payments.");
-      }
-    };
-
     fetchPayments();
   }, []);
+
+
 
   // Handle form submission to add a new payment
   const handleFormSubmit = async (e) => {
@@ -144,7 +146,7 @@ function AdminMaintenance() {
                   <th>Name</th>
                   <th>Amount</th>
                   <th>Payment Type</th>
-                  <th>Due Date</th>
+                  <th>Payment Date</th>
                 </tr>
               </thead>
               <tbody>
@@ -153,7 +155,7 @@ function AdminMaintenance() {
                     <td>{payment.firstName}{" "}{payment.lastName}</td>
                     <td>{payment.amount}</td>
                     <td>{payment.paymentType}</td>
-                    <td>{payment.dueDate}</td>
+                    <td>{payment.paymentDate}</td>
                   </tr>
                 ))}
               </tbody>

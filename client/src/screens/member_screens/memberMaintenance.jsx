@@ -65,6 +65,7 @@ function MemberMaintenance() {
         }
       );
       console.log("Payment added successfully");
+      toast.success("payment added successfully");
 
 
       if (paymentResponse.status === 200) {
@@ -83,9 +84,9 @@ function MemberMaintenance() {
         );
 
         if (receiptResponse.status === 200) {
-          toast.success("Payment made successfully and receipt sent.");
+          toast.success("receipt sent successfully");
         } else {
-          toast.error("Payment made but failed to send receipt.");
+          toast.error("Failed to send receipt.");
         }
       } else {
         toast.error("Failed to make payment.");
