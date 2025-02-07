@@ -87,8 +87,12 @@ public class PaymentServiceImpl implements PaymentService {
 	public List<PaymentResDto> getAllPayments(String adminEmail) {
 		List<Payment> payments = paymentDao.findAll();
 
-		return payments.stream().map(payment -> modelMapper.map(payment, PaymentResDto.class))
-				.collect(Collectors.toList());
+		return payments.stream().map(payment -> {
+			PaymentResDto dto = modelMapper.map(payment, PaymentResDto.class);
+			dto.setFirstName(payment.getUser().getFirstName());
+			dto.setLastName(payment.getUser().getLastName());
+			return dto;
+		}).collect(Collectors.toList());
 
 	}
 
