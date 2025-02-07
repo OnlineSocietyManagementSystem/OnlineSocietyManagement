@@ -1,0 +1,46 @@
+package com.society.pojos;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "society")
+public class Society extends BaseEntity {
+
+	@Column(length = 25)
+	private String name;
+
+	@Column(length = 50)
+	private String address;
+
+	@Column(length = 10)
+	private String contact_no;
+
+	@Column(name = "building_count")
+	private int buildingCount;
+
+	@Column(name = "floor_count")
+	private int floorCount;
+
+	@Column(name = "flat_count")
+	private int flatCount;
+
+//	@OneToMany(mappedBy = "society", cascade = CascadeType.ALL, orphanRemoval = true)
+//	private List<User> users = new ArrayList<>();
+
+}

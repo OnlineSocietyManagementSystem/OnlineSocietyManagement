@@ -1,6 +1,7 @@
 package com.society.pojos;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name="users")
 public class User extends BaseEntity {
    
@@ -17,7 +19,7 @@ public class User extends BaseEntity {
 	
 	@Column(name="last_name")
 	private String lastName;
-	@Column(unique=true ,length=25,nullable=false)
+	@Column(unique=true ,length=50,nullable=false)
 	private String email;
 	
 	@Column(length=500,nullable=false)
@@ -35,7 +37,7 @@ public class User extends BaseEntity {
 	UserRole role;
 	
 	@Column(unique=true ,length=20)
-	private String  addhar;
+	private String  aadhar;
 	
 	@Column(unique=true ,length=10)
 	private String phone;
@@ -43,12 +45,9 @@ public class User extends BaseEntity {
 	@Column(name="family_count")
 	private int familyCount;
 
-	public User(String building, int flatNo, int floor, String addhar, String phone) {
-		super();
-		this.building = building;
-		this.flatNo = flatNo;
-		this.floor = floor;
-		this.addhar = addhar;
-		this.phone = phone;
-	}
+//	@ManyToOne
+//    @JoinColumn(name="society_id")
+//    private Society society;
+
+	
 }

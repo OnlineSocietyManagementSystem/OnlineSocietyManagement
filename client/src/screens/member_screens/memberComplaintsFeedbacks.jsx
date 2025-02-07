@@ -1,37 +1,25 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function MemberComplaintsFeedbacks() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [feedbackContent, setFeedbackContent] = useState("");
   const [feedbacks, setFeedbacks] = useState([]);
-
-  const complaints = [
-    {
-      id: 1,
-      memberName: "John Doe",
-      title: "Water leakage issue",
-      description: "Water leakage issue in the bathroom.",
-    },
-    {
-      id: 2,
-      memberName: "Jane Smith",
-      title: "Elevator issue",
-      description: "Elevator not working properly.",
-    },
-  ];
+  const [complaints, setComplaints] = useState([]);
 
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchFeedbacks();
+    fetchComplaints();
   }, []);
 
   const fetchFeedbacks = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/all-feedbacks", {
+      const response = await axios.get("http://localhost:8080/all-feedbacks", { // here we have to add my -feedbacks
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,6 +27,19 @@ function MemberComplaintsFeedbacks() {
       setFeedbacks(response.data);
     } catch (error) {
       console.error("Error fetching feedbacks:", error);
+    }
+  };
+
+  const fetchComplaints = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/my-complaints", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setComplaints(response.data);
+    } catch (error) {
+      console.error("Error fetching complaints:", error);
     }
   };
 
@@ -62,15 +63,34 @@ function MemberComplaintsFeedbacks() {
       setTitle("");
       setDescription("");
       // Fetch updated complaints to display the new one
+      toast.success("Complaint added successfully.");
       fetchComplaints();
     } catch (error) {
       console.error("Error adding complaint:", error);
     }
   };
 
+  const handleDeleteComplaints = async (complaintId) => {
+    try {
+      await axios.delete(
+        `http://localhost:8080/delete-complaint/${complaintId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Complaint Deleted Successfully");
+      fetchComplaints(); // Refresh feedback list
+    } catch (error) {
+      toast.error("Error Deleting complaint");
+      console.error("Error deleting complaint:", error);
+    }
+  };
+
   const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
-
+// new comment 
     const feedbackData = { content: feedbackContent };
 
     try {
@@ -93,30 +113,32 @@ function MemberComplaintsFeedbacks() {
     }
   };
 
+  const handleDeleteFeedback = async (feedbackId) => {
+    try {
+      await axios.delete(
+        `http://localhost:8080/delete-feedback/${feedbackId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Feedback Deleted Successfully");
+      fetchFeedbacks(); // Refresh feedback list
+    } catch (error) {
+      toast.error("Error Deleting feedback");
+      console.error("Error deleting feedback:", error);
+    }
+  };
+
   return (
     <div className="d-flex">
       <Sidebar />
 
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
         {/* Add Navbar at the top using Bootstrap classes */}
-        <nav
-          className="navbar navbar-expand-lg navbar-light mb-4"
-          style={{ backgroundColor: "#e3d5f5" }}
-        >
-          <a className="navbar-brand fw-bold fs-3 px-4" href="#">
-            Complaints & Feedbacks
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+        <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#e3d5f5" }}>
+          <span className="navbar-brand fw-bold fs-3 px-4" >Complaints & Feedbacks</span>
         </nav>
 
         <h2 className="mb-4 fw-bold">Add Complaint</h2>
@@ -164,9 +186,12 @@ function MemberComplaintsFeedbacks() {
                   <p className="card-text fw-bold fs-5">
                     {complaint.description}
                   </p>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    Member: {complaint.memberName}
-                  </h6>
+                  <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDeleteComplaints(complaint.id)}
+                    >
+                      Delete
+                    </button>
                 </div>
               </div>
             </div>
@@ -203,7 +228,17 @@ function MemberComplaintsFeedbacks() {
                 style={{ backgroundColor: "#d4edda", borderColor: "#c3e6cb" }}
               >
                 <div className="card-body">
-                  <p className="card-text fw-bold fs-5">{feedback.content}</p>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p className="card-text fw-bold fs-5 mb-0">
+                      {feedback.content}
+                    </p>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDeleteFeedback(feedback.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
