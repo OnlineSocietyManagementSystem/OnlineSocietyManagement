@@ -36,4 +36,6 @@ public class GuestNotificationController {
         guestNotificationService.rejectGuest(notificationId);
         return "Guest rejected!";
     }
+    
+    
 }

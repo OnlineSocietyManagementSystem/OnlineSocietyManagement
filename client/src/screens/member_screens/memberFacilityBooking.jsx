@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/sidebar";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -12,7 +12,6 @@ function MemberFacilityBooking() {
   const [endTime, setEndTime] = useState("");
   const [purpose, setPurpose] = useState("");
   const [comments, setComments] = useState("");
-  const [status, setStatus] = useState("");
 
   useEffect(() => {
     fetchResources();
