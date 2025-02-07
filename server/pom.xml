@@ -118,6 +118,13 @@
 			<scope>runtime</scope>
 		</dependency>
 		
+		<dependency>
+    <groupId>jakarta.mail</groupId>
+    <artifactId>jakarta.mail-api</artifactId>
+    <version>2.1.0</version> <!-- Use the appropriate version -->
+</dependency>
+
+		
 	<dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
@@ -132,6 +139,7 @@
 			<scope>runtime</scope>
 		</dependency>
 		
+<<<<<<< HEAD
 		
 <!-- https://mvnrepository.com/artifact/com.twilio.sdk/twilio -->
 <dependency>
@@ -140,6 +148,35 @@
     <version>9.4.0</version>
 </dependency>
 
+=======
+		<!-- Apache PDFBox for PDF generation -->
+<dependency>
+    <groupId>org.apache.pdfbox</groupId>
+    <artifactId>pdfbox</artifactId>
+    <version>2.0.24</version>
+</dependency>
+
+<!-- Spring Boot Starter Mail for sending emails -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
+</dependency>
+
+		<!-- JavaMail API -->
+    <dependency>
+        <groupId>javax.mail</groupId>
+        <artifactId>javax.mail-api</artifactId>
+        <version>1.6.2</version>
+    </dependency>
+
+    <!-- JavaMail implementation -->
+    <dependency>
+        <groupId>com.sun.mail</groupId>
+        <artifactId>javax.mail</artifactId>
+        <version>1.6.2</version>
+    </dependency>
+
+>>>>>>> main
 		
 		</dependencies>
 		<build>

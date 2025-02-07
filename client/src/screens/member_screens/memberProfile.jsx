@@ -64,48 +64,37 @@ function MemberProfile() {
   const handleUpdateClick = async () => {
     if (isEditing) {
       try {
-        const token = localStorage.getItem("token"); // Assuming the token is stored after login
-        await axios.put("http://localhost:8080/update-profile", profileData, {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token not found in localStorage");
+        }
+        console.log("Token retrieved:", token);
+        console.log("Profile data to be sent:", profileData);
+        
+        const response = await axios.put("http://localhost:8080/update-profile", profileData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         toast.success("Profile updated successfully.");
-        console.log("Profile updated successfully.");
+        console.log("Profile updated successfully:", response.data);
       } catch (error) {
-        console.error("Error updating profile:", error);
+        console.error("Error updating profile:", error.response ? error.response.data : error.message);
         toast.error("Error updating profile.");
       }
     }
     setIsEditing(!isEditing);
   };
-
+  
   return (
     <div className="d-flex">
       <Sidebar />
 
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
         {/* Add Navbar at the top using Bootstrap classes */}
-        <nav
-          className="navbar navbar-expand-lg navbar-light mb-4"
-          style={{ backgroundColor: "#e3d5f5" }}
-        >
-          <a className="navbar-brand fw-bold fs-3 px-4" href="#">
-            Profile
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+        <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#e3d5f5" }}>
+          <span className="navbar-brand fw-bold fs-3 px-4" >Profile</span>
         </nav>
-
         <h2 className="mb-4">Profile Information</h2>
         <div className="card shadow-sm p-4 mb-4 bg-white rounded">
           <div className="row">

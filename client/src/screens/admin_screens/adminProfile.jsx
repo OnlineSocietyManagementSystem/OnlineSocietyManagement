@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../../components/sidebar";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 function AdminProfile() {
   const [profileData, setProfileData] = useState({
@@ -84,24 +84,8 @@ function AdminProfile() {
 
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
         {/* Add Navbar at the top using Bootstrap classes */}
-        <nav
-          className="navbar navbar-expand-lg navbar-light mb-4"
-          style={{ backgroundColor: "#e3d5f5" }}
-        >
-          <a className="navbar-brand fw-bold fs-3 px-4" href="#">
-            Profile
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+        <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#e3d5f5" }}>
+          <span className="navbar-brand fw-bold fs-3 px-4" >Profile</span>
         </nav>
 
         <h2 className="mb-4">Profile Information</h2>
@@ -251,6 +235,8 @@ function AdminProfile() {
             </button>
           </div>
         </div>
+
+        
       </div>
     </div>
   );

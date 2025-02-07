@@ -7,16 +7,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.society.pojos.Payment;
 import com.society.pojos.PaymentStatus;
-import com.society.pojos.User;
 
 public interface PaymentDao extends JpaRepository<Payment, Long> {
 
-	List<Payment> findByStatus(PaymentStatus unpaid);
+    
+    // Get all unpaid payments for a specific user
+    List<Payment> findByUserIdAndStatus(Long userId, PaymentStatus status);
 
-	Optional<Payment> findFirstByUserAndStatus(User user, PaymentStatus unpaid);
-
-	Optional<Payment> findFirstByStatus(PaymentStatus unpaid);
-
-	List<Payment> findByUserId(Long id);
-
+    // Get all payments (paid/unpaid) for a specific user
+    List<Payment> findByUserId(Long userId);
+    
+    
 }
