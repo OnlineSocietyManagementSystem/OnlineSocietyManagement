@@ -139,7 +139,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		
-<<<<<<< HEAD
 		
 <!-- https://mvnrepository.com/artifact/com.twilio.sdk/twilio -->
 <dependency>
@@ -148,7 +147,6 @@
     <version>9.4.0</version>
 </dependency>
 
-=======
 		<!-- Apache PDFBox for PDF generation -->
 <dependency>
     <groupId>org.apache.pdfbox</groupId>
@@ -176,7 +174,6 @@
         <version>1.6.2</version>
     </dependency>
 
->>>>>>> main
 		
 		</dependencies>
 		<build>
