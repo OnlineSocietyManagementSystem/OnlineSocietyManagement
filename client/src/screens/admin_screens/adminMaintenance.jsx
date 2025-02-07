@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../../components/sidebar";
 import { toast } from "react-toastify";
+import ReactPaginate from "react-paginate";
 
 function AdminMaintenance() {
   const [amount, setAmount] = useState("");
   const [paymentType, setPaymentType] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [payments, setPayments] = useState([]);
+  const [currentPaidPage, setCurrentPaidPage] = useState(0);
+  const [currentUnpaidPage, setCurrentUnpaidPage] = useState(0);
+  const paymentsPerPage = 10;
 
   // Fetch all payments
   useEffect(() => {
@@ -55,6 +59,20 @@ function AdminMaintenance() {
   // Filter payments based on status
   const paidPayments = payments.filter(payment => payment.status === "PAID");
   const unpaidPayments = payments.filter(payment => payment.status !== "PAID");
+
+  // Pagination for Paid Payments
+  const paidPageCount = Math.ceil(paidPayments.length / paymentsPerPage);
+  const paidPaymentsToShow = paidPayments.slice(currentPaidPage * paymentsPerPage, (currentPaidPage + 1) * paymentsPerPage);
+  const handlePaidPageChange = ({ selected }) => {
+    setCurrentPaidPage(selected);
+  };
+
+  // Pagination for Unpaid Payments
+  const unpaidPageCount = Math.ceil(unpaidPayments.length / paymentsPerPage);
+  const unpaidPaymentsToShow = unpaidPayments.slice(currentUnpaidPage * paymentsPerPage, (currentUnpaidPage + 1) * paymentsPerPage);
+  const handleUnpaidPageChange = ({ selected }) => {
+    setCurrentUnpaidPage(selected);
+  };
 
   return (
     <div className="d-flex">
@@ -123,16 +141,16 @@ function AdminMaintenance() {
             <table className="table table-striped">
               <thead>
                 <tr>
-                  <th>Id</th>
+                  <th>Name</th>
                   <th>Amount</th>
                   <th>Payment Type</th>
                   <th>Due Date</th>
                 </tr>
               </thead>
               <tbody>
-                {paidPayments.map((payment) => (
+                {paidPaymentsToShow.map((payment) => (
                   <tr key={payment.id}>
-                    <td>{payment.id}</td>
+                    <td>{payment.firstName}{" "}{payment.lastName}</td>
                     <td>{payment.amount}</td>
                     <td>{payment.paymentType}</td>
                     <td>{payment.dueDate}</td>
@@ -140,6 +158,14 @@ function AdminMaintenance() {
                 ))}
               </tbody>
             </table>
+            <ReactPaginate
+              previousLabel={"Previous"}
+              nextLabel={"Next"}
+              pageCount={paidPageCount}
+              onPageChange={handlePaidPageChange}
+              containerClassName={"pagination"}
+              activeClassName={"active"}
+            />
           </div>
         </div>
 
@@ -152,16 +178,16 @@ function AdminMaintenance() {
             <table className="table table-striped">
               <thead>
                 <tr>
-                  <th>Id</th>
+                  <th>Name</th>
                   <th>Amount</th>
                   <th>Payment Type</th>
                   <th>Due Date</th>
                 </tr>
               </thead>
               <tbody>
-                {unpaidPayments.map((payment) => (
+                {unpaidPaymentsToShow.map((payment) => (
                   <tr key={payment.id}>
-                    <td>{payment.id}</td>
+                    <td>{payment.firstName}{" "}{payment.lastName}</td>
                     <td>{payment.amount}</td>
                     <td>{payment.paymentType}</td>
                     <td>{payment.dueDate}</td>
@@ -169,6 +195,14 @@ function AdminMaintenance() {
                 ))}
               </tbody>
             </table>
+            <ReactPaginate
+              previousLabel={"Previous"}
+              nextLabel={"Next"}
+              pageCount={unpaidPageCount}
+              onPageChange={handleUnpaidPageChange}
+              containerClassName={"pagination"}
+              activeClassName={"active"}
+            />
           </div>
         </div>
       </div>
