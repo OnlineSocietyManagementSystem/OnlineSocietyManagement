@@ -17,4 +17,6 @@ public class PaymentResDto extends BaseDto{
 	    private String paymentType;
 	    private LocalDate dueDate;
 	    private PaymentStatus status;
+	    private String firstName;
+	    private String lastName;
 }
