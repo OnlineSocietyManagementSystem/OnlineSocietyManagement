@@ -9,6 +9,7 @@ function AdminNotices() {
     title: "",
     description: "",
   });
+  const [showForm, setShowForm] = useState(false);
 
   // Fetch notices from the API
   useEffect(() => {
@@ -46,6 +47,7 @@ function AdminNotices() {
       setNewNotice({ title: "", description: "" });
       fetchNotices();
       toast.success("Notice added successfully.");
+      setShowForm(false);
     } catch (error) {
       console.error("Error adding notice:", error);
       toast.error("Error adding notice.");
@@ -55,16 +57,13 @@ function AdminNotices() {
   const handleDelete = async (noticeId) => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(
-        `http://localhost:8080/delete-notice/${noticeId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.delete(`http://localhost:8080/delete-notice/${noticeId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       toast.success("Notice deleted successfully.");
-      fetchNotices(); 
+      fetchNotices();
     } catch (error) {
       toast.error("Error deleting notice.");
       console.error("Error deleting notice:", error);
@@ -76,45 +75,57 @@ function AdminNotices() {
       <Sidebar />
 
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
-        {/* Add Navbar at the top using Bootstrap classes */}
-        <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#e3d5f5" }}>
-          <span className="navbar-brand fw-bold fs-3 px-4" >Notices</span>
+        <nav
+          className="navbar navbar-expand-lg navbar-light mb-4"
+          style={{ backgroundColor: "#A9B5DF" }}
+        >
+          <span className="navbar-brand fw-bold fs-3 px-4">Notices</span>
         </nav>
 
-        {/* Notice Form */}
-        <div className="card mb-4">
-          <div className="card-header">
-            <strong>Add New Notice</strong>
+        {showForm ? (
+          <div className="card mb-4">
+            {/* <div className="card-header">
+              <strong>Add New Notice</strong>
+            </div> */}
+            <div className="card-body">
+              <form onSubmit={handleFormSubmit}>
+                <div className="mb-3">
+                  <label className="form-label fw-bold">Title</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="title"
+                    value={newNotice.title}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label fw-bold">Description</label>
+                  <textarea
+                    className="form-control"
+                    name="description"
+                    value={newNotice.description}
+                    onChange={handleInputChange}
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" className="btn btn-primary fw-bold">
+                  Add Notice
+                </button>
+              </form>
+            </div>
           </div>
-          <div className="card-body">
-            <form onSubmit={handleFormSubmit}>
-              <div className="mb-3">
-                <label className="form-label">Title</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="title"
-                  value={newNotice.title}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Description</label>
-                <textarea
-                  className="form-control"
-                  name="description"
-                  value={newNotice.description}
-                  onChange={handleInputChange}
-                  required
-                ></textarea>
-              </div>
-              <button type="submit" className="btn btn-primary">
-                Add Notice
-              </button>
-            </form>
+        ) : (
+          <div className="text-center">
+            <button
+              className="btn btn-primary mb-4"
+              onClick={() => setShowForm(true)}
+            >
+              Click here to add a notice
+            </button>
           </div>
-        </div>
+        )}
 
         {notices.length > 0 ? (
           <div className="row row-cols-1 row-cols-md-2 g-4">
@@ -124,8 +135,8 @@ function AdminNotices() {
                   <div
                     className="card-header"
                     style={{
-                      backgroundColor: "#e3d5f5",
-                      color: "#23044a",
+                      backgroundColor: "#2D336B",
+                      color: "rgb(255, 255, 255)",
                       fontWeight: "bold",
                     }}
                   >
@@ -139,19 +150,12 @@ function AdminNotices() {
                       </span>
                     </div>
                   </div>
-                  <div
-                    className="card-body"
-                    style={{ backgroundColor: "#f6edf9" }}
-                  >
-                    <p className="card-text text-dark">
-                      {notice.description}
-                    </p>
+                  <div className="card-body">
+                    <p className="card-text text-dark">{notice.description}</p>
                   </div>
                   <div className="card-footer text-muted">
                     <div className="d-flex justify-content-between align-items-center">
-                      <p className="mb-0 fw-bold">
-                        Date: {notice.createdOn}
-                      </p>
+                      <p className="mb-0 fw-bold">Date: {notice.createdOn}</p>
                       <button
                         className="btn btn-danger btn-sm"
                         onClick={() => handleDelete(notice.id)}

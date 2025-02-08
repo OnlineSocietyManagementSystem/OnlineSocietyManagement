@@ -108,7 +108,7 @@ function MemberMaintenance() {
         {/* Add Navbar at the top using Bootstrap classes */}
         <nav
           className="navbar navbar-expand-lg navbar-light mb-4"
-          style={{ backgroundColor: "#e3d5f5" }}
+          style={{ backgroundColor: "#A9B5DF" }}
         >
           <span className="navbar-brand fw-bold fs-3 px-4">Maintenance</span>
         </nav>
