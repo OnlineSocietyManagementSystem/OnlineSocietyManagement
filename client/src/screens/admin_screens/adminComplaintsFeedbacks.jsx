@@ -44,30 +44,47 @@ function AdminComplaintsFeedbacks() {
       <Sidebar />
 
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
-        {/* Add Navbar at the top using Bootstrap classes */}
-        <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#e3d5f5" }}>
-          <span className="navbar-brand fw-bold fs-3 px-4" >Complaints & Feedbacks</span>
+        <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#A9B5DF" }}>
+          <span className="navbar-brand fw-bold fs-3 px-4" style={{ color: "#2D336B" }}>Complaints & Feedbacks</span>
         </nav>
 
-        <h2 className="mb-4 fw-bold">Complaints</h2>
-        <div className="row">
+        <h2 className="mb-4 fw-bold" style={{ color: "#2D336B" }}>Complaints</h2>
+        <div className="row row-cols-1 row-cols-md-2 g-4">
           {complaints.map((complaint) => (
-            <div className="col-md-6 mb-3" key={complaint.id}>
-              <div
-                className="card"
-                style={{ backgroundColor: "#f8d7da", borderColor: "#f5c6cb" }}
-              >
-                <div className="card-body">
-                  <h5 className="card-title fw-bold">
-                    Title: {complaint.title}
-                  </h5>
-                  <p className="card-text fw-bold fs-5">
-                    Description: {complaint.description}
+            <div key={complaint.id} className="col">
+              <div className="card border-0 shadow">
+                <div
+                  className="card-header"
+                  style={{
+                    backgroundColor: "#2D336B",
+                    color: "#FFF2F2",
+                    fontWeight: "bold",
+                  }}
+                >
+                  <div className="d-flex justify-content-between">
+                    <span>{complaint.title}</span>
+                    <span
+                      className="badge"
+                      style={{ backgroundColor: "#7886C7", color: "#FFF2F2" }}
+                    >
+                      {complaint.date}
+                    </span>
+                  </div>
+                </div>
+                <div
+                  className="card-body"
+                  // style={{ backgroundColor: "#A9B5DF" }}
+                >
+                  <p className="card-text text-dark">
+                    {complaint.description}
                   </p>
-                  <p className="card-text fw-bold fs-5">Name: {complaint.userName}</p>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    Creation Date: {complaint.creationDate}
-                  </h6>
+                </div>
+                <div className="card-footer text-muted">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p className="mb-0 fw-bold">
+                      Date: {complaint.creationDate}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -76,16 +93,33 @@ function AdminComplaintsFeedbacks() {
 
         <hr />
 
-        <h2 className="mt-4 mb-4 fw-bold">Feedbacks</h2>
-        <div className="row">
+        <h2 className="mt-4 mb-4 fw-bold" style={{ color: "#2D336B" }}>Feedbacks</h2>
+        <div className="row row-cols-1 row-cols-md-2 g-4">
           {feedbacks.map((feedback) => (
-            <div className="col-12 mb-3" key={feedback.id}>
-              <div
-                className="card"
-                style={{ backgroundColor: "#d4edda", borderColor: "#c3e6cb" }}
-              >
-                <div className="card-body">
-                  <p className="card-text fw-bold fs-5">{feedback.content}</p>
+            <div key={feedback.id} className="col">
+              <div className="card border-0 shadow">
+                <div
+                  className="card-header"
+                  style={{
+                    backgroundColor: "#2D336B",
+                    color: "#FFF2F2",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Feedback
+                </div>
+                <div
+                  className="card-body"
+                  // style={{ backgroundColor: "#A9B5DF" }}
+                >
+                  <p className="card-text text-dark">
+                    {feedback.content}
+                  </p>
+                </div>
+                <div className="card-footer text-muted">
+                  <p className="mb-0 fw-bold">
+                    Date: {feedback.createdOn}
+                  </p>
                 </div>
               </div>
             </div>
