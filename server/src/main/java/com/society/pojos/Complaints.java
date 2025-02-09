@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Table(name="complaints")
 public class Complaints extends BaseEntity{
 	
@@ -23,10 +23,26 @@ public class Complaints extends BaseEntity{
 	
 	@Enumerated(EnumType.STRING)  
 	private ComplaintStatus status;
+	
+	@Enumerated(EnumType.STRING)  
+	private ActivityStatus activityStatus;
+	
+
+	public Complaints(String title, String description, ComplaintStatus status, ActivityStatus activityStatus,
+			User user) {
+		super();
+		this.title = title;
+		this.description = description;
+		this.status = status;
+		this.activityStatus = ActivityStatus.ACTIVE;
+		this.user = user;
+	}
+
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+	
 	
 	
 	

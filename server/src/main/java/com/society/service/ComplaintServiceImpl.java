@@ -15,8 +15,10 @@ import com.society.dtos.ApiResponse;
 import com.society.dtos.ComplaintByIdDto;
 import com.society.dtos.ComplaintDto;
 import com.society.dtos.ComplaintResDto;
+import com.society.pojos.ActivityStatus;
 import com.society.pojos.ComplaintStatus;
 import com.society.pojos.Complaints;
+import com.society.pojos.Events;
 import com.society.pojos.User;
 
 @Service
@@ -47,7 +49,8 @@ public class ComplaintServiceImpl implements ComplaintService {
 
 		// Manually set properties that are not in DTO
 
-		complaint.setStatus(ComplaintStatus.PENDING); // Automatically set status
+		complaint.setStatus(ComplaintStatus.PENDING);
+		complaint.setActivityStatus(ActivityStatus.ACTIVE);// Automatically set status
 		complaint.setUser(user); // Set the user entity (foreign key)
 
 		// Save to the database
@@ -60,7 +63,7 @@ public class ComplaintServiceImpl implements ComplaintService {
 
 	@Override
 	public List<ComplaintResDto> getAllComplaints() {
-		List<Complaints> complaints = complaintDao.findAll();
+		List<Complaints> complaints = complaintDao.findByActivityStatus(ActivityStatus.ACTIVE);
 		return complaints.stream().map(ComplaintResDto::new).collect(Collectors.toList());
 	}
 	// -------------------get complaints by ID------------------------
@@ -70,7 +73,7 @@ public class ComplaintServiceImpl implements ComplaintService {
 		Optional<User> optionalUser = userDao.findByEmail(email);
 		User user = optionalUser.get();
 		Long userId = user.getId();
-		List<Complaints> complaints = complaintDao.findByUserId(userId);
+		List<Complaints> complaints = complaintDao.findByUserIdAndActivityStatus(userId,ActivityStatus.ACTIVE);
 		return complaints.stream().map(ComplaintByIdDto::new).collect(Collectors.toList());
 	}
 
@@ -87,8 +90,9 @@ public class ComplaintServiceImpl implements ComplaintService {
 		if(!optionalComplaint.isPresent()) {
 			return new ApiResponse("Complaint not found");
 		}
+		    Complaints complaint= optionalComplaint.get();
+		    complaint.setActivityStatus(ActivityStatus.INACTIVE);
 		
-		complaintDao.delete(optionalComplaint.get());
 		return new ApiResponse("Complaint deleted successfully");
 	}
 }

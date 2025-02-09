@@ -14,6 +14,7 @@ import com.society.daos.UserDao;
 import com.society.dtos.ApiResponse;
 import com.society.dtos.EventDto;
 import com.society.dtos.EventResponseDto;
+import com.society.pojos.ActivityStatus;
 import com.society.pojos.Events;
 import com.society.pojos.User;
 
@@ -46,7 +47,7 @@ public class EventServiceImpl implements EventService{
 		   User user= optionalUser.get();
 		   
 		   Events event =mapper.map(eventDto, Events.class);
-		   
+		   event.setStatus(ActivityStatus.ACTIVE);
 		   event.setUser(user);
 		
 //		if(eventDto.getUserId() != null) {
@@ -61,7 +62,7 @@ public class EventServiceImpl implements EventService{
 	@Override
 	public List<EventResponseDto> getAllEvents() {
 		
-		return eventDao.findAll()
+		return eventDao.findByStatus(ActivityStatus.ACTIVE)
 				.stream()
 				.map(event -> 
 				mapper.map(event, EventResponseDto.class))
@@ -69,20 +70,22 @@ public class EventServiceImpl implements EventService{
 	}
 
 	  @Override
-	    public ApiResponse deleteEvent(Long eventId, String email) {
-	        Optional<User> optionalUser = userDao.findByEmail(email);
+	  public ApiResponse deleteEvent(Long eventId, String email) {
+		    Optional<User> optionalUser = userDao.findByEmail(email);
 
-	        if (!optionalUser.isPresent()) {
-	            return new ApiResponse("Unauthorized access!");
-	        }
-
-	        Optional<Events> optionalEvent = eventDao.findById(eventId);
-	        if (!optionalEvent.isPresent()) {
+		    if (!optionalUser.isPresent()) {
+		        return new ApiResponse("Unauthorized access!");
+		    }
+		    Optional<Events> optionalEvent = eventDao.findById(eventId);
+		    // Check if the event exists before attempting to soft delete
+		    if (!optionalEvent.isPresent()) {
 	            return new ApiResponse("Event not found!");
 	        }
+		    Events event = optionalEvent.get();
+		    event.setStatus(ActivityStatus.INACTIVE);
+		    //eventDao.softDeleteById(eventId);
+		    return new ApiResponse("Event  deleted successfully");
+		}
 
-	        eventDao.delete(optionalEvent.get());
-	        return new ApiResponse("Event deleted successfully");
-	    }
 
 }
