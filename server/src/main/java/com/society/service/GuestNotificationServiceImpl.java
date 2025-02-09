@@ -106,7 +106,7 @@ public class GuestNotificationServiceImpl implements GuestNotificationService {
 	    
 	    return "Guest: " + notification.getGuestName() + 
 	           ", Status: " + notification.getStatus().name() +
-	           "Username : " + user.getFirstName() + " " + user.getLastName();
+	           " Username : " + user.getFirstName() + " " + user.getLastName();
 	}
 
 
