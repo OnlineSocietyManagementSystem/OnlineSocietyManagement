@@ -48,17 +48,28 @@ function GuardPage() {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:8080/notify-member", formData);
-      console.log(response.data);
+      const notificationId = response.data.notificationId;
+      console.log(notificationId);
+
+      // Store the notificationId in local storage
+      localStorage.setItem("notificationId", notificationId);
+
       setShowForm(false);
       toast.success("Message sent successfully.. wait for response");
+      fetchNotification(notificationId);
     } catch (error) {
       console.error("error sending notification", error);
     }
-    // fetchNotification();
   };
 
   useEffect(() => {
     fetchMembers();
+
+    // Retrieve the notificationId from local storage and fetch notification details
+    const storedNotificationId = localStorage.getItem("notificationId");
+    if (storedNotificationId) {
+      fetchNotification(storedNotificationId);
+    }
   }, []);
 
   return (
@@ -171,9 +182,7 @@ function GuardPage() {
           }}
         >
           <h4>Notification Details</h4>
-          <p>
-            Guest: {notification.guestName}, Status: {notification.status}
-          </p>
+          <p className="fs-5 fw-bold">{notification}</p>
         </div>
       )}
     </div>
