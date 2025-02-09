@@ -1,6 +1,18 @@
 import { NavLink } from "react-router-dom";
 import "../App.css";
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
+import {
+  Dashboard as DashboardIcon,
+  Announcement as AnnouncementIcon,
+  Event as EventIcon,
+  Feedback as FeedbackIcon,
+  MeetingRoom as FacilityIcon,
+  AccountCircle as ProfileIcon,
+  ExitToApp as LogoutIcon,
+  AttachMoney as MoneyIcon,
+} from '@mui/icons-material';
+import HomeworkIcon from "@mui/icons-material/Homework";
+
 
 function Sidebar() {
   let role = null;
@@ -28,7 +40,7 @@ function Sidebar() {
           width: "20%",
           top: "0",
           left: "0",
-          backgroundColor: "#e3d5f5",
+          backgroundColor: "#A9B5DF",
         }}
       >
         <div
@@ -36,10 +48,11 @@ function Sidebar() {
           style={{ flex: 1 }}
         >
           <div
-            className="text-center mb-2 pb-3 mt-2"
+            className="text-center mb-2 pb-3 mt-2 d-flex align-items-center"
             style={{ borderBottom: "2px solid #23044a" }}
           >
-            <h4 className="text-dark fs-1 fw-bold ">SocioHub</h4>
+            <HomeworkIcon style={{ fontSize: 50, marginRight: "10px" }} />
+            <h4 className="text-dark fs-1 fw-bold">SocioHub</h4>
           </div>
 
           <ul className="nav flex-column text-start fs-5 fw-semibold mt-3 gap-4">
@@ -58,6 +71,7 @@ function Sidebar() {
                     : "nav-link"
                 }
               >
+                <DashboardIcon className="me-2" />
                 Dashboard
               </NavLink>
             </li>
@@ -71,6 +85,7 @@ function Sidebar() {
                       isActive ? "nav-link active-link" : "nav-link"
                     }
                   >
+                    <AnnouncementIcon className="me-2" />
                     Notices
                   </NavLink>
                 </li>
@@ -81,6 +96,7 @@ function Sidebar() {
                       isActive ? "nav-link active-link" : "nav-link"
                     }
                   >
+                    <MoneyIcon className="me-2" />
                     Maintenance
                   </NavLink>
                 </li>
@@ -91,6 +107,7 @@ function Sidebar() {
                       isActive ? "nav-link active-link" : "nav-link"
                     }
                   >
+                    <EventIcon className="me-2" />
                     Event Management
                   </NavLink>
                 </li>
@@ -101,6 +118,7 @@ function Sidebar() {
                       isActive ? "nav-link active-link" : "nav-link"
                     }
                   >
+                    <FeedbackIcon className="me-2" />
                     Complaints & Feedbacks
                   </NavLink>
                 </li>
@@ -111,6 +129,7 @@ function Sidebar() {
                       isActive ? "nav-link active-link" : "nav-link"
                     }
                   >
+                    <FacilityIcon className="me-2" />
                     Facility Booking
                   </NavLink>
                 </li>
@@ -121,6 +140,7 @@ function Sidebar() {
                       isActive ? "nav-link active-link" : "nav-link"
                     }
                   >
+                    <ProfileIcon className="me-2" />
                     Profile
                   </NavLink>
                 </li>
@@ -134,6 +154,7 @@ function Sidebar() {
                       isActive ? "nav-link active-link" : "nav-link"
                     }
                   >
+                    <AnnouncementIcon className="me-2" />
                     Notices
                   </NavLink>
                 </li>
@@ -144,6 +165,7 @@ function Sidebar() {
                       isActive ? "nav-link active-link" : "nav-link"
                     }
                   >
+                    <MoneyIcon className="me-2" />
                     Maintenance
                   </NavLink>
                 </li>
@@ -154,6 +176,7 @@ function Sidebar() {
                       isActive ? "nav-link active-link" : "nav-link"
                     }
                   >
+                    <EventIcon className="me-2" />
                     Event Management
                   </NavLink>
                 </li>
@@ -164,6 +187,7 @@ function Sidebar() {
                       isActive ? "nav-link active-link" : "nav-link"
                     }
                   >
+                    <FeedbackIcon className="me-2" />
                     Complaints & Feedbacks
                   </NavLink>
                 </li>
@@ -174,6 +198,7 @@ function Sidebar() {
                       isActive ? "nav-link active-link" : "nav-link"
                     }
                   >
+                    <FacilityIcon className="me-2" />
                     Facility Booking
                   </NavLink>
                 </li>
@@ -184,14 +209,15 @@ function Sidebar() {
                       isActive ? "nav-link active-link" : "nav-link"
                     }
                   >
+                    <ProfileIcon className="me-2" />
                     Profile
                   </NavLink>
                 </li>
-              </>
-            )}
+              </> )}
           </ul>
           <div>
             <button onClick={handleLogout} className="btn btn-danger mt-4">
+              <LogoutIcon className="me-2" />
               Logout
             </button>
           </div>

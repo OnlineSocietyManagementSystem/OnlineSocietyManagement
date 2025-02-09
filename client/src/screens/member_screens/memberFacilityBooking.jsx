@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/sidebar";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -12,7 +12,6 @@ function MemberFacilityBooking() {
   const [endTime, setEndTime] = useState("");
   const [purpose, setPurpose] = useState("");
   const [comments, setComments] = useState("");
-  const [status, setStatus] = useState("");
 
   useEffect(() => {
     fetchResources();
@@ -100,47 +99,63 @@ function MemberFacilityBooking() {
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
         <nav
           className="navbar navbar-expand-lg navbar-light mb-4"
-          style={{ backgroundColor: "#e3d5f5" }}
+          style={{ backgroundColor: "#A9B5DF" }}
         >
           <span className="navbar-brand fw-bold fs-3 px-4">
             Facility Booking
           </span>
         </nav>
 
-        <h2>Existing Resources</h2>
-        <div className="row">
+        <h2>Resources</h2>
+        <div className="row row-cols-1 row-cols-md-2 g-4 mb-4">
           {Array.isArray(resources) &&
             resources.map((resource, index) => (
-              <div className="col-md-6 mb-3" key={index}>
-                <div
-                  className="card"
-                  style={{
-                    backgroundColor:
-                      resource.status === "Unavailable" ? "#f8d7da" : "#dfe6e9",
-                    borderColor: "#b2bec3",
-                    cursor:
-                      resource.status !== "Unavailable"
-                        ? "pointer"
-                        : "not-allowed",
-                  }}
-                  onClick={() => handleBookNow(resource)}
-                >
+              <div key={index} className="col">
+                <div className="card border-0 shadow">
+                  <div
+                    className="card-header fs-4"
+                    style={{
+                      backgroundColor:
+                        resource.status === "Unavailable"
+                          ? "#2D336B"
+                          : "#A9B5DF",
+                      color: "2D336B",
+                      fontWeight: "bold",
+                      cursor:
+                        resource.status !== "Unavailable"
+                          ? "pointer"
+                          : "not-allowed",
+                    }}
+                    onClick={() => handleBookNow(resource)}
+                  >
+                    {resource.resourceType}
+                  </div>
                   <div className="card-body">
-                    <h5 className="card-title fw-bold fs-4">
-                      {resource.resourceType}
-                    </h5>
-                    <h6 className="card-subtitle mb-2 text-muted">
+                    <p className="card-text text-dark mb-1">
                       Description: {resource.description}
-                    </h6>
-                    <h6 className="card-subtitle mb-2 text-muted">
+                    </p>
+                    <p className="card-text text-dark mb-1">
                       Capacity: {resource.capacity}
-                    </h6>
-                    <h6 className="card-subtitle mb-2 text-muted">
+                    </p>
+                    <p className="card-text text-dark mb-0">
                       Booking Fee: {resource.bookingFee}
-                    </h6>
-                    <h6 className="card-subtitle mb-2 text-muted">
+                    </p>
+                    
+                  </div>
+                  <div className="card-footer">
+                    <div className="d-flex justify-content-between align-items-center">
+                    <p className="card-text text-dark fs-5 fw-bold">
                       Availability: {resource.status}
-                    </h6>
+                    </p>
+                      {resource.status !== "Unavailable" && (
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => handleBookNow(resource)}
+                        >
+                          Book Now
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -148,26 +163,48 @@ function MemberFacilityBooking() {
         </div>
 
         <h2>Booked Resources</h2>
-        <div className="row">
+        <div className="row row-cols-1 row-cols-md-2 g-4 mb-4 mt-2">
           {Array.isArray(bookedResources) &&
             bookedResources
               .filter((booking) => booking.status !== "CANCELLED")
               .map((booking, index) => (
-                <div className="col-md-6 mb-3" key={index}>
-                  <div className="card p-3">
-                    <h5 className="fw-bold">{booking.resourceType}</h5>
-                    <p>Date: {booking.bookingDate}</p>
-                    <p>
-                      Time: {booking.startTime} - {booking.endTime}
-                    </p>
-                    <p>comments: {booking.comments}</p>
-                    <p className="fw-bold">Status: {booking.status}</p>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => handleDeleteBooking(booking.id)}
+                <div key={index} className="col">
+                  <div className="card border-0 shadow ">
+                    <div
+                      className="card-header fs-5"
+                      style={{
+                        backgroundColor: "#2D336B",
+                        color: "rgb(255, 255, 255)",
+                        fontWeight: "bold",
+                      }}
                     >
-                      Cancel Booking
-                    </button>
+                      {booking.resourceType}
+                    </div>
+                    <div className="card-body">
+                      <p className="card-text text-dark mb-1">
+                        Comments: {booking.comments}
+                      </p>
+
+                      <p className="card-text text-dark mb-1">
+                        Date: {booking.bookingDate}
+                      </p>
+                      <p className="card-text text-dark mb-0">
+                        Time: {booking.startTime} - {booking.endTime}
+                      </p>
+                    </div>
+                    <div className="card-footer fs-5">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <p className="card-text fw-bold">
+                          Status: {booking.status}
+                        </p>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => handleDeleteBooking(booking.id)}
+                        >
+                          Cancel Booking
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}

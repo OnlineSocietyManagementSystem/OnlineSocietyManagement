@@ -9,6 +9,8 @@ function MemberComplaintsFeedbacks() {
   const [feedbackContent, setFeedbackContent] = useState("");
   const [feedbacks, setFeedbacks] = useState([]);
   const [complaints, setComplaints] = useState([]);
+  const [showComplaintForm, setShowComplaintForm] = useState(false);
+  const [showFeedbackForm, setShowFeedbackForm] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -19,7 +21,7 @@ function MemberComplaintsFeedbacks() {
 
   const fetchFeedbacks = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/all-feedbacks", { // here we have to add my -feedbacks
+      const response = await axios.get("http://localhost:8080/all-feedbacks", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -65,6 +67,7 @@ function MemberComplaintsFeedbacks() {
       // Fetch updated complaints to display the new one
       toast.success("Complaint added successfully.");
       fetchComplaints();
+      setShowComplaintForm(false); // Hide form after submission
     } catch (error) {
       console.error("Error adding complaint:", error);
     }
@@ -90,7 +93,7 @@ function MemberComplaintsFeedbacks() {
 
   const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
-// new comment 
+
     const feedbackData = { content: feedbackContent };
 
     try {
@@ -108,6 +111,7 @@ function MemberComplaintsFeedbacks() {
       setFeedbackContent("");
       // Fetch updated feedbacks to display the new one
       fetchFeedbacks();
+      setShowFeedbackForm(false); // Hide form after submission
     } catch (error) {
       console.error("Error adding feedback:", error);
     }
@@ -137,61 +141,102 @@ function MemberComplaintsFeedbacks() {
 
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
         {/* Add Navbar at the top using Bootstrap classes */}
-        <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#e3d5f5" }}>
-          <span className="navbar-brand fw-bold fs-3 px-4" >Complaints & Feedbacks</span>
+        <nav
+          className="navbar navbar-expand-lg navbar-light mb-4"
+          style={{ backgroundColor: "#A9B5DF" }}
+        >
+          <span className="navbar-brand fw-bold fs-3 px-4">
+            Complaints & Feedbacks
+          </span>
         </nav>
 
-        <h2 className="mb-4 fw-bold">Add Complaint</h2>
-        <form onSubmit={handleComplaintSubmit}>
-          <div className="mb-3">
-            <label htmlFor="title" className="form-label">
-              Title
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
+        {/* <h2 className="mb-4 fw-bold">Add Complaint</h2> */}
+        {showComplaintForm ? (
+          <form onSubmit={handleComplaintSubmit}>
+            <div className="mb-3">
+              <label htmlFor="title" className="form-label">
+                Title
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">
+                Description
+              </label>
+              <textarea
+                className="form-control"
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              className="btn btn-danger btn-lg fw-bold mb-3"
+            >
+              Add Complaint
+            </button>
+          </form>
+        ) : (
+          <div className="text-center">
+            <button
+              className="btn btn-primary mb-4 fs-5 fw-bold"
+              onClick={() => setShowComplaintForm(true)}
+            >
+              Click here to add a complaint
+            </button>
           </div>
-          <div className="mb-3">
-            <label htmlFor="description" className="form-label">
-              Description
-            </label>
-            <textarea
-              className="form-control"
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            ></textarea>
-          </div>
-          <button type="submit" className="btn btn-danger btn-lg fw-bold">
-            Add Complaint
-          </button>
-        </form>
+        )}
 
-        <h2 className="mt-4 mb-4 fw-bold">Complaints</h2>
-        <div className="row">
+        <h2 className="mb-4 fw-bold" style={{ color: "#2D336B" }}>
+          Complaints
+        </h2>
+        <div className="row row-cols-1 row-cols-md-2 g-4">
           {complaints.map((complaint) => (
-            <div className="col-md-6 mb-3" key={complaint.id}>
-              <div
-                className="card"
-                style={{ backgroundColor: "#f8d7da", borderColor: "#f5c6cb" }}
-              >
-                <div className="card-body">
-                  <h5 className="card-title fw-bold">{complaint.title}</h5>
-                  <p className="card-text fw-bold fs-5">
-                    {complaint.description}
-                  </p>
-                  <button
+            <div key={complaint.id} className="col">
+              <div className="card border-0 shadow">
+                <div
+                  className="card-header"
+                  style={{
+                    backgroundColor: "#2D336B",
+                    color: "#FFF2F2",
+                    fontWeight: "bold",
+                  }}
+                >
+                  <div className="d-flex justify-content-between">
+                    <span>{complaint.title}</span>
+                    <span
+                      className="badge"
+                      style={{ backgroundColor: "#7886C7", color: "#FFF2F2" }}
+                    >
+                      {complaint.date}
+                    </span>
+                  </div>
+                </div>
+                <div
+                  className="card-body"
+                  // style={{ backgroundColor: "#A9B5DF" }}
+                >
+                  <p className="card-text text-dark">{complaint.description}</p>
+                </div>
+                <div className="card-footer text-muted">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p className="mb-0 fw-bold">Date: {complaint.createdOn}</p>
+                    <button
                       className="btn btn-danger btn-sm"
                       onClick={() => handleDeleteComplaints(complaint.id)}
                     >
                       Delete
                     </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -200,38 +245,62 @@ function MemberComplaintsFeedbacks() {
 
         <hr />
 
-        <h2 className="mt-4 mb-4 fw-bold">Add Feedback</h2>
-        <form onSubmit={handleFeedbackSubmit}>
-          <div className="mb-3">
-            <label htmlFor="feedbackContent" className="form-label">
-              Content
-            </label>
-            <textarea
-              className="form-control"
-              id="feedbackContent"
-              value={feedbackContent}
-              onChange={(e) => setFeedbackContent(e.target.value)}
-              required
-            ></textarea>
+        {/* <h2 className="mt-4 mb-4 fw-bold">Add Feedback</h2> */}
+        {showFeedbackForm ? (
+          <form onSubmit={handleFeedbackSubmit}>
+            <div className="mb-3">
+              <label htmlFor="feedbackContent" className="form-label">
+                Content
+              </label>
+              <textarea
+                className="form-control"
+                id="feedbackContent"
+                value={feedbackContent}
+                onChange={(e) => setFeedbackContent(e.target.value)}
+                required
+              ></textarea>
+            </div>
+            <button type="submit" className="btn btn-success btn-lg fw-bold">
+              Add Feedback
+            </button>
+          </form>
+        ) : (
+          <div className="text-center">
+            <button
+              className="btn btn-primary mb-2 fs-5 fw-bold"
+              onClick={() => setShowFeedbackForm(true)}
+            >
+              Click here to add feedback
+            </button>
           </div>
-          <button type="submit" className="btn btn-success btn-lg fw-bold">
-            Add Feedback
-          </button>
-        </form>
+        )}
 
-        <h2 className="mt-4 mb-4 fw-bold">Feedbacks</h2>
-        <div className="row">
+        <h2 className="mt-4 mb-4 fw-bold" style={{ color: "#2D336B" }}>
+          Feedbacks
+        </h2>
+        <div className="row row-cols-1 row-cols-md-2 g-4">
           {feedbacks.map((feedback) => (
-            <div className="col-md-6 mb-3" key={feedback.id}>
-              <div
-                className="card"
-                style={{ backgroundColor: "#d4edda", borderColor: "#c3e6cb" }}
-              >
-                <div className="card-body">
+            <div key={feedback.id} className="col">
+              <div className="card border-0 shadow">
+                <div
+                  className="card-header"
+                  style={{
+                    backgroundColor: "#2D336B",
+                    color: "#FFF2F2",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Feedback
+                </div>
+                <div
+                  className="card-body"
+                  // style={{ backgroundColor: "#A9B5DF" }}
+                >
+                  <p className="card-text text-dark">{feedback.content}</p>
+                </div>
+                <div className="card-footer text-muted ">
                   <div className="d-flex justify-content-between align-items-center">
-                    <p className="card-text fw-bold fs-5 mb-0">
-                      {feedback.content}
-                    </p>
+                    <p className="mb-0 fw-bold">Date: {feedback.createdOn}</p>
                     <button
                       className="btn btn-danger btn-sm"
                       onClick={() => handleDeleteFeedback(feedback.id)}

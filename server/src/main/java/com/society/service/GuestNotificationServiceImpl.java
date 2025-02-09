@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.society.custom_exceptions.ApiException;
 import com.society.daos.GuestNotificationDao;
 import com.society.daos.SecurityGuardDao;
 import com.society.daos.UserDao;
 import com.society.dtos.GuestNotificationDto;
+import com.society.dtos.GuestNotificationResponseDto;
 import com.society.pojos.GuestNotification;
 import com.society.pojos.NotificationStatus;
 import com.society.pojos.SecurityGuard;
@@ -46,6 +48,7 @@ public class GuestNotificationServiceImpl implements GuestNotificationService {
 				.orElseThrow(() -> new RuntimeException("Notification not found"));
 		notification.setStatus(NotificationStatus.APPROVED);
 		guestNotificationDao.save(notification);
+		
 	}
 
 	@Override
@@ -57,30 +60,56 @@ public class GuestNotificationServiceImpl implements GuestNotificationService {
 	}
 
 	@Override
-	public String notifyGuestArrival(GuestNotificationDto dto) {
-		User member = userDao.findById(dto.getUserId()).orElseThrow(() -> new RuntimeException("Member not found"));
+	public GuestNotificationResponseDto notifyGuestArrival(GuestNotificationDto dto) {
+	    User member = userDao.findById(dto.getUserId())
+	            .orElseThrow(() -> new RuntimeException("Member not found"));
 
-		SecurityGuard securityGuard = securityGuardDao.findById(dto.getSecurityGuardId())
-				.orElseThrow(() -> new RuntimeException("Security Guard not found"));
+	    SecurityGuard securityGuard = securityGuardDao.findById(dto.getSecurityGuardId())
+	            .orElseThrow(() -> new RuntimeException("Security Guard not found"));
 
-		GuestNotification notification = new GuestNotification();
-		notification.setMember(member);
-		notification.setGuestName(dto.getGuestName());
-		notification.setArrivalTime(LocalDateTime.now());
-		notification.setStatus(NotificationStatus.PENDING);
-		notification.setSecurityGuard(securityGuard);
+	    GuestNotification notification = new GuestNotification();
+	    notification.setMember(member);
+	    notification.setGuestName(dto.getGuestName());
+	    notification.setArrivalTime(LocalDateTime.now());
+	    notification.setStatus(NotificationStatus.PENDING);
+	    notification.setSecurityGuard(securityGuard);
 
-		guestNotificationDao.save(notification);
+	    // Save notification and retrieve the generated ID
+	    GuestNotification savedNotification = guestNotificationDao.save(notification);
+	    Long notificationId = savedNotification.getId();
 
-		 String formattedPhoneNumber = "+91" + member.getPhone();
-		// Logic to send notification to the member (e.g., SMS, email, or app
-		// notification)
-		// Here, we simulate by returning a message
-		String smsMessage = "Hello " + member.getFirstName() + member.getLastName() + ", your guest "
-				+ dto.getGuestName() + " has arrived at the gate. Please confirm their entry.";
-		twilioService.sendSms(formattedPhoneNumber, smsMessage);
-		
-		return "Notification sent to " + member.getFirstName() +member.getLastName()+ " for guest " + dto.getGuestName();
+	    // Format phone number
+	    String formattedPhoneNumber = "+91" + member.getPhone();
+
+	    // Send SMS notification
+	    String smsMessage = "Hello " + member.getFirstName() + " " + member.getLastName() +
+	                        ", your guest " + dto.getGuestName() + " has arrived at the gate. " +
+	                        "Please confirm their entry. Notification ID: " + notificationId;
+	    twilioService.sendSms(formattedPhoneNumber, smsMessage);
+
+	    // Return response DTO
+	    return new GuestNotificationResponseDto(notificationId, 
+	            "Notification sent to " + member.getFirstName() + " " + member.getLastName() + 
+	            " for guest " + dto.getGuestName() + ".");
 	}
+
+	
+	
+	
+	@Override
+	public String getGuestStatusForGuard(Long notificationId) {
+	    GuestNotification notification = guestNotificationDao.findById(notificationId)
+	            .orElseThrow(() -> new RuntimeException("Notification not found"));
+
+	    User user = userDao.findById(notification.getMember().getId()).orElseThrow(()-> new ApiException("User not found for given notification Id "));
+	    
+	    
+	    return " Name : " + user.getFirstName() + " " + user.getLastName()+
+	    		", Guest: " + notification.getGuestName() + 
+	           ", Status: " + notification.getStatus().name() ;
+	           
+	}
+
+
 
 }

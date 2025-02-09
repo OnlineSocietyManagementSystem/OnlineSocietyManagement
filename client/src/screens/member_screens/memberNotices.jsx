@@ -25,7 +25,7 @@ function MemberNotices() {
 
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
         {/* Add Navbar at the top using Bootstrap classes */}
-        <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#e3d5f5" }}>
+        <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#A9B5DF" }}>
           <span className="navbar-brand fw-bold fs-3 px-4" >Notices</span>
         </nav>
 
@@ -44,8 +44,8 @@ function MemberNotices() {
                   <div
                     className="card-header"
                     style={{
-                      backgroundColor: "#e3d5f5",
-                      color: "#23044a",
+                      backgroundColor: "#2D336B",
+                      color: "rgb(255, 255, 255)",
                       fontWeight: "bold",
                     }}
                   >
@@ -61,7 +61,6 @@ function MemberNotices() {
                   </div>
                   <div
                     className="card-body"
-                    style={{ backgroundColor: "#f6edf9" }}
                   >
                     <p className="card-text text-dark">
                       {notice.description}

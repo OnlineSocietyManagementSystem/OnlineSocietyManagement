@@ -24,6 +24,7 @@ import AdminNotices from './screens/admin_screens/adminNotices';
 import MemberNotices from './screens/member_screens/memberNotices';
 
 import ProtectedRoute from './screens/auth_screens/ProtectedRoute'; // Ensure correct import path
+import GuardPage from './screens/auth_screens/GuardPage';
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/signin" element={<Login />} />
+        <Route path="/guestpage" element={<GuardPage />} />
+        
 
         <Route path="/member-dashboard" element={<ProtectedRoute element={MemberDashboard} />} />
         <Route path="/member-announcements" element={<ProtectedRoute element={MemberNotices} />} />

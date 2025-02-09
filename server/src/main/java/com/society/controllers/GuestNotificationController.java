@@ -4,6 +4,7 @@ import com.society.dtos.GuestNotificationDto;
 import com.society.service.GuestNotificationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,9 +16,9 @@ public class GuestNotificationController {
     private GuestNotificationService guestNotificationService;
 
     
-    @PostMapping("/notify")
-    public String notifyGuest(@RequestBody GuestNotificationDto dto) {
-        return guestNotificationService.notifyGuestArrival(dto);
+    @PostMapping("/notify-member")
+    public ResponseEntity<?> notifyGuest(@RequestBody GuestNotificationDto dto) {
+    	return ResponseEntity.ok(guestNotificationService.notifyGuestArrival(dto));
     }
 
     @GetMapping("/pending/{memberId}")
@@ -36,4 +37,18 @@ public class GuestNotificationController {
         guestNotificationService.rejectGuest(notificationId);
         return "Guest rejected!";
     }
+    
+//    @GetMapping("/notify-guard")
+//    public String notifyGuard(@PathVariable Long notificationId) {
+//        guestNotificationService.notifyGuard(notificationId);
+//        return "Guest rejected!";
+//    }
+   
+    
+    @GetMapping("/notify-guard/{notificationId}")
+    public String getGuestStatusForGuard(@PathVariable Long notificationId) {
+        return guestNotificationService.getGuestStatusForGuard(notificationId);
+    }
+
+    
 }
