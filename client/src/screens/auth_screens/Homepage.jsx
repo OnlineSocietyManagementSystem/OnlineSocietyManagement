@@ -11,19 +11,52 @@ const Homepage = () => {
   const navigate = useNavigate();
 
   const facilities = [
-    { title: "Swimming Pool", description: "State-of-the-art swimming pool with lifeguard.", image: swimmingPool },
-    { title: "Gym", description: "Fully equipped gym with personal trainers available.", image: gym },
-    { title: "Clubhouse", description: "Spacious clubhouse for events and gatherings.", image: clubHouse },
-    { title: "Tennis Court", description: "Professional grade tennis court with coaching.", image: tennisCourt },
-    { title: "Garden", description: "Beautiful garden with walking paths and benches.", image: garden },
-    { title: "Library", description: "Quiet library with a wide collection of books and study areas.", image: library }
-];
-
+    {
+      title: "Swimming Pool",
+      description: "State-of-the-art swimming pool with lifeguard.",
+      image: swimmingPool,
+    },
+    {
+      title: "Gym",
+      description: "Fully equipped gym with personal trainers available.",
+      image: gym,
+    },
+    {
+      title: "Clubhouse",
+      description: "Spacious clubhouse for events and gatherings.",
+      image: clubHouse,
+    },
+    {
+      title: "Tennis Court",
+      description: "Professional grade tennis court with coaching.",
+      image: tennisCourt,
+    },
+    {
+      title: "Garden",
+      description: "Beautiful garden with walking paths and benches.",
+      image: garden,
+    },
+    {
+      title: "Library",
+      description:
+        "Quiet library with a wide collection of books and study areas.",
+      image: library,
+    },
+  ];
 
   const testimonials = [
-    { name: "John Doe", feedback: "This system has improved our community's efficiency." },
-    { name: "Jane Smith", feedback: "I love the ease of booking facilities online." },
-    { name: "Alice Johnson", feedback: "Fantastic platform for managing our society's needs!" },
+    {
+      name: "John Doe",
+      feedback: "This system has improved our community's efficiency.",
+    },
+    {
+      name: "Jane Smith",
+      feedback: "I love the ease of booking facilities online.",
+    },
+    {
+      name: "Alice Johnson",
+      feedback: "Fantastic platform for managing our society's needs!",
+    },
   ];
 
   return (
@@ -33,11 +66,23 @@ const Homepage = () => {
         className="text-white d-flex flex-column align-items-center justify-content-center text-center p-5"
         style={{ background: "#003366", minHeight: "60vh" }}
       >
-        <h1 className="display-4 fw-bold">Welcome to Society Management System</h1>
+        <h1 className="display-4 fw-bold">
+          Welcome to Society Management System
+        </h1>
         <p className="lead">Managing your society made easy and efficient.</p>
         <div className="mt-3">
-          <button className="btn btn-primary btn-lg me-3" onClick={() => navigate("/signin")}>Login</button>
-          <button className="btn btn-success btn-lg" onClick={() => navigate("/register")}>Register</button>
+          <button
+            className="btn btn-primary btn-lg me-3"
+            onClick={() => navigate("/signin")}
+          >
+            Login
+          </button>
+          <button
+            className="btn btn-success btn-lg"
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </button>
         </div>
       </div>
 
@@ -48,7 +93,12 @@ const Homepage = () => {
           {facilities.map((facility, index) => (
             <div className="col-md-4 mb-4" key={index}>
               <div className="card shadow-lg">
-                <img src={facility.image} className="card-img-top" alt={facility.title} style={{ height: "200px", objectFit: "cover" }} />
+                <img
+                  src={facility.image}
+                  className="card-img-top"
+                  alt={facility.title}
+                  style={{ height: "200px", objectFit: "cover" }}
+                />
                 <div className="card-body">
                   <h5 className="card-title">{facility.title}</h5>
                   <p className="card-text">{facility.description}</p>
@@ -68,7 +118,9 @@ const Homepage = () => {
               <div className="card shadow-sm">
                 <div className="card-body">
                   <p className="card-text">"{testimonial.feedback}"</p>
-                  <h6 className="card-subtitle text-muted">- {testimonial.name}</h6>
+                  <h6 className="card-subtitle text-muted">
+                    - {testimonial.name}
+                  </h6>
                 </div>
               </div>
             </div>
@@ -78,7 +130,15 @@ const Homepage = () => {
 
       {/* Footer */}
       <footer className="text-center py-3 bg-dark text-white">
-        <p className="mb-0">&copy; 2025 Society Management. All rights reserved.</p>
+        <p className="mb-0">
+          &copy; 2025 Society Management. All rights reserved.
+        </p>
+        <button
+          className="btn btn-primary me-3"
+          onClick={() => navigate("/guestpage")}
+        >
+          Guard Page
+        </button>
       </footer>
     </div>
   );
