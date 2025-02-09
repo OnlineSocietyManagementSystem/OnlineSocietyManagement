@@ -25,6 +25,8 @@ import MemberNotices from './screens/member_screens/memberNotices';
 
 import ProtectedRoute from './screens/auth_screens/ProtectedRoute'; // Ensure correct import path
 import GuardPage from './screens/auth_screens/GuardPage';
+import ForgotPassword from './screens/auth_screens/ForgotPassword';
+import ResetPassword from './screens/auth_screens/ResetPassword';
 
 function App() {
   return (
@@ -34,6 +36,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/guestpage" element={<GuardPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+
         
 
         <Route path="/member-dashboard" element={<ProtectedRoute element={MemberDashboard} />} />

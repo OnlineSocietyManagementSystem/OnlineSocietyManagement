@@ -102,6 +102,13 @@ function Login() {
                     Register now
                   </Link>
                 </p>
+
+                <p>
+                  Forgot your password? {" "}
+                  <Link to="/forgot-password" className="text-primary text-decoration-none">
+                    Reset here
+                  </Link>
+                </p>
               </div>
             </div>
           </form>
