@@ -228,48 +228,55 @@ function AdminFacilityBooking() {
           </button>
         </form>
 
-        <h2>Existing Resources</h2>
-        <div className="row">
+        <h2 className="mt-2 mb-3">Existing Resources</h2>
+        <div className="row row-cols-1 row-cols-md-2 g-4">
           {Array.isArray(resources) &&
             resources.map((resource, index) => (
-              <div className="col-md-4 mb-3" key={index}>
-                <div className="card shadow-sm border-0">
-                  <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h5 className="mb-0">{resource.resourceType}</h5>
-                    <button
-                      className="btn btn-sm btn-danger"
-                      onClick={() => handleDelete(resource.id)}
-                    >
-                      Delete
-                    </button>
+              <div key={index} className="col">
+                <div className="card border-0 shadow">
+                  <div
+                    className="card-header"
+                    style={{
+                      backgroundColor: "#2D336B",
+                      color: "rgb(255, 255, 255)",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    <div className="d-flex justify-content-between align-items-center">
+                      <h5 className="mb-0">{resource.resourceType}</h5>
+                    </div>
                   </div>
                   <div className="card-body">
-                    <p className="mb-1">
+                    <p className="card-text text-dark mb-1">
                       <strong>Description:</strong> {resource.description}
                     </p>
-                    <p className="mb-1">
+                    <p className="card-text text-dark mb-1">
                       <strong>Capacity:</strong> {resource.capacity}
                     </p>
-                    <p className="mb-1">
+                    <p className="card-text text-dark mb-0">
                       <strong>Booking Fee:</strong> ₹{resource.bookingFee}
                     </p>
-                    <p
-                      className={`mb-1 fw-bold ${
-                        resource.status === "Unavailable"
-                          ? "text-danger"
-                          : "text-success"
-                      }`}
-                    >
-                      <strong>Availability:</strong> {resource.status}
-                    </p>
+                  </div>
+                  <div className="card-footer">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <p className="fs-5">
+                        <strong>Availability:</strong> {resource.status}
+                      </p>
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => handleDelete(resource.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             ))}
         </div>
 
-        <h2>All Bookings</h2>
-        <div className="row">
+        <h2 className="mt-3 mb-3">All Bookings</h2>
+        <div className="row row-cols-1 row-cols-md-2 g-4">
           {Array.isArray(bookings) &&
             bookings
               .filter(
@@ -277,41 +284,19 @@ function AdminFacilityBooking() {
                   booking.status === "PENDING" || booking.status === "CONFIRMED"
               )
               .map((booking, index) => (
-                <div className="col-md-6 mb-3" key={index}>
-                  <div
-                    className="card"
-                    style={{
-                      backgroundColor:
-                        booking.status === "PENDING" ? "#fff3cd" : "#d1ecf1",
-                      borderColor:
-                        booking.status === "PENDING" ? "#ffeeba" : "#bee5eb",
-                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                      transition: "transform 0.2s",
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.transform = "scale(1.05)")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.transform = "scale(1)")
-                    }
-                  >
-                    <div className="card-body">
-                      <h5 className="card-title fw-bold fs-4">
-                        {booking.resourceType}
-                      </h5>
-                      <h6 className="card-subtitle mb-2 text-muted">
-                        Booker Name: {booking.firstName} {booking.lastName}
-                      </h6>
-                      <h6 className="card-subtitle mb-2 text-muted">
-                        Booking Date: {booking.bookingDate}
-                      </h6>
-                      <h6 className="card-subtitle mb-2 text-muted">
-                        Start Time: {booking.startTime}
-                      </h6>
-                      <h6 className="card-subtitle mb-2 text-muted">
-                        End Time: {booking.endTime}
-                      </h6>
-                      <h6 className="card-subtitle mb-2">
+                <div key={index} className="col">
+                  <div className="card border-0 shadow">
+                    <div
+                      className="card-header fw-bold"
+                      style={{
+                        backgroundColor:
+                          booking.status === "PENDING" ? "#A9B5DF" : "#2D336B",
+                        color: booking.status === "PENDING" ? "#000000" : "rgb(255, 255, 255)",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <div className="d-flex justify-content-between align-items-center">
+                        <h5 className="mb-0">{booking.resourceType}</h5>
                         <span
                           className={`badge ${
                             booking.status === "PENDING"
@@ -321,11 +306,27 @@ function AdminFacilityBooking() {
                         >
                           {booking.status}
                         </span>
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <h6 className="card-text text-dark">
+                        Booker Name: {booking.firstName} {booking.lastName}
                       </h6>
+                      <h6 className="card-text text-dark">
+                        Booking Date: {booking.bookingDate}
+                      </h6>
+                      <h6 className="card-text text-dark">
+                        Start Time: {booking.startTime}
+                      </h6>
+                      <h6 className="card-text text-dark">
+                        End Time: {booking.endTime}
+                      </h6>
+                    </div>
+                    <div className="card-footer text-muted">
                       {booking.status === "PENDING" && (
                         <div>
                           <button
-                            className="btn btn-success btn-sm mr-2"
+                            className="btn btn-success btn-sm me-2"
                             onClick={() => confirmBooking(booking.id)}
                           >
                             Confirm

@@ -44,8 +44,8 @@ function MemberNotices() {
                   <div
                     className="card-header"
                     style={{
-                      backgroundColor: "#e3d5f5",
-                      color: "#23044a",
+                      backgroundColor: "#2D336B",
+                      color: "rgb(255, 255, 255)",
                       fontWeight: "bold",
                     }}
                   >
@@ -61,7 +61,6 @@ function MemberNotices() {
                   </div>
                   <div
                     className="card-body"
-                    style={{ backgroundColor: "#f6edf9" }}
                   >
                     <p className="card-text text-dark">
                       {notice.description}
