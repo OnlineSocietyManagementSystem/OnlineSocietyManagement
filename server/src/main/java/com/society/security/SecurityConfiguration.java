@@ -38,7 +38,7 @@ public class SecurityConfiguration {
 								"/auth/register", "/auth/signin", "/all-complaints",
 								"/v*/api-doc*/**", "/swagger-ui/**", "/all-events", "/all-feedbacks", "/all-notices", "/get-society",
 								"/my-profile", "/update-profile", "/all-resources", "/all-bookings", "/cancel-booking", "/add-guest",
-								"/request-approval", "/notify", "/pending","/all-members")
+								"/request-approval", "/notify-member","/pending","/all-members","/notify-guard/**")
 						.permitAll()
 						.requestMatchers(HttpMethod.OPTIONS).permitAll()
 						// Endpoints accessible only to members

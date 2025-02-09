@@ -83,5 +83,18 @@ public class GuestNotificationServiceImpl implements GuestNotificationService {
 		
 		return "Notification sent to " + member.getFirstName() +member.getLastName()+ " for guest " + dto.getGuestName();
 	}
+	
+	
+	
+	@Override
+	public String getGuestStatusForGuard(Long notificationId) {
+	    GuestNotification notification = guestNotificationDao.findById(notificationId)
+	            .orElseThrow(() -> new RuntimeException("Notification not found"));
+
+	    return "Guest: " + notification.getGuestName() + 
+	           ", Status: " + notification.getStatus().name();
+	}
+
+
 
 }

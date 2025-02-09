@@ -9,4 +9,7 @@ public interface GuestNotificationService {
     void approveGuest(Long notificationId);
     void rejectGuest(Long notificationId);
 	String notifyGuestArrival(GuestNotificationDto dto);
+    //String notifyGuard(Long notificationId);
+//	List<GuestNotificationDto> getNotificationsForGuard(Long guardId);
+	String getGuestStatusForGuard(Long notificationId);
 }
