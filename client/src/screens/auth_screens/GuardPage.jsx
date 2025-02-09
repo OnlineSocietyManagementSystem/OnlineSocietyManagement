@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 function GuardPage() {
   const [members, setMembers] = useState([]);
@@ -9,8 +9,9 @@ function GuardPage() {
     userId: "",
     guestName: "",
     arrivalTime: "",
-    securityGuardId: ""
+    securityGuardId: "",
   });
+  const [notification, setNotification] = useState(null);
 
   const fetchMembers = async () => {
     try {
@@ -19,6 +20,18 @@ function GuardPage() {
       console.log(response.data);
     } catch (error) {
       console.error("error fetching members", error);
+    }
+  };
+
+  const fetchNotification = async (notificationId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/notify-guard/${notificationId}`
+      );
+      setNotification(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("error fetching notification", error);
     }
   };
 
@@ -34,13 +47,14 @@ function GuardPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/notify", formData);
+      const response = await axios.post("http://localhost:8080/notify-member", formData);
       console.log(response.data);
       setShowForm(false);
-      toast.success("msg sent successfully.. wait for response");
+      toast.success("Message sent successfully.. wait for response");
     } catch (error) {
       console.error("error sending notification", error);
     }
+    // fetchNotification();
   };
 
   useEffect(() => {
@@ -51,7 +65,14 @@ function GuardPage() {
     <div className="container mt-5">
       <h2 className="text-center mb-4">Members List</h2>
       <div className="table-responsive">
-        <table className="table table-bordered table-hover" style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", borderRadius: "8px", overflow: "hidden" }}>
+        <table
+          className="table table-bordered table-hover"
+          style={{
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            borderRadius: "8px",
+            overflow: "hidden",
+          }}
+        >
           <thead className="thead-light" style={{ backgroundColor: "#f8f9fa" }}>
             <tr>
               <th>First Name</th>
@@ -87,7 +108,14 @@ function GuardPage() {
         </table>
       </div>
       {showForm && (
-        <div className="mt-4 p-4" style={{ backgroundColor: "#f8f9fa", borderRadius: "8px", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}>
+        <div
+          className="mt-4 p-4"
+          style={{
+            backgroundColor: "#f8f9fa",
+            borderRadius: "8px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          }}
+        >
           <h4>Send Notification</h4>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -114,7 +142,6 @@ function GuardPage() {
                 required
               />
             </div>
-
             <div className="form-group">
               <label htmlFor="securityGuardId">Security Guard ID</label>
               <input
@@ -131,6 +158,22 @@ function GuardPage() {
               Send
             </button>
           </form>
+        </div>
+      )}
+
+      {notification && (
+        <div
+          className="mt-4 p-4"
+          style={{
+            backgroundColor: "#f8f9fa",
+            borderRadius: "8px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <h4>Notification Details</h4>
+          <p>
+            Guest: {notification.guestName}, Status: {notification.status}
+          </p>
         </div>
       )}
     </div>

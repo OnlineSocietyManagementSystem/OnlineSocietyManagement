@@ -232,6 +232,7 @@ function AdminDashboard() {
 
           <h2>Feedback and complaint</h2>
           <div className="row">
+            
             {/* latest feedback */}
             <div className="col-md-6 mb-4">
               {latestFeedback ? (
@@ -364,6 +365,7 @@ function AdminDashboard() {
                   ))}
             </div>
           </div>
+
         </div>
       </div>
     </div>
