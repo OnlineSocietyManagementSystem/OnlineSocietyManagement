@@ -78,6 +78,9 @@ function AdminComplaintsFeedbacks() {
                   <p className="card-text text-dark">
                     {complaint.description}
                   </p>
+                  <p className="card-text text-dark fw-bold">
+                    Name: {complaint.userName}
+                  </p>
                 </div>
                 <div className="card-footer text-muted">
                   <div className="d-flex justify-content-between align-items-center">
@@ -115,6 +118,7 @@ function AdminComplaintsFeedbacks() {
                   <p className="card-text text-dark">
                     {feedback.content}
                   </p>
+                  
                 </div>
                 <div className="card-footer text-muted">
                   <p className="mb-0 fw-bold">
