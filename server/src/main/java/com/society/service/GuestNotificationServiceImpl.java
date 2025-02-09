@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.society.custom_exceptions.ApiException;
 import com.society.daos.GuestNotificationDao;
 import com.society.daos.SecurityGuardDao;
 import com.society.daos.UserDao;
@@ -100,8 +101,12 @@ public class GuestNotificationServiceImpl implements GuestNotificationService {
 	    GuestNotification notification = guestNotificationDao.findById(notificationId)
 	            .orElseThrow(() -> new RuntimeException("Notification not found"));
 
+	    User user = userDao.findById(notification.getMember().getId()).orElseThrow(()-> new ApiException("User not found for given notification Id "));
+	    
+	    
 	    return "Guest: " + notification.getGuestName() + 
-	           ", Status: " + notification.getStatus().name();
+	           ", Status: " + notification.getStatus().name() +
+	           "Username : " + user.getFirstName() + " " + user.getLastName();
 	}
 
 
