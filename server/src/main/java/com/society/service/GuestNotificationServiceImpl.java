@@ -84,4 +84,10 @@ public class GuestNotificationServiceImpl implements GuestNotificationService {
 		return "Notification sent to " + member.getFirstName() +member.getLastName()+ " for guest " + dto.getGuestName();
 	}
 
+	@Override
+	public String notifyGuard(Long notificationId) {
+		
+		return null;
+	}
+
 }

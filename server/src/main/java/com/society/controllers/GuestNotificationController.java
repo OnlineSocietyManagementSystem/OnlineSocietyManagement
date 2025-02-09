@@ -15,7 +15,7 @@ public class GuestNotificationController {
     private GuestNotificationService guestNotificationService;
 
     
-    @PostMapping("/notify")
+    @PostMapping("/notify-member")
     public String notifyGuest(@RequestBody GuestNotificationDto dto) {
         return guestNotificationService.notifyGuestArrival(dto);
     }
@@ -37,5 +37,10 @@ public class GuestNotificationController {
         return "Guest rejected!";
     }
     
+    @GetMapping("/notify-guard")
+    public String notifyGuard(@PathVariable Long notificationId) {
+        guestNotificationService.notifyGuard(notificationId);
+        return "Guest rejected!";
+    }
     
 }
