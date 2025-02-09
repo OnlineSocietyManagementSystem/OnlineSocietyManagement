@@ -104,9 +104,10 @@ public class GuestNotificationServiceImpl implements GuestNotificationService {
 	    User user = userDao.findById(notification.getMember().getId()).orElseThrow(()-> new ApiException("User not found for given notification Id "));
 	    
 	    
-	    return "Guest: " + notification.getGuestName() + 
-	           ", Status: " + notification.getStatus().name() +
-	           " Username : " + user.getFirstName() + " " + user.getLastName();
+	    return " Name : " + user.getFirstName() + " " + user.getLastName()+
+	    		", Guest: " + notification.getGuestName() + 
+	           ", Status: " + notification.getStatus().name() ;
+	           
 	}
 
 

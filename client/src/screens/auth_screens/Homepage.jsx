@@ -7,6 +7,7 @@ import tennisCourt from "../../images/tennisCourt.jpg";
 import garden from "../../images/garden.jpg";
 import library from "../../images/library.jpg";
 import HomeworkIcon from "@mui/icons-material/Homework";
+import "./HomePage.css"; 
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -92,7 +93,7 @@ const Homepage = () => {
         <div className="row">
           {facilities.map((facility, index) => (
             <div className="col-md-4 mb-4" key={index}>
-              <div className="card shadow-lg">
+              <div className="card shadow-lg facility-card">
                 <img
                   src={facility.image}
                   className="card-img-top"
@@ -114,16 +115,18 @@ const Homepage = () => {
         <h2 className="text-center mb-4">Key Features</h2>
         <div className="row">
           <div className="col-md-4 mb-4">
-            <div className="card text-center shadow-sm">
+            <div className="card text-center shadow-sm feature-card">
               <div className="card-body">
                 <i className="fas fa-calendar-check fa-3x mb-3"></i>
                 <h5 className="card-title">Easy Booking</h5>
-                <p className="card-text">Quickly book facilities and manage reservations online.</p>
+                <p className="card-text">
+                  Quickly book facilities and manage reservations online.
+                </p>
               </div>
             </div>
           </div>
           <div className="col-md-4 mb-4">
-            <div className="card text-center shadow-sm">
+            <div className="card text-center shadow-sm feature-card">
               <div className="card-body">
                 <i className="fas fa-bell fa-3x mb-3"></i>
                 <h5 className="card-title">Notifications</h5>
@@ -132,7 +135,7 @@ const Homepage = () => {
             </div>
           </div>
           <div className="col-md-4 mb-4">
-            <div className="card text-center shadow-sm">
+            <div className="card text-center shadow-sm feature-card">
               <div className="card-body">
                 <i className="fas fa-bell fa-3x mb-3"></i>
                 <h5 className="card-title">Complaints & Feedbacks</h5>
@@ -141,7 +144,7 @@ const Homepage = () => {
             </div>
           </div>
           <div className="col-md-4 mb-4">
-            <div className="card text-center shadow-sm">
+            <div className="card text-center shadow-sm feature-card">
               <div className="card-body">
                 <i className="fas fa-user-shield fa-3x mb-3"></i>
                 <h5 className="card-title">Security</h5>
@@ -158,7 +161,7 @@ const Homepage = () => {
         <div className="row">
           {testimonials.map((testimonial, index) => (
             <div className="col-md-4 mb-4" key={index}>
-              <div className="card shadow-sm">
+              <div className="card shadow-sm testimonial-card">
                 <div className="card-body">
                   <p className="card-text">"{testimonial.feedback}"</p>
                   <h6 className="card-subtitle text-muted">- {testimonial.name}</h6>
