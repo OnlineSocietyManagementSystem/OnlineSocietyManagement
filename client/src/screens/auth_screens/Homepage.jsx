@@ -48,16 +48,20 @@ const Homepage = () => {
 
   const testimonials = [
     {
-      name: "John Doe",
+      name: "Shradha Kulkarni",
       feedback: "This system has improved our community's efficiency.",
     },
     {
-      name: "Jane Smith",
+      name: "Shrusti parlikar",
       feedback: "I love the ease of booking facilities online.",
     },
     {
-      name: "Alice Johnson",
+      name: "Pavankumar Bhamare",
       feedback: "Fantastic platform for managing our society's needs!",
+    },
+    {
+      name: "Dhananjay Gayke",
+      feedback: "This is the best platform that i have used till now",
     },
   ];
 
@@ -89,7 +93,7 @@ const Homepage = () => {
 
       {/* Facilities Section */}
       <div className="container py-5">
-        <h2 className="text-center mb-4">Our Facilities</h2>
+        <h2 className="text-center mb-4 fw-bold">Our Facilities</h2>
         <div className="row">
           {facilities.map((facility, index) => (
             <div className="col-md-4 mb-4" key={index}>
@@ -112,10 +116,11 @@ const Homepage = () => {
 
       {/* Key Features Section */}
       <div className="container py-5">
-        <h2 className="text-center mb-4">Key Features</h2>
+        <h2 className="text-center mb-4 fw-bold">Key Features</h2>
         <div className="row">
+
           <div className="col-md-4 mb-4">
-            <div className="card text-center shadow-sm feature-card">
+            <div className="card text-center shadow-sm feature-card" style={{ backgroundColor: "#A9B5DF" }}>
               <div className="card-body">
                 <i className="fas fa-calendar-check fa-3x mb-3"></i>
                 <h5 className="card-title">Easy Booking</h5>
@@ -126,7 +131,7 @@ const Homepage = () => {
             </div>
           </div>
           <div className="col-md-4 mb-4">
-            <div className="card text-center shadow-sm feature-card">
+            <div className="card text-center shadow-sm feature-card" style={{ backgroundColor: "#A9B5DF" }}>
               <div className="card-body">
                 <i className="fas fa-bell fa-3x mb-3"></i>
                 <h5 className="card-title">Notifications</h5>
@@ -135,7 +140,7 @@ const Homepage = () => {
             </div>
           </div>
           <div className="col-md-4 mb-4">
-            <div className="card text-center shadow-sm feature-card">
+            <div className="card text-center shadow-sm feature-card" style={{ backgroundColor: "#A9B5DF" }}>
               <div className="card-body">
                 <i className="fas fa-bell fa-3x mb-3"></i>
                 <h5 className="card-title">Complaints & Feedbacks</h5>
@@ -144,7 +149,7 @@ const Homepage = () => {
             </div>
           </div>
           <div className="col-md-4 mb-4">
-            <div className="card text-center shadow-sm feature-card">
+            <div className="card text-center shadow-sm feature-card" style={{ backgroundColor: "#A9B5DF" }}>
               <div className="card-body">
                 <i className="fas fa-user-shield fa-3x mb-3"></i>
                 <h5 className="card-title">Security</h5>
@@ -157,11 +162,11 @@ const Homepage = () => {
 
       {/* Testimonials Section */}
       <div className="container py-5 bg-light">
-        <h2 className="text-center mb-4">What Our Members Say</h2>
+        <h2 className="text-center mb-4 fw-bold">What Our Members Say</h2>
         <div className="row">
           {testimonials.map((testimonial, index) => (
             <div className="col-md-4 mb-4" key={index}>
-              <div className="card shadow-sm testimonial-card">
+              <div className="card shadow-sm testimonial-card" style={{ backgroundColor: "#A9B5DF" }}>
                 <div className="card-body">
                   <p className="card-text">"{testimonial.feedback}"</p>
                   <h6 className="card-subtitle text-muted">- {testimonial.name}</h6>
