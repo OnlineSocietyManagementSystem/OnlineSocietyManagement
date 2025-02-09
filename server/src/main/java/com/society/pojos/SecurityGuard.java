@@ -17,5 +17,9 @@ public class SecurityGuard extends BaseEntity {
     
     @Column(name="contact_no")
     private String contactNumber;
+    
+    @ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 }
 

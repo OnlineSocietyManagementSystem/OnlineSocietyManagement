@@ -7,10 +7,14 @@ import java.util.List;
 
 public interface GuestNotificationService {
     List<GuestNotificationDto> getPendingNotifications(Long memberId);
+
     void approveGuest(Long notificationId);
+
     void rejectGuest(Long notificationId);
+
     GuestNotificationResponseDto notifyGuestArrival(GuestNotificationDto dto);
-    //String notifyGuard(Long notificationId);
-//	List<GuestNotificationDto> getNotificationsForGuard(Long guardId);
-	String getGuestStatusForGuard(Long notificationId);
+
+    // String notifyGuard(Long notificationId);
+    // List<GuestNotificationDto> getNotificationsForGuard(Long guardId);
+    String getGuestStatusForGuard(Long notificationId);
 }

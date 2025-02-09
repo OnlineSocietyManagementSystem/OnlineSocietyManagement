@@ -94,8 +94,7 @@ public class GuestNotificationServiceImpl implements GuestNotificationService {
 	}
 
 	
-	
-	
+
 	@Override
 	public String getGuestStatusForGuard(Long notificationId) {
 	    GuestNotification notification = guestNotificationDao.findById(notificationId)

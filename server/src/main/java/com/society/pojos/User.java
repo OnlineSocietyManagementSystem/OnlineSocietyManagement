@@ -1,6 +1,9 @@
 package com.society.pojos;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,14 +17,20 @@ import lombok.Setter;
 @Table(name = "users")
 public class User extends BaseEntity {
 
+	
 	@Column(name = "first_name")
 	private String firstName;
 
 	@Column(name = "last_name")
 	private String lastName;
+	
+	
+	
 	@Column(unique = true, length = 50, nullable = false)
 	private String email;
 
+	 
+	
 	@Column(length = 500, nullable = false)
 	private String password;
 

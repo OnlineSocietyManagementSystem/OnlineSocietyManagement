@@ -48,7 +48,7 @@ public class SecurityConfiguration {
 						.hasRole("MEMBER")
 						.requestMatchers("/admin/**", "/add-event", "/add-notice", "/delete-event/**", "/delete-notice",
 								"/add-society", "delete-society", "/all-bookings", "/add-resource", "/delete-resource", "/add-payment",
-								"/confirm-booking", "/all-payments")
+								"/confirm-booking", "/all-payments","/add-guard")
 						.hasRole("ADMIN")
 						.anyRequest().authenticated())
 				.sessionManagement(session -> session
