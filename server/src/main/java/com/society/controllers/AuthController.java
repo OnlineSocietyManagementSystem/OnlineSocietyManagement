@@ -36,7 +36,7 @@ public class AuthController {
 	private JwtUtils jwtUtils;
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> registerUser(@RequestBody UserRegisterDto dto) {
+	public ResponseEntity<?> registerUser(@RequestBody @Valid UserRegisterDto dto) {
 		try {
 			return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerMemeber(dto));
 		} catch(RuntimeException e) {
