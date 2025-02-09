@@ -1,0 +1,25 @@
+/* Homepage.css */
+
+/* Hover effects for facility cards */
+.facility-card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+  }
+  
+  /* Hover effects for feature cards */
+  .feature-card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+  }
+  
+  /* Hover effects for testimonial cards */
+  .testimonial-card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+  }
+  
+  /* Additional styling (if needed) */
+  .card {
+    transition: transform 0.3s ease;
+  }
+  

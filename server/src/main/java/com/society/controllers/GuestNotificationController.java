@@ -4,6 +4,7 @@ import com.society.dtos.GuestNotificationDto;
 import com.society.service.GuestNotificationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +17,8 @@ public class GuestNotificationController {
 
     
     @PostMapping("/notify-member")
-    public String notifyGuest(@RequestBody GuestNotificationDto dto) {
-        return guestNotificationService.notifyGuestArrival(dto);
+    public ResponseEntity<?> notifyGuest(@RequestBody GuestNotificationDto dto) {
+    	return ResponseEntity.ok(guestNotificationService.notifyGuestArrival(dto));
     }
 
     @GetMapping("/pending/{memberId}")
