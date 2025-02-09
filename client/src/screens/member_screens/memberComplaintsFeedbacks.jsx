@@ -75,7 +75,7 @@ function MemberComplaintsFeedbacks() {
 
   const handleDeleteComplaints = async (complaintId) => {
     try {
-      await axios.delete(
+      await axios.put(
         `http://localhost:8080/delete-complaint/${complaintId}`,
         {
           headers: {

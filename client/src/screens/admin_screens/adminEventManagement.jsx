@@ -51,7 +51,7 @@ function AdminEventManagement() {
 
   const handleDelete = async (eventId) => {
     try {
-      await axios.delete(`http://localhost:8080/delete-event/${eventId}`, {
+      await axios.put(`http://localhost:8080/delete-event/${eventId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Event Deleted Successfully");
@@ -59,6 +59,15 @@ function AdminEventManagement() {
     } catch (error) {
       toast.error("Error Deleting Event");
       console.error("Error deleting event:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+    } else if (error.request) {
+        console.error("Request data:", error.request);
+    } else {
+        console.error("Error message:", error.message);
+    }
     }
   };
 
