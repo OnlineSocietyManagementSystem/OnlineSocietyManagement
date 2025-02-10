@@ -3,8 +3,9 @@ package com.society.dtos;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import com.society.pojos.User;
+//import com.society.pojos.User;
 
+//import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class EventDto extends BaseDto{
 	
 	private String description;
 	
-
+	
 	private LocalDate date;
 
 	private Long userId;
