@@ -21,6 +21,7 @@ jobs:
 
       - name: Build JAR file
         run: |
+          cd server 
           mvn clean package -DskipTests
 
       - name: Transfer JAR to EC2
@@ -29,7 +30,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "target/society_management-0.0.1-SNAPSHOT.jar"
+          source: "server/target/society_management-0.0.1-SNAPSHOT.jar"
           target: "/home/ec2-user/"
 
       - name: Restart application
