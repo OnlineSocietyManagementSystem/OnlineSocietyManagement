@@ -17,6 +17,11 @@ function AdminProfile() {
     familyCount: "",
   });
   const [isEditing, setIsEditing] = useState(false);
+  const [showGuardForm, setShowGuardForm] = useState(false);
+  const [guardData, setGuardData] = useState({
+    name: "",
+    contactNumber: "",
+  });
 
   useEffect(() => {
     fetchProfileData();
@@ -48,6 +53,24 @@ function AdminProfile() {
     } catch (error) {
       console.error("Error fetching profile data:", error);
       toast.error("Error fetching profile data.");
+    }
+  };
+
+  const handleAddGuard = async () => {
+    try {
+      const token = localStorage.getItem("token"); // Assuming the token is stored after login
+      await axios.post("http://localhost:8080/add-guard", guardData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success("Guard added successfully.");
+      console.log("Guard added successfully.");
+      setShowGuardForm(false);
+      // Optionally, fetch updated data if needed
+    } catch (error) {
+      console.error("Error adding guard:", error);
+      toast.error("Error adding guard.");
     }
   };
 
@@ -84,8 +107,11 @@ function AdminProfile() {
 
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
         {/* Add Navbar at the top using Bootstrap classes */}
-        <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#A9B5DF" }}>
-          <span className="navbar-brand fw-bold fs-3 px-4" >Profile</span>
+        <nav
+          className="navbar navbar-expand-lg navbar-light mb-4"
+          style={{ backgroundColor: "#A9B5DF" }}
+        >
+          <span className="navbar-brand fw-bold fs-3 px-4">Profile</span>
         </nav>
 
         <h2 className="mb-4">Profile Information</h2>
@@ -236,7 +262,57 @@ function AdminProfile() {
           </div>
         </div>
 
-        
+        <button
+          className="btn btn-primary mt-3 ms-3 mb-3"
+          onClick={() => setShowGuardForm(true)}
+        >
+          Add Guard
+        </button>
+
+        {showGuardForm && (
+          <div className="card shadow-sm p-4 mb-4 bg-white rounded">
+            <h3 className="mb-4">Add Guard</h3>
+            <div className="form-group mb-3">
+              <label>
+                <strong>Name</strong>
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="name"
+                value={guardData.name}
+                onChange={(e) =>
+                  setGuardData({ ...guardData, name: e.target.value })
+                }
+              />
+            </div>
+            <div className="form-group mb-3">
+              <label>
+                <strong>Contact No</strong>
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="contactNo"
+                value={guardData.contactNumber}
+                onChange={(e) =>
+                  setGuardData({ ...guardData, contactNumber: e.target.value })
+                }
+              />
+            </div>
+            <div className="text-center">
+              <button className="btn btn-success mt-3" onClick={handleAddGuard}>
+                Save Guard
+              </button>
+              <button
+                className="btn btn-danger mt-3 ms-3"
+                onClick={() => setShowGuardForm(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

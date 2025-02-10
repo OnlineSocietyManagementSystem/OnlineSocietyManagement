@@ -13,22 +13,42 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    // Email validation
+    // const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    // if (!emailPattern.test(email)) {
+    //   toast.error("Please enter a valid email address!");
+    //   return;
+    // }
+  
+    // Password validation
+    // if (password.length < 6) {
+    //   toast.error("Password must be at least 6 characters long!");
+    //   return;
+    // }
+  
+    // if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    //   toast.error("Password should include at least one special character!");
+    //   return;
+    // }
+  
     try {
       const response = await axios.post("http://localhost:8080/auth/signin", {
         email,
         password,
       });
-
-      toast.success("login successful");
+  
+      console.log(response);
+  
+      toast.success("Login successful");
       const token = response.data.jwt;
-
+  
       localStorage.setItem("token", token);
-
+  
       if (token) {
         const decoded = jwtDecode(token);
         const role = decoded.authorities;
-
+  
         if (role === "ROLE_MEMBER") {
           navigate("/member-dashboard");
         } else {
@@ -36,11 +56,18 @@ function Login() {
         }
       }
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "login failed";
-      toast.error(errorMessage);
-      console.error("Error : ", errorMessage);
+      if (error.response?.status === 401) {
+        toast.error("Incorrect password. Please try again.");
+      } else if (error.response?.status === 400) {
+        toast.error("Please enter a valid email address.");
+      } else {
+        const errorMessage = error.response?.data?.message || "Login failed";
+        toast.error(errorMessage);
+      }
+      console.error("Error : ", error.response || error.message);
     }
   };
+  
 
   return (
     <div className="container-fluid vh-100 d-flex">

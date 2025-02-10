@@ -36,24 +36,27 @@ public class FeedbackServiceImpl implements FeedbackService {
 		if (!optionalUser.isPresent()) {
 			return new ApiResponse("Member not found!");
 		}
-		
+
 		User user = optionalUser.get();
-		
+
 		Feedback feedback = mapper.map(feedbackDto, Feedback.class);
-		
+
 		feedback.setUser(user);
-		
+
 		feedbackDao.save(feedback);
-		
+
 		return new ApiResponse("Feedback send successfully");
-	
+
 	}
 
 	@Override
 	public List<FeedbackDto> getAllFeedbacks() {
-		return feedbackDao.findAll().stream()
-                .map(feedback -> mapper.map(feedback, FeedbackDto.class))
-                .collect(Collectors.toList());
+		return feedbackDao.findAll().stream().map(feedback -> {
+			FeedbackDto feedbackDto = mapper.map(feedback, FeedbackDto.class);
+			feedbackDto.setFirstName(feedback.getUser().getFirstName());
+			feedbackDto.setLastName(feedback.getUser().getLastName());
+			return feedbackDto;
+		}).collect(Collectors.toList());
 	}
 
 	@Override
