@@ -38,33 +38,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
-          key: "-----BEGIN RSA PRIVATE KEY-----
-            MIIEowIBAAKCAQEAoWNFsXWTpJeczVJ8IwZTAwSVsmuUI+rW/TZog65GLbJojNJc
-            senfc/54uIz8qjSghK3W6biJWuP09ScH1xNMUMIx483l4lXRVnzO/SZtesyMolp5
-            2zxRJqb2/0phQx9cirJqO6+JN075BpFgEPJGZ3LqjGc2HaoxSGYFFI+HTK0IxVaA
-            7jycvv5TsNaYteTp/D5hShBNabSW8K5A1qJTuV4KtRtUtMe9Aj1oQE3KzzfX+MfA
-            W9Ls8MIAixFvYS80HUztLi663HkSwi3QYxu03HjurjOeLPhQOfPW5qnBg4Dr9YMG
-            koJzCH5T8gWVLMx79XaF27ld+EH9fO0fJd9JVQIDAQABAoIBAGXB3C2aPu9mkP18
-            5ryGvkyG1YRcBFnpNokNhzSP67vgY7922+9p0PSoHKHwc1c2O4esvHc9XY2rccYp
-            R+46QsIgz6gdKLde+NEZfMFtO1ZUJtAvT+oFy/0dBVvOIClcWtMwz362nUP8TVPw
-            0audtvp/IJhKc3qc1toZSVa/cMXMy+ZESDqHnWp3XEXNuyuIYZAA3L40Rz8ssamh
-            sU37sSpA4jG7foLOiJ2sws9uq93vii79ncxM5TtmFJlw4+SP7P87tL/PXpmlsUa4
-            KAVrJV8EdkMmxihkcXv7Oi5jdOje571N2f93i79kM2QqEDrzXbYl9+Ic/CeZFRRS
-            rR/ETgECgYEA0h5WCJM98/uC68a6kim6C0DhTiDtDo/KDCqBgaWP0o3NbWx48ISf
-            TXEzsjlvcI2tDR22mqYvtQfaqG7NOJwsdZwzKWo9c9acFJdZcN3JgtM+/uO9o4gg
-            J1kqDU1nOEj0LfmY263HuyNp4hKaOk2DP/uE9++HlO2i1wycwM3cM8ECgYEAxKDh
-            OwrRHLNxpmepjmBuikahTf8dfMHttXhBRafEXO2mOHu1uz3q1Xb1tbQXRDWmpT9O
-            rHG7vfkdXeMpbgjZjGosgvp/Qe++kYZfwvgy0V1I0ncHfCRjbfosBLD6QRbXbaFh
-            QcVCpZzxVnNHS9LpFHdQBPH5t3fZPrcjt3QXqpUCgYBAzuaOYov7UxpAit1E8+XU
-            TsCvjmxPz33sXrfvOxevQ9mW5Jww41cXVdEyKZD70FcN8po9/QA+ABwrU3GtAk6c
-            P/9vyLsHnawqlbwame3rkiieCbSWWghA2rmjvLoXnDjkbVX+fA1c5UFlX4N+dCYF
-            eBi9OH5DK0DMv7Ehrt06gQKBgQCbAj0s/4UEvE3/Ij+f91ONfMrTIyhK3tMXuXqz
-            f+OkYtEkPBpzRwenSwW/Pf8NjcIXCYZrGaooxIerKVbS4PUn5de7VeEWyPqR3L4H
-            hQUC2ih7isyCyGj+HTewZxiSUYB5c7ypTeoRh10WiwCMvPN0Z+7URzJWuYuxDk2A
-            5Wt21QKBgE+bcPSLnUVbYzGKzaaOaXjPLV3xOl6qRjrF4SxhTZHtNM3hTh5VXR8Z
-            Tf3mkR3zvIUhZZ53Wn921Waqq0RciTLrAfsIOFtF4T6Ryg/6lTS414m/MokeVZt4
-            bqw8DSaayCy9kpAwjfQ5C2ISfQlB+XA4S66y7rVdpiXycsqUSj5B
-            -----END RSA PRIVATE KEY-----"
+          key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChY0WxdZOkl5zNUnwjBlMDBJWya5Qj6tb9NmiDrkYtsmiM0lyx6d9z/ni4jPyqNKCErdbpuIla4/T1JwfXE0xQwjHjzeXiVdFWfM79Jm16zIyiWnnbPFEmpvb/SmFDH1yKsmo7r4k3TvkGkWAQ8kZncuqMZzYdqjFIZgUUj4dMrQjFVoDuPJy+/lOw1pi15On8PmFKEE1ptJbwrkDWolO5Xgq1G1S0x70CPWhATcrPN9f4x8Bb0uzwwgCLEW9hLzQdTO0uLrrceRLCLdBjG7TceO6uM54s+FA589bmqcGDgOv1gwaSgnMIflPyBZUszHv1doXbuV34Qf187R8l30lV My key pair for online society ec2"
           script: |
             pkill -f 'java -jar your-app.jar' || true
             nohup java -jar /home/ubuntu/server/target/society_management-0.0.1-SNAPSHOT.jar > /home/ubuntu/output.log 2>&1 &
