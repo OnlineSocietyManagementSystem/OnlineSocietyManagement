@@ -110,9 +110,18 @@ function AdminNotices() {
                     required
                   ></textarea>
                 </div>
-                <button type="submit" className="btn btn-primary fw-bold">
-                  Add Notice
-                </button>
+                <div className="d-flex">
+                  <button type="submit" className="btn btn-primary fw-bold me-3">
+                    Add Notice
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-danger "
+                    onClick={() => setShowForm(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </form>
             </div>
           </div>

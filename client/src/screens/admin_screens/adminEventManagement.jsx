@@ -49,12 +49,15 @@ function AdminEventManagement() {
     }
   };
 
-
   const handleDelete = async (eventId) => {
     try {
-      const response = await axios.put(`http://localhost:8080/delete-event/${eventId}`, {}, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.put(
+        `http://localhost:8080/delete-event/${eventId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       console.log("response: ", response);
       toast.success("Event Deleted Successfully");
       console.log("Event deleted successfully");
@@ -64,7 +67,6 @@ function AdminEventManagement() {
       console.error("Error deleting event:", error);
     }
   };
-  
 
   return (
     <div className="d-flex">
@@ -81,9 +83,6 @@ function AdminEventManagement() {
 
         {showForm ? (
           <div className="card mb-4">
-            {/* <div className="card-header">
-              <strong>Add New Event</strong>
-            </div> */}
             <div className="card-body">
               <form onSubmit={handleSubmit}>
                 <div className="row mb-3">
@@ -142,9 +141,18 @@ function AdminEventManagement() {
                   </div>
                 </div>
 
-                <button type="submit" className="btn btn-primary">
-                  Add Event
-                </button>
+                <div className="d-flex ">
+                  <button type="submit" className="btn btn-primary me-3">
+                    Add Event
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-danger "
+                    onClick={() => setShowForm(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -177,17 +185,12 @@ function AdminEventManagement() {
                       <span>{event.title}</span>
                     </div>
                   </div>
-                  <div
-                    className="card-body"
-                    
-                  >
+                  <div className="card-body">
                     <p className="card-text">
                       <strong>Description: </strong> {event.description}
                     </p>
                   </div>
-                  <div
-                    className="card-footer "
-                  >
+                  <div className="card-footer ">
                     <div className="d-flex justify-content-between align-items-center">
                       <p className="card-text">
                         <strong>Date:</strong> {event.date}
