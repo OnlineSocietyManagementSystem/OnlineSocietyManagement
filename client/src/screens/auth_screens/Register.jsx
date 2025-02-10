@@ -17,8 +17,26 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(email)) {
+      toast.error("Please enter a valid email address!");
+      return;
+    }
+
+    // Password validation
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters long!");
+      return;
+    }
+
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      toast.error("Password should include at least one special character!");
+      return;
+    }
+
+    // Confirm password validation
     if (password !== confirmpassword) {
-      toast.error("passwords do not match!");
+      toast.error("Passwords do not match!");
       return;
     }
 
@@ -39,7 +57,7 @@ const Register = () => {
       console.error(error);
       toast.error(
         error.response?.data?.message ||
-        "Something Went Wrong, Please Try Again!"
+          "Something Went Wrong, Please Try Again!"
       );
     }
   };
@@ -49,12 +67,18 @@ const Register = () => {
       <div className="col-md-6 d-flex align-items-center justify-content-center bg-light">
         <div className="p-5 rounded " style={{ width: "80%" }}>
           <h2 className="text-center mb-2 fw-bold">Registration Form</h2>
-          <p className="mt-3">Be part of our community and transform your society management experience!</p>
+          <p className="mt-3">
+            Be part of our community and transform your society management
+            experience!
+          </p>
           <form onSubmit={handleSubmit}>
             <div className="mb-4 mt-5">
               <div className="row">
                 <div className="col-md-6">
-                  <label htmlFor="firstname" className="form-label fw-bold fs-5">
+                  <label
+                    htmlFor="firstname"
+                    className="form-label fw-bold fs-5"
+                  >
                     First Name
                   </label>
                   <input
@@ -159,13 +183,22 @@ const Register = () => {
             </div>
 
             <div className="text-center">
-              <button type="submit" className="btn btn-primary w-100 fw-bold fs-5">
+              <button
+                type="submit"
+                className="btn btn-primary w-100 fw-bold fs-5"
+              >
                 Register
               </button>
               <div className="mt-3">
-                <p className="fs-6">Already have an account? <Link to="/signin" className="text-primary text-decoration-none">
-                  Login here.
-                </Link></p>
+                <p className="fs-6">
+                  Already have an account?{" "}
+                  <Link
+                    to="/signin"
+                    className="text-primary text-decoration-none"
+                  >
+                    Login here.
+                  </Link>
+                </p>
               </div>
             </div>
           </form>
@@ -173,7 +206,9 @@ const Register = () => {
       </div>
       <div
         className="col-md-6 d-flex flex-column justify-content-center align-items-center text-white"
-        style={{ background: "linear-gradient(to bottom,rgb(110, 83, 229), #4682B4)" }}
+        style={{
+          background: "linear-gradient(to bottom,rgb(110, 83, 229), #4682B4)",
+        }}
       >
         <HomeworkIcon style={{ fontSize: 200 }} />
         <h1 className="fw-bold">SocioHub</h1>
