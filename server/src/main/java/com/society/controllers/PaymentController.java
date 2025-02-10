@@ -25,6 +25,7 @@ import com.society.service.PaymentService;
 import com.society.service.PaymentServiceImpl;
 
 import io.jsonwebtoken.io.IOException;
+import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -33,16 +34,14 @@ public class PaymentController {
 	private PaymentService paymentService;
 
 	@PostMapping("/add-payment")
-	public ResponseEntity<?> addPayment(@RequestBody PaymentDto paymentDto, Authentication authentication) {
-		try {
+	public ResponseEntity<?> addPayment(@Valid @RequestBody PaymentDto paymentDto, Authentication authentication) {
+		
 			String email = authentication.getName();
 
 			ApiResponse response = paymentService.addPayment(paymentDto, email);
 			System.out.println(paymentDto.getAmount() + " " + paymentDto.getPaymentType());
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-		}
+		
 	}
 
 	@GetMapping("/get-unpaidpayment")
@@ -53,13 +52,9 @@ public class PaymentController {
 	}
 	@PutMapping("/make-payment/{id}")
 	public ResponseEntity<?> makePayment(@PathVariable Long id, Authentication authentication) {
-	    try {
 	        String email = authentication.getName();
 	        ApiResponse response = paymentService.makePayment(id, email);
 	        return ResponseEntity.ok(response);
-	    } catch (RuntimeException e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-	    }
 	}
 
 
@@ -72,13 +67,9 @@ public class PaymentController {
 
 	@GetMapping("/all-payments")
 	public ResponseEntity<List<PaymentResDto>> getAllPayments(Authentication authentication) {
-		try {
 			String adminEmail = authentication.getName();
 			List<PaymentResDto> payments = paymentService.getAllPayments(adminEmail);
 			return ResponseEntity.ok(payments);
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}
 	}
 
 }

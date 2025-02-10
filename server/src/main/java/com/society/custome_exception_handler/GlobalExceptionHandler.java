@@ -1,5 +1,6 @@
 package com.society.custome_exception_handler;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -54,5 +55,12 @@ public class GlobalExceptionHandler {
 	public ApiResponse handleAnyException(RuntimeException e) {
 		System.out.println("in catch-all " + e);
 		return new ApiResponse(e.getMessage());
+	}
+	
+	@ExceptionHandler(IOException.class)
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	public ApiResponse handleIOException(IOException e) {
+	    System.out.println("in IO exception " + e);
+	    return new ApiResponse(e.getMessage());
 	}
 }
