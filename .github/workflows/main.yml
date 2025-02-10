@@ -36,8 +36,8 @@ jobs:
       - name: Deploy and Restart Application
         run: |
           chmod 400 server/key.pem
-          scp -i server/key.pem society_management-0.0.1-SNAPSHOT.jar ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/
+          scp -i server/key.pem server/target/society_management-0.0.1-SNAPSHOT.jar ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/
           ssh -i server/key.pem ubuntu@${{ secrets.EC2_HOST }} << EOF
-            pkill -f 'java -jar society_management-0.0.1-SNAPSHOT.jar' || true
-            nohup java -jar /home/ubuntu/society_management-0.0.1-SNAPSHOT.jar > /home/ubuntu/output.log 2>&1 &
+            pkill -f 'java -jar server/target/society_management-0.0.1-SNAPSHOT.jar' || true
+            nohup java -jar /home/ubuntu/server/target/society_management-0.0.1-SNAPSHOT.jar > /home/ubuntu/output.log 2>&1 &
           EOF
