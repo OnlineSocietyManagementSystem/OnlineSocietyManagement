@@ -8,5 +8,9 @@ import lombok.Setter;
 public class FeedbackDto extends BaseDto {
 
 	private String content;
+	
+	private String firstName;
+	
+	private String lastName;
 
 }
