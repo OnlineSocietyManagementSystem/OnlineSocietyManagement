@@ -32,30 +32,23 @@ public class BookingController {
 	
 	@PostMapping("/add-booking")
 	public ResponseEntity<?> addBooking(@RequestBody @Valid BookingDto bookingDto, Authentication authentication) {
-		try {
-
+		
 			String email = authentication.getName();
 			ApiResponse response = bookingService.addBooking(bookingDto, email);
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-		}
-
-	}
+		} 
 	
 	@PutMapping("/confirm-booking/{bookingId}")
 	public ResponseEntity<?> confirmBooking(@PathVariable Long bookingId) {
-	    try {
+	    
 	        ApiResponse response = bookingService.confirmBooking(bookingId);
 	        return ResponseEntity.ok(response);
-	    } catch (RuntimeException e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-	    }
+	    
 	}
 	
 	@GetMapping("/all-bookings")
 	public ResponseEntity<?> getAllBookings(Authentication authentication) {
-	    try {
+	    
 	        String email = authentication.getName();
 	        List<BookingRespDto> bookings = bookingService.getBookingsByRole(email);
 	        
@@ -64,20 +57,16 @@ public class BookingController {
 	        } else {
 	            return ResponseEntity.ok(bookings);
 	        }
-	    } catch (RuntimeException e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-	    }
-	}
+	    } 
+	
 	
 	@DeleteMapping("/cancel-booking/{bookingId}")
 	public ResponseEntity<?> cancelBooking(@PathVariable Long bookingId, Authentication authentication) {
-	    try {
+	    
 	        String email = authentication.getName();
 	        ApiResponse response = bookingService.cancelBooking(bookingId, email);
 	        return ResponseEntity.ok(response);
-	    } catch (RuntimeException e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-	    }
+	      
 	}
 
 	

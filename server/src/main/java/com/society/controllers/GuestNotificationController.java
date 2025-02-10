@@ -3,6 +3,8 @@ package com.society.controllers;
 import com.society.dtos.GuestNotificationDto;
 import com.society.service.GuestNotificationService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +19,7 @@ public class GuestNotificationController {
 
     
     @PostMapping("/notify-member")
-    public ResponseEntity<?> notifyGuest(@RequestBody GuestNotificationDto dto) {
+    public ResponseEntity<?> notifyGuest(@Valid @RequestBody GuestNotificationDto dto) {
     	return ResponseEntity.ok(guestNotificationService.notifyGuestArrival(dto));
     }
 

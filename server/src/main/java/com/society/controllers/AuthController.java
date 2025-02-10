@@ -37,11 +37,8 @@ public class AuthController {
 	
 	@PostMapping("/register")
 	public ResponseEntity<?> registerUser(@RequestBody UserRegisterDto dto) {
-		try {
 			return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerMemeber(dto));
-		} catch(RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-		}
+		
 	}
 	
 
