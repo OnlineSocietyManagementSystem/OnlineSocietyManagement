@@ -118,6 +118,9 @@ function AdminComplaintsFeedbacks() {
                   <p className="card-text text-dark">
                     {feedback.content}
                   </p>
+                  <p className="card-text text-dark fw-bold">
+                    Name: {feedback.firstName }  {feedback.lastName}
+                  </p>
                   
                 </div>
                 <div className="card-footer text-muted">
