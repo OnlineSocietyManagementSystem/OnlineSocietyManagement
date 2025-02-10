@@ -20,7 +20,6 @@ import com.society.dtos.FeedbackDto;
 import com.society.service.FeedbackService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
 public class FeedbackController {
 
 	@Autowired
@@ -39,25 +38,25 @@ public class FeedbackController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
 		}
 	}
-	
-	@GetMapping("/all-feedbacks")
-    public ResponseEntity<List<FeedbackDto>> getAllFeedbacks() {
-        try {
-            List<FeedbackDto> feedbacks = feedbackService.getAllFeedbacks();
-            return ResponseEntity.ok(feedbacks);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 
-    @DeleteMapping("/delete-feedback/{id}")
-    public ResponseEntity<?> deleteFeedback(@PathVariable Long id) {
-        try {
-            feedbackService.deleteFeedback(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-        }
-    }
+	@GetMapping("/all-feedbacks")
+	public ResponseEntity<List<FeedbackDto>> getAllFeedbacks() {
+		try {
+			List<FeedbackDto> feedbacks = feedbackService.getAllFeedbacks();
+			return ResponseEntity.ok(feedbacks);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	@DeleteMapping("/delete-feedback/{id}")
+	public ResponseEntity<?> deleteFeedback(@PathVariable Long id) {
+		try {
+			feedbackService.deleteFeedback(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
+		}
+	}
 
 }

@@ -25,7 +25,6 @@ import com.society.dtos.ComplaintResDto;
 import com.society.service.ComplaintService;
 import com.society.service.ComplaintServiceImpl;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class ComplaintController {
 

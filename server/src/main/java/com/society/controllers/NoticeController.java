@@ -25,7 +25,6 @@ import com.society.service.NoticeService;
 
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class NoticeController {
 
