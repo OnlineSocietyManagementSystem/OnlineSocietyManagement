@@ -33,12 +33,4 @@ jobs:
           source: "server/target/society_management-0.0.1-SNAPSHOT.jar"
           target: "/home/ubuntu/"
 
-      - name: Restart application
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChY0WxdZOkl5zNUnwjBlMDBJWya5Qj6tb9NmiDrkYtsmiM0lyx6d9z/ni4jPyqNKCErdbpuIla4/T1JwfXE0xQwjHjzeXiVdFWfM79Jm16zIyiWnnbPFEmpvb/SmFDH1yKsmo7r4k3TvkGkWAQ8kZncuqMZzYdqjFIZgUUj4dMrQjFVoDuPJy+/lOw1pi15On8PmFKEE1ptJbwrkDWolO5Xgq1G1S0x70CPWhATcrPN9f4x8Bb0uzwwgCLEW9hLzQdTO0uLrrceRLCLdBjG7TceO6uM54s+FA589bmqcGDgOv1gwaSgnMIflPyBZUszHv1doXbuV34Qf187R8l30lV My key pair for online society ec2"
-          script: |
-            pkill -f 'java -jar your-app.jar' || true
-            nohup java -jar /home/ubuntu/server/target/society_management-0.0.1-SNAPSHOT.jar > /home/ubuntu/output.log 2>&1 &
+     
