@@ -49,27 +49,22 @@ function AdminEventManagement() {
     }
   };
 
+
   const handleDelete = async (eventId) => {
     try {
-      await axios.put(`http://localhost:8080/delete-event/${eventId}`, {
+      const response = await axios.put(`http://localhost:8080/delete-event/${eventId}`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      console.log("response: ", response);
       toast.success("Event Deleted Successfully");
+      console.log("Event deleted successfully");
       fetchEvents();
     } catch (error) {
       toast.error("Error Deleting Event");
       console.error("Error deleting event:", error);
-      if (error.response) {
-        console.error("Response data:", error.response.data);
-        console.error("Response status:", error.response.status);
-        console.error("Response headers:", error.response.headers);
-    } else if (error.request) {
-        console.error("Request data:", error.request);
-    } else {
-        console.error("Error message:", error.message);
-    }
     }
   };
+  
 
   return (
     <div className="d-flex">
