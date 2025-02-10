@@ -1,0 +1,44 @@
+name: Deploy Java JAR to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build JAR file
+        run: |
+          cd server 
+          mvn clean package -DskipTests
+
+      - name: Transfer JAR to EC2
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "server/target/society_management-0.0.1-SNAPSHOT.jar"
+          target: "/home/ec2-user/"
+
+      - name: Restart application
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            pkill -f 'java -jar society_management-0.0.1-SNAPSHOT.jar' || true
+            nohup java -jar /home/ec2-user/society_management-0.0.1-SNAPSHOT.jar > /home/ec2-user/output.log 2>&1 &
