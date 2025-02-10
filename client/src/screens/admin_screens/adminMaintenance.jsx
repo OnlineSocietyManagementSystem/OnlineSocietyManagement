@@ -3,6 +3,7 @@ import axios from "axios";
 import Sidebar from "../../components/sidebar";
 import { toast } from "react-toastify";
 import ReactPaginate from "react-paginate";
+import "./paginationStyles.css";
 
 function AdminMaintenance() {
   const [amount, setAmount] = useState("");
@@ -12,7 +13,6 @@ function AdminMaintenance() {
   const [currentPaidPage, setCurrentPaidPage] = useState(0);
   const [currentUnpaidPage, setCurrentUnpaidPage] = useState(0);
   const paymentsPerPage = 10;
-
 
   const fetchPayments = async () => {
     const token = localStorage.getItem("token");
@@ -32,8 +32,6 @@ function AdminMaintenance() {
   useEffect(() => {
     fetchPayments();
   }, []);
-
-
 
   // Handle form submission to add a new payment
   const handleFormSubmit = async (e) => {
@@ -59,19 +57,27 @@ function AdminMaintenance() {
   };
 
   // Filter payments based on status
-  const paidPayments = payments.filter(payment => payment.status === "PAID");
-  const unpaidPayments = payments.filter(payment => payment.status !== "PAID");
+  const paidPayments = payments.filter((payment) => payment.status === "PAID");
+  const unpaidPayments = payments.filter(
+    (payment) => payment.status !== "PAID"
+  );
 
   // Pagination for Paid Payments
   const paidPageCount = Math.ceil(paidPayments.length / paymentsPerPage);
-  const paidPaymentsToShow = paidPayments.slice(currentPaidPage * paymentsPerPage, (currentPaidPage + 1) * paymentsPerPage);
+  const paidPaymentsToShow = paidPayments.slice(
+    currentPaidPage * paymentsPerPage,
+    (currentPaidPage + 1) * paymentsPerPage
+  );
   const handlePaidPageChange = ({ selected }) => {
     setCurrentPaidPage(selected);
   };
 
   // Pagination for Unpaid Payments
   const unpaidPageCount = Math.ceil(unpaidPayments.length / paymentsPerPage);
-  const unpaidPaymentsToShow = unpaidPayments.slice(currentUnpaidPage * paymentsPerPage, (currentUnpaidPage + 1) * paymentsPerPage);
+  const unpaidPaymentsToShow = unpaidPayments.slice(
+    currentUnpaidPage * paymentsPerPage,
+    (currentUnpaidPage + 1) * paymentsPerPage
+  );
   const handleUnpaidPageChange = ({ selected }) => {
     setCurrentUnpaidPage(selected);
   };
@@ -82,7 +88,10 @@ function AdminMaintenance() {
 
       <div className="flex-grow-1 p-4" style={{ marginLeft: "20%" }}>
         {/* Add Navbar at the top using Bootstrap classes */}
-        <nav className="navbar navbar-expand-lg navbar-light mb-4" style={{ backgroundColor: "#A9B5DF" }}>
+        <nav
+          className="navbar navbar-expand-lg navbar-light mb-4"
+          style={{ backgroundColor: "#A9B5DF" }}
+        >
           <span className="navbar-brand fw-bold fs-3 px-4">Maintenance</span>
         </nav>
 
@@ -152,7 +161,9 @@ function AdminMaintenance() {
               <tbody>
                 {paidPaymentsToShow.map((payment) => (
                   <tr key={payment.id}>
-                    <td>{payment.firstName}{" "}{payment.lastName}</td>
+                    <td>
+                      {payment.firstName} {payment.lastName}
+                    </td>
                     <td>{payment.amount}</td>
                     <td>{payment.paymentType}</td>
                     <td>{payment.paymentDate}</td>
@@ -165,7 +176,7 @@ function AdminMaintenance() {
               nextLabel={"Next"}
               pageCount={paidPageCount}
               onPageChange={handlePaidPageChange}
-              containerClassName={"pagination"}
+              containerClassName={"pagination justify-content-center"}
               activeClassName={"active"}
             />
           </div>
@@ -189,7 +200,9 @@ function AdminMaintenance() {
               <tbody>
                 {unpaidPaymentsToShow.map((payment) => (
                   <tr key={payment.id}>
-                    <td>{payment.firstName}{" "}{payment.lastName}</td>
+                    <td>
+                      {payment.firstName} {payment.lastName}
+                    </td>
                     <td>{payment.amount}</td>
                     <td>{payment.paymentType}</td>
                     <td>{payment.dueDate}</td>

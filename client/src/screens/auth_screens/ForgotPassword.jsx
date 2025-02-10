@@ -12,6 +12,7 @@ function ForgotPassword() {
     try {
       const response = await axios.post("http://localhost:8080/forgot-password", { email });
       toast.success(response.data);
+      setEmail("");
     } catch (error) {
       const errorMessage = error.response?.data || "Something went wrong";
       toast.error(errorMessage);

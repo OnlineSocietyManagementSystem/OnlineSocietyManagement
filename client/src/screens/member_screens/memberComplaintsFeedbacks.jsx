@@ -76,7 +76,8 @@ function MemberComplaintsFeedbacks() {
   const handleDeleteComplaints = async (complaintId) => {
     try {
       await axios.put(
-        `http://localhost:8080/delete-complaint/${complaintId}`, {},
+        `http://localhost:8080/delete-complaint/${complaintId}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -180,9 +181,16 @@ function MemberComplaintsFeedbacks() {
             </div>
             <button
               type="submit"
-              className="btn btn-danger btn-lg fw-bold mb-3"
+              className="btn btn-success btn-lg fw-bold mb-3"
             >
               Add Complaint
+            </button>
+            <button
+              type="button"
+              className="btn btn-danger ms-3"
+              onClick={() => setShowComplaintForm(false)}
+            >
+              Cancel
             </button>
           </form>
         ) : (
@@ -262,6 +270,13 @@ function MemberComplaintsFeedbacks() {
             </div>
             <button type="submit" className="btn btn-success btn-lg fw-bold">
               Add Feedback
+            </button>
+            <button
+              type="button"
+              className="btn btn-danger ms-3"
+              onClick={() => setShowFeedbackForm(false)}
+            >
+              Cancel
             </button>
           </form>
         ) : (

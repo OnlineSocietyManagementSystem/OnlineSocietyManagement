@@ -8,6 +8,8 @@ function AdminDashboard() {
   const [latestFeedback, setLatestFeedback] = useState(null);
   const [latestComplaint, setLatestComplaint] = useState(null);
   const [bookings, setBookings] = useState([]);
+  const [members, setMembers] = useState([]);
+  const [showList, setShowList] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -128,12 +130,27 @@ function AdminDashboard() {
     }
   };
 
+  const fetchMembers = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/all-members");
+      setMembers(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("error fetching members", error);
+    }
+  };
+
+  const toggleList = () => {
+    setShowList(!showList);
+  };
+
   useEffect(() => {
     fetchNotices();
     fetchEvents();
     fetchFeedbacks();
     fetchComplaints();
     fetchBookings();
+    fetchMembers();
   }, []);
 
   return (
@@ -150,6 +167,36 @@ function AdminDashboard() {
         </nav>
 
         <div className="container">
+          <div className="d-flex justify-content-end mb-3">
+            <button className="btn btn-primary" onClick={toggleList}>
+              {showList ? "Hide Members" : "Show Members"}
+            </button>
+          </div>
+          {showList && members.length > 0 ? (
+            <div className="row justify-content-end">
+              <div className="col-md-6">
+                <table className="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Flat No.</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {members.map((member) => (
+                      <tr key={member.id}>
+                        <td>{member.firstName} {member.lastName}</td>
+                        <td>{member.flatNo}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ) : (
+            showList && <p className="text-center">No members found.</p>
+          )}
+
           <h2>Notice and Event</h2>
           <div className="row">
             {/* latest notice */}
@@ -232,9 +279,8 @@ function AdminDashboard() {
 
           <h2>Feedback and complaint</h2>
           <div className="row">
-            
             {/* latest feedback */}
-            <div className="col-md-6 mb-4">
+            <div className="col-md-6 mb-2">
               {latestFeedback ? (
                 <div className="card border-0 shadow">
                   <div
@@ -262,7 +308,7 @@ function AdminDashboard() {
             </div>
 
             {/* latest complaint */}
-            <div className="col-md-6 mb-4">
+            <div className="col-md-6 mb-2">
               {latestComplaint ? (
                 <div className="card border-0 shadow">
                   <div
@@ -289,7 +335,7 @@ function AdminDashboard() {
               )}
             </div>
 
-            <h2 className=" mb-0">All Bookings</h2>
+            <h2 className=" mb-0 mt-0">All Bookings</h2>
             <div className="row row-cols-1 row-cols-md-2 mt-2">
               {Array.isArray(bookings) &&
                 bookings
@@ -365,7 +411,6 @@ function AdminDashboard() {
                   ))}
             </div>
           </div>
-
         </div>
       </div>
     </div>
