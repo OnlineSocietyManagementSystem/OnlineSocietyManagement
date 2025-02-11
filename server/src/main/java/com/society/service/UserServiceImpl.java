@@ -16,6 +16,7 @@ import com.society.dtos.ProfileDto;
 import com.society.dtos.UserRegisterDto;
 import com.society.pojos.Society;
 import com.society.pojos.User;
+import com.society.pojos.UserRole;
 
 @Service
 @Transactional
@@ -38,9 +39,10 @@ public class UserServiceImpl implements UserService {
 		if(userDao.existsByEmail(dto.getEmail()))
 			throw new ApiException("User email already exists!!!");
 		User memberEntity = modelMapper.map(dto, User.class);
-		memberEntity.setPassword(passwordEncoder.encode(memberEntity.getPassword()));		
+		memberEntity.setPassword(passwordEncoder.encode(memberEntity.getPassword()));
+		memberEntity.setRole(UserRole.ROLE_MEMBER);
 		User savedMember= userDao.save(memberEntity);
-		return new ApiResponse(dto.getRole()+" "+"registered with ID " + savedMember.getId());
+		return new ApiResponse(savedMember.getRole()+" "+"registered with ID " + savedMember.getId());
 		
 	}
 
