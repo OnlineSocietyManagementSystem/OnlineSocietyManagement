@@ -22,17 +22,13 @@ public class MemberController {
 
 	@GetMapping("/all-members")
 	
-	public ResponseEntity<?> getAllEvents() {
-		try {
+	public ResponseEntity<?> getAllEvents() 
+	{
 			List<MemberRespDto> members = memberService.getAllMembers();
 			if (members.isEmpty()) {
 				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 			} else {
 				return ResponseEntity.ok(members);
-			}
-
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-		}
+			}	
 	}
 }

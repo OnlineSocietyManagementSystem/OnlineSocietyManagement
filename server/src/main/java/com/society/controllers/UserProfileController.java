@@ -17,6 +17,8 @@ import com.society.dtos.ProfileDto;
 import com.society.service.GuestNotificationService;
 import com.society.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class UserProfileController {
 	
@@ -27,7 +29,7 @@ public class UserProfileController {
 	private GuestNotificationService guestNotificationService;
 	
 	@PutMapping("/update-profile")
-	public ResponseEntity<?> updateProfile(@RequestBody ProfileDto dto, Authentication authentication) {
+	public ResponseEntity<?> updateProfile(@Valid @RequestBody ProfileDto dto, Authentication authentication) {
 	    String email = authentication.getName(); // Get the logged-in user's email
 	    ApiResponse response = userService.updateProfile(dto,email);
 	    return ResponseEntity.ok(response);
