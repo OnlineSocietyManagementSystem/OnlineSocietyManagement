@@ -18,6 +18,8 @@ import com.society.dtos.ResourceRequestDto;
 import com.society.dtos.ResourceResponseDto;
 import com.society.service.ResourceService;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class ResourceController {
 
@@ -25,22 +27,19 @@ public class ResourceController {
 	private ResourceService resourceService;
 	
 	@PostMapping("/add-resource")
-	public ResponseEntity<?> addResource(@RequestBody ResourceRequestDto dto, Authentication authentication) {
-		try {
+	public ResponseEntity<?> addResource(@Valid @RequestBody ResourceRequestDto dto, Authentication authentication) {
+		
 			String email = authentication.getName();
 			System.out.println("Extracted User Email : " + email);
 			
 			ApiResponse response = resourceService.addResource(dto, email);
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
-			
-		}catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-		}
+	
 	}
 	
 	@GetMapping("/all-resources")
 	public ResponseEntity<?> getAllResources() {
-		try {
+		
 			List<ResourceResponseDto> resources = resourceService.getAllResources();
 			
 			if(resources.isEmpty()) {
@@ -48,19 +47,13 @@ public class ResourceController {
 			} else {
 				return ResponseEntity.ok(resources);
 			}
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-		}
 	}
 	
 	@DeleteMapping("/delete-resource/{resourceId}")
 	public ResponseEntity<?> deleteResource(@PathVariable Long resourceId, Authentication authentication) {
-		try {
+		
 			String email = authentication.getName();
 			ApiResponse response = resourceService.deleteResource(resourceId, email);
 			return ResponseEntity.ok(response);
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-		}
 	}
 }

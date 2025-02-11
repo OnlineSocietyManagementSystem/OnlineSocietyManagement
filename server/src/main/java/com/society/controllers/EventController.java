@@ -31,43 +31,30 @@ public class EventController {
 	
 	@PostMapping("/add-event")
 	public ResponseEntity<?> addEvent(@RequestBody @Valid EventDto eventDto, Authentication authentication) {
-		try {
-
 			String email = authentication.getName();
 			// Extract logged-in user's email
 //	            System.out.println(eventDto);
 			ApiResponse response = eventService.addEvent(eventDto, email);
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-		}
 
 	}
 
 	@GetMapping("/all-events")
-	public ResponseEntity<?> getAllEvents() {
-		try {
-			List<EventResponseDto> events = eventService.getAllEvents();
+	public ResponseEntity<?> getAllEvents() 
+	{
+		 List<EventResponseDto> events = eventService.getAllEvents();
 			if (events.isEmpty()) {
 				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 			} else {
 				return ResponseEntity.ok(events);
 			}
-
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-		}
 	}
 
 	@PutMapping("/delete-event/{eventId}")
 	public ResponseEntity<?> deleteEvent(@PathVariable Long eventId, Authentication authentication) {
-		try {
 			String email = authentication.getName();
 			ApiResponse response = eventService.deleteEvent(eventId, email);
 			return ResponseEntity.ok(response);
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-		}
 	}
 	
 	

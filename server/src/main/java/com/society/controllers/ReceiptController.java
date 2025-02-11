@@ -1,6 +1,9 @@
 package com.society.controllers;
 
 import com.society.service.ReceiptService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +24,7 @@ public class ReceiptController {
     private ReceiptService receiptService;
 
     @PostMapping("/generate-receipt")
-    public ResponseEntity<String> generateReceipt(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<String> generateReceipt(@Valid @RequestBody Map<String, Object> payload) {
         String email = (String) payload.get("email");
         double amount = ((Number) payload.get("amount")).doubleValue();
 

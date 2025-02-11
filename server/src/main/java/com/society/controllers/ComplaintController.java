@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.jwt.Jwt;
-
+import org.springframework.validation.annotation.Validated;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -24,8 +24,8 @@ import com.society.dtos.ComplaintDto;
 import com.society.dtos.ComplaintResDto;
 import com.society.service.ComplaintService;
 import com.society.service.ComplaintServiceImpl;
+ 
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class ComplaintController {
 
@@ -34,17 +34,12 @@ public class ComplaintController {
 
     @PostMapping("/add-complaint")
     public ResponseEntity<?> addComplaint(@RequestBody ComplaintDto dto, Authentication authentication) {
-        try {
+       
         	    String email = authentication.getName();
                 System.out.println("Extracted User Email: " + email);
-
                 // Call service layer
                 ApiResponse response = complaintService.addComplaint(dto, email);
                 return ResponseEntity.status(HttpStatus.CREATED).body(response);
-            } 
-         catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-        }
     }
     @GetMapping("/all-complaints")
     public ResponseEntity<List<ComplaintResDto>> getAllComplaints() 
@@ -54,28 +49,19 @@ public class ComplaintController {
     }
     
     @GetMapping("/my-complaints")
-    public ResponseEntity<?> getUserComplaints(Authentication authentication) {
-      
-          try {
+    public ResponseEntity<?> getUserComplaints(Authentication authentication)
+    {   
     	       String email = authentication.getName();
                 List<ComplaintByIdDto> complaints = complaintService.getComplaintById(email);
-                return ResponseEntity.ok(complaints);
-            }
-          catch (Exception e) {
-              return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-          }
+                return ResponseEntity.ok(complaints);   
     }
     
     @PutMapping("/delete-complaint/{complaintId}")
     public ResponseEntity<?> deleteComplaint(@PathVariable Long complaintId, Authentication authentication) {
-    	try {
 			String email = authentication.getName();
 			ApiResponse response = complaintService.deleteComplaint(complaintId, email);
 			return ResponseEntity.ok(response);
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage()));
-		}
-    }
+}
 }
 
 
