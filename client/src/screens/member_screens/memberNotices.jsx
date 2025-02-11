@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../../components/sidebar";
-
+import {Announcement as AnnouncementIcon} from '@mui/icons-material';
 function MemberNotices() {
   const [notices, setNotices] = useState([]);
 
@@ -50,7 +50,8 @@ function MemberNotices() {
                     }}
                   >
                     <div className="d-flex justify-content-between">
-                      <span>{notice.title}</span>
+
+                      <span className="fs-4"> <AnnouncementIcon className="me-2" /> {notice.title}</span>
                       <span
                         className="badge"
                         style={{ backgroundColor: "#23044a", color: "#ffffff" }}
