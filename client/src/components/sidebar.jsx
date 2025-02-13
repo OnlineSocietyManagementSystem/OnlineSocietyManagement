@@ -10,8 +10,9 @@ import {
   AccountCircle as ProfileIcon,
   ExitToApp as LogoutIcon,
   AttachMoney as MoneyIcon,
+  Home as HomeIcon, // Add HomeIcon here
 } from '@mui/icons-material';
-import HomeworkIcon from "@mui/icons-material/Homework";
+
 
 
 function Sidebar() {
