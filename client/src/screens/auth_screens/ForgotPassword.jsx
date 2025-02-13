@@ -2,7 +2,6 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import HomeworkIcon from "@mui/icons-material/Homework";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -25,7 +24,6 @@ function ForgotPassword() {
         className="col-md-6 d-flex flex-column justify-content-center align-items-center text-white"
         style={{ background: "linear-gradient(to bottom,rgb(110, 83, 229), #4682B4)" }}
       >
-        <HomeworkIcon style={{ fontSize: 200 }} />
         <h1 className="fw-bold">SocioHub</h1>
         <p>One Platform, Complete Society Management!</p>
       </div>
