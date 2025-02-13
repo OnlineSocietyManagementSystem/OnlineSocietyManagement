@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar";
 import axios from "axios";
-import {Event as EventIcon} from '@mui/icons-material';
 
 function MemberEventManagement() {
   const [events, setEvents] = useState([]);
@@ -44,7 +43,7 @@ function MemberEventManagement() {
                     }}
                   >
                     <div className="d-flex justify-content-between align-items-center">
-                      <span><EventIcon className="me-2" />{event.title}</span>
+                      <span>{event.title}</span>
                     </div>
                   </div>
                   <div

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import HomeworkIcon from "@mui/icons-material/Homework";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -208,7 +207,6 @@ const Register = () => {
           background: "linear-gradient(to bottom,rgb(110, 83, 229), #4682B4)",
         }}
       >
-        <HomeworkIcon style={{ fontSize: 200 }} />
         <h1 className="fw-bold">SocioHub</h1>
         <p>One Platform, Complete Society Management!</p>
       </div>

@@ -6,7 +6,6 @@ import clubHouse from "../../images/clubHouse.jpg";
 import tennisCourt from "../../images/tennisCourt.jpg";
 import garden from "../../images/garden.jpg";
 import library from "../../images/library.jpg";
-import HomeworkIcon from "@mui/icons-material/Homework";
 import "./HomePage.css"; 
 
 const Homepage = () => {
@@ -72,7 +71,6 @@ const Homepage = () => {
         className="text-white d-flex flex-column align-items-center justify-content-center text-center p-5"
         style={{ background: "#003366", minHeight: "60vh" }}
       >
-        <HomeworkIcon style={{ fontSize: 150, marginRight: "10px" }} />
         <h1 className="display-2 fw-bold">Welcome to SocioHub</h1>
         <p className="lead">Managing your society made easy and efficient.</p>
         <div className="mt-3">
