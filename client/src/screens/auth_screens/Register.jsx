@@ -8,9 +8,10 @@ const Register = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
+  // const [role, setRole] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmpassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
 
@@ -35,7 +36,7 @@ const Register = () => {
     }
 
     // Confirm password validation
-    if (password !== confirmpassword) {
+    if (password !== confirmPassword) {
       toast.error("Passwords do not match!");
       return;
     }
@@ -45,7 +46,7 @@ const Register = () => {
         firstName,
         lastName,
         email,
-        role,
+        phone,
         password,
       });
 
@@ -76,7 +77,7 @@ const Register = () => {
               <div className="row">
                 <div className="col-md-6">
                   <label
-                    htmlFor="firstname"
+                    htmlFor="firstName"
                     className="form-label fw-bold fs-5"
                   >
                     First Name
@@ -84,7 +85,7 @@ const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    id="firstname"
+                    id="firstName"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     placeholder="Enter your first name"
@@ -92,13 +93,13 @@ const Register = () => {
                   />
                 </div>
                 <div className="col-md-6">
-                  <label htmlFor="lastname" className="form-label fw-bold fs-5">
+                  <label htmlFor="lastName" className="form-label fw-bold fs-5">
                     Last Name
                   </label>
                   <input
                     type="text"
                     className="form-control"
-                    id="lastname"
+                    id="lastName"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     placeholder="Enter your last name"
@@ -126,23 +127,20 @@ const Register = () => {
                 </div>
 
                 <div className="col-md-6">
-                  <label htmlFor="role" className="form-label fw-bold fs-5">
-                    Role
+                  <label htmlFor="Phone" className="form-label fw-bold fs-5">
+                    Phone No
                   </label>
-                  <select
-                    className="form-select"
-                    id="role"
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="text"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="Enter your PhoneNo"
                     required
-                  >
-                    <option value="" disabled>
-                      Select your role
-                    </option>
-                    <option value="ROLE_ADMIN">ADMIN</option>
-                    <option value="ROLE_MEMBER">MEMBER</option>
-                  </select>
+                  />
                 </div>
+
               </div>
             </div>
 
@@ -164,7 +162,7 @@ const Register = () => {
                 </div>
                 <div className="col-md-6">
                   <label
-                    htmlFor="confirmpassword"
+                    htmlFor="confirmPassword"
                     className="form-label fw-bold fs-5"
                   >
                     Confirm Password
@@ -172,9 +170,9 @@ const Register = () => {
                   <input
                     type="password"
                     className="form-control"
-                    id="confirmpassword"
-                    value={confirmpassword}
-                    onChange={(e) => setConfirmpassword(e.target.value)}
+                    id="confirmPassword"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Confirm your password"
                     required
                   />
