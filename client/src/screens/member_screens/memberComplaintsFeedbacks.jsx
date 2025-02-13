@@ -21,7 +21,7 @@ function MemberComplaintsFeedbacks() {
 
   const fetchFeedbacks = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/all-feedbacks", {
+      const response = await axios.get("http://13.201.73.36:8080/all-feedbacks", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -34,7 +34,7 @@ function MemberComplaintsFeedbacks() {
 
   const fetchComplaints = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/my-complaints", {
+      const response = await axios.get("http://13.201.73.36:8080/my-complaints", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -52,7 +52,7 @@ function MemberComplaintsFeedbacks() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/add-complaint",
+        "http://13.201.73.36:8080/add-complaint",
         complaintData,
         {
           headers: {
@@ -76,7 +76,7 @@ function MemberComplaintsFeedbacks() {
   const handleDeleteComplaints = async (complaintId) => {
     try {
       await axios.put(
-        `http://localhost:8080/delete-complaint/${complaintId}`,
+        `http://13.201.73.36:8080/delete-complaint/${complaintId}`,
         {},
         {
           headers: {
@@ -99,7 +99,7 @@ function MemberComplaintsFeedbacks() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/add-feedback",
+        "http://13.201.73.36:8080/add-feedback",
         feedbackData,
         {
           headers: {
@@ -121,7 +121,7 @@ function MemberComplaintsFeedbacks() {
   const handleDeleteFeedback = async (feedbackId) => {
     try {
       await axios.delete(
-        `http://localhost:8080/delete-feedback/${feedbackId}`,
+        `http://13.201.73.36:8080/delete-feedback/${feedbackId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

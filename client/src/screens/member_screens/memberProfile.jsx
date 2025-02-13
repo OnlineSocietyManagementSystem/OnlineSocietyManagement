@@ -25,7 +25,7 @@ function MemberProfile() {
   const fetchProfileData = async () => {
     try {
       const token = localStorage.getItem("token"); // Assuming the token is stored after login
-      const response = await axios.get("http://localhost:8080/my-profile", {
+      const response = await axios.get("http://13.201.73.36:8080/my-profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -71,7 +71,7 @@ function MemberProfile() {
         console.log("Token retrieved:", token);
         console.log("Profile data to be sent:", profileData);
         
-        const response = await axios.put("http://localhost:8080/update-profile", profileData, {
+        const response = await axios.put("http://13.201.73.36:8080/update-profile", profileData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -15,7 +15,7 @@ function AdminComplaintsFeedbacks() {
 
   const fetchFeedbacks = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/all-feedbacks", {
+      const response = await axios.get("http://13.201.73.36:8080/all-feedbacks", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -28,7 +28,7 @@ function AdminComplaintsFeedbacks() {
 
   const fetchComplaints = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/all-complaints", {
+      const response = await axios.get("http://13.201.73.36:8080/all-complaints", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

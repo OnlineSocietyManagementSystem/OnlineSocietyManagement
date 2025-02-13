@@ -22,7 +22,7 @@ function AdminFacilityBooking() {
   const fetchResources = async () => {
     try {
       const token = localStorage.getItem("token"); // Assuming the token is stored after login
-      const response = await axios.get("http://localhost:8080/all-resources", {
+      const response = await axios.get("http://13.201.73.36:8080/all-resources", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -36,7 +36,7 @@ function AdminFacilityBooking() {
   const fetchBookings = async () => {
     try {
       const token = localStorage.getItem("token"); // Assuming the token is stored after login
-      const response = await axios.get("http://localhost:8080/all-bookings", {
+      const response = await axios.get("http://13.201.73.36:8080/all-bookings", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -59,7 +59,7 @@ function AdminFacilityBooking() {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token"); // Assuming the token is stored after login
-      await axios.post("http://localhost:8080/add-resource", newResource, {
+      await axios.post("http://13.201.73.36:8080/add-resource", newResource, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -83,7 +83,7 @@ function AdminFacilityBooking() {
     const token = localStorage.getItem("token");
     try {
       await axios.delete(
-        `http://localhost:8080/delete-resource/${resourceId}`,
+        `http://13.201.73.36:8080/delete-resource/${resourceId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -104,7 +104,7 @@ function AdminFacilityBooking() {
     const token = localStorage.getItem("token");
     try {
       await axios.put(
-        `http://localhost:8080/confirm-booking/${bookingId}`,
+        `http://13.201.73.36:8080/confirm-booking/${bookingId}`,
         {},
         {
           headers: {
@@ -126,7 +126,7 @@ function AdminFacilityBooking() {
     const token = localStorage.getItem("token");
     try {
       await axios.delete(
-        `http://localhost:8080/cancel-booking/${bookingId}`,
+        `http://13.201.73.36:8080/cancel-booking/${bookingId}`,
         {},
         {
           headers: {

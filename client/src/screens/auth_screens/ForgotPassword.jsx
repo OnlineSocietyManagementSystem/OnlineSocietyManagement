@@ -9,7 +9,7 @@ function ForgotPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/forgot-password", { email });
+      const response = await axios.post("http://13.201.73.36:8080/forgot-password", { email });
       toast.success(response.data);
       setEmail("");
     } catch (error) {

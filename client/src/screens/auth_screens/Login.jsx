@@ -32,7 +32,7 @@ function Login() {
     // }
   
     try {
-      const response = await axios.post("http://localhost:8080/auth/signin", {
+      const response = await axios.post("http://13.201.73.36:8080/auth/signin", {
         email,
         password,
       });
