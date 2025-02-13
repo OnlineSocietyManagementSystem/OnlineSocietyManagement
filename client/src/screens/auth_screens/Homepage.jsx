@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import swimmingPool from "../../images/swimmingPool.jpg";
 import gym from "../../images/gym.jpg";
-import clubHouse from "../../images/clubhouse.jpg";
+import clubHouse from "../../images/clubHouse.jpg";
 import tennisCourt from "../../images/tennisCourt.jpg";
 import garden from "../../images/garden.jpg";
 import library from "../../images/library.jpg";
