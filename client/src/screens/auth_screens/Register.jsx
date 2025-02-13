@@ -9,7 +9,7 @@ const Register = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   // const [role, setRole] = useState("");
-  const [phoneNo, setPhoneNo] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -46,7 +46,7 @@ const Register = () => {
         firstName,
         lastName,
         email,
-        role,
+        phone,
         password,
       });
 
@@ -127,15 +127,15 @@ const Register = () => {
                 </div>
 
                 <div className="col-md-6">
-                  <label htmlFor="PhoneNo" className="form-label fw-bold fs-5">
+                  <label htmlFor="Phone" className="form-label fw-bold fs-5">
                     Phone No
                   </label>
                   <input
                     type="text"
                     className="form-control"
                     id="text"
-                    value={phoneNo}
-                    onChange={(e) => setPhoneNo(e.target.value)}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     placeholder="Enter your PhoneNo"
                     required
                   />
