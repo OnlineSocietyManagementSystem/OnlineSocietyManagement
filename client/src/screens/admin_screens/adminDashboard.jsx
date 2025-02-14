@@ -15,13 +15,15 @@ function AdminDashboard() {
 
   const fetchNotices = async () => {
     try {
-      const response = await axios.get("http://13.201.73.36:8080/all-notices");
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-notices`);
       const notices = response.data;
+      
 
-      // Sort notices by updatedOn date in descending order
+     
+      if (notices.length > 0) {
+         // Sort notices by updatedOn date in descending order
       notices.sort((a, b) => new Date(b.updatedOn) - new Date(a.updatedOn));
 
-      if (notices.length > 0) {
         setLatestNotice(notices[0]);
       }
     } catch (error) {
@@ -31,13 +33,14 @@ function AdminDashboard() {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get("http://13.201.73.36:8080/all-events");
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-events`);
       const events = response.data;
 
-      // Sort events by updatedOn date in descending order
+      
+      if (events.length > 0) {
+        // Sort events by updatedOn date in descending order
       events.sort((a, b) => new Date(b.updatedOn) - new Date(a.updatedOn));
 
-      if (events.length > 0) {
         setLatestEvent(events[0]);
       }
     } catch (error) {
@@ -47,17 +50,18 @@ function AdminDashboard() {
 
   const fetchFeedbacks = async () => {
     try {
-      const response = await axios.get("http://13.201.73.36:8080/all-feedbacks", {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-feedbacks`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       const feedbacks = response.data;
 
-      // Sort feedbacks by updatedOn date in descending order
+     
+      if (feedbacks.length > 0) {
+         // Sort feedbacks by updatedOn date in descending order
       feedbacks.sort((a, b) => new Date(b.updatedOn) - new Date(a.updatedOn));
 
-      if (feedbacks.length > 0) {
         setLatestFeedback(feedbacks[0]);
       }
     } catch (error) {
@@ -67,19 +71,20 @@ function AdminDashboard() {
 
   const fetchComplaints = async () => {
     try {
-      const response = await axios.get("http://13.201.73.36:8080/all-complaints", {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-complaints`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       const complaints = response.data;
 
-      // Sort complaints by creationDate in descending order
+     
+
+      if (complaints.length > 0) {
+         // Sort complaints by creationDate in descending order
       complaints.sort(
         (a, b) => new Date(b.creationDate) - new Date(a.creationDate)
       );
-
-      if (complaints.length > 0) {
         setLatestComplaint(complaints[0]);
       }
     } catch (error) {
@@ -90,7 +95,7 @@ function AdminDashboard() {
   const fetchBookings = async () => {
     try {
       const token = localStorage.getItem("token"); // Assuming the token is stored after login
-      const response = await axios.get("http://13.201.73.36:8080/all-bookings", {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-bookings`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -103,7 +108,7 @@ function AdminDashboard() {
 
   const handleDeleteEvent = async (eventId) => {
     try {
-      await axios.delete(`http://13.201.73.36:8080/delete-event/${eventId}`, {
+      await axios.delete(`${import.meta.env.VITE_BASE_URL}delete-event/${eventId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Event Deleted Successfully");
@@ -117,7 +122,7 @@ function AdminDashboard() {
   const handleDeleteNotice = async (noticeId) => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`http://13.201.73.36:8080/delete-notice/${noticeId}`, {
+      await axios.delete(`${import.meta.env.VITE_BASE_URL}delete-notice/${noticeId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -132,7 +137,7 @@ function AdminDashboard() {
 
   const fetchMembers = async () => {
     try {
-      const response = await axios.get("http://13.201.73.36:8080/all-members");
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-members`);
       setMembers(response.data);
       console.log(response.data);
     } catch (error) {

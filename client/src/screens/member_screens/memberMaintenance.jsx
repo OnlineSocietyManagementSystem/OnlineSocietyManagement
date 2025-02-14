@@ -17,7 +17,7 @@ function MemberMaintenance() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://13.201.73.36:8080/get-unpaidpayment",
+        `${import.meta.env.VITE_BASE_URL}get-unpaidpayment`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -34,7 +34,7 @@ function MemberMaintenance() {
   const fetchPaymentHistory = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://13.201.73.36:8080/my-payments", {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}my-payments`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -56,7 +56,7 @@ function MemberMaintenance() {
 
       // Make the payment
       const paymentResponse = await axios.put(
-        `http://13.201.73.36:8080/make-payment/${paymentId}`,
+        `${import.meta.env.VITE_BASE_URL}make-payment/${paymentId}`,
         {},
         {
           headers: {
@@ -71,7 +71,7 @@ function MemberMaintenance() {
       if (paymentResponse.status === 200) {
         // Send the receipt
         const receiptResponse = await axios.post(
-          "http://13.201.73.36:8080/generate-receipt",
+          `${import.meta.env.VITE_BASE_URL}generate-receipt`,
           {
             email: email,
             amount: amount,

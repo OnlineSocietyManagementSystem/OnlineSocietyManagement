@@ -15,7 +15,7 @@ function MemberDashboard() {
   const fetchNotifications = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`http://13.201.73.36:8080/pending/${id}`, {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}pending/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -36,7 +36,7 @@ function MemberDashboard() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        `http://13.201.73.36:8080/approve/${notificationId}`,
+        `${import.meta.env.VITE_BASE_URL}approve/${notificationId}`,
         {},
         {
           headers: {
@@ -56,7 +56,7 @@ function MemberDashboard() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        `http://13.201.73.36:8080/reject/${notificationId}`,
+        `${import.meta.env.VITE_BASE_URL}reject/${notificationId}`,
         {},
         {
           headers: {
@@ -74,7 +74,7 @@ function MemberDashboard() {
 
   const fetchNotices = async () => {
     try {
-      const response = await axios.get("http://13.201.73.36:8080/all-notices");
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-notices`);
       const notices = response.data;
 
       // Sort notices by updatedOn date in descending order
@@ -90,7 +90,7 @@ function MemberDashboard() {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get("http://13.201.73.36:8080/all-events");
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-events`);
       const events = response.data;
 
       // Sort events by updatedOn date in descending order
@@ -107,7 +107,7 @@ function MemberDashboard() {
   const fetchBookedResources = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://13.201.73.36:8080/all-bookings", {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-bookings`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       // console.log(response);
@@ -120,7 +120,7 @@ function MemberDashboard() {
   const handleDeleteBooking = async (bookingId) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://13.201.73.36:8080/cancel-booking/${bookingId}`, {
+      await axios.delete(`${import.meta.env.VITE_BASE_URL}cancel-booking/${bookingId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Booking deleted successfully");
