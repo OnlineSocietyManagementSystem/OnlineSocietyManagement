@@ -56,7 +56,7 @@ public class PasswordResetServiceImpl implements PasswordResetService {
 	}
 
 	private void sendResetEmail(String email, String token) {
-		String resetLink = "http://localhost:5174/reset-password/" + token;
+		String resetLink = "https://online-society-management-fe.vercel.app/reset-password/" + token;
 
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(email);
