@@ -33,16 +33,16 @@ jobs:
           source: "server/target/society_management-0.0.1-SNAPSHOT.jar"
           target: "/home/ubuntu/"
           
-      - name: Run JAR on EC2
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            # Stop the previous running process (optional)
-            pkill -f "society_management-0.0.1-SNAPSHOT.jar" || true
+      # - name: Run JAR on EC2
+      #   uses: appleboy/ssh-action@v0.1.7
+      #   with:
+      #     host: ${{ secrets.EC2_HOST }}
+      #     username: ${{ secrets.EC2_USER }}
+      #     key: ${{ secrets.EC2_SSH_KEY }}
+      #     script: |
+      #       # Stop the previous running process (optional)
+      #       pkill -f "society_management-0.0.1-SNAPSHOT.jar" || true
             
-            # Run JAR file in the background
-            nohup java -jar /home/ubuntu/society_management-0.0.1-SNAPSHOT.jar > /home/ubuntu/output.log 2>&1 & echo $! >> /home/ubuntu/output.log
+      #       # Run JAR file in the background
+      #       nohup java -jar /home/ubuntu/society_management-0.0.1-SNAPSHOT.jar > /home/ubuntu/output.log 2>&1 & echo $! >> /home/ubuntu/output.log
      
