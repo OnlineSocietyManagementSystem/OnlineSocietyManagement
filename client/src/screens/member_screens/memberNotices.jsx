@@ -12,7 +12,7 @@ function MemberNotices() {
 
   const fetchNotices = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-notices`);
+      const response = await axios.get(`http://localhost:8080/all-notices`);
       setNotices(response.data);
     } catch (error) {
       console.error("Error fetching notices:", error);

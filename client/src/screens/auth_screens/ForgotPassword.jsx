@@ -9,7 +9,7 @@ function ForgotPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}forgot-password`, { email });
+      const response = await axios.post(`http://localhost:8080/forgot-password`, { email });
       toast.success(response.data);
       setEmail("");
     } catch (error) {

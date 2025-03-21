@@ -16,7 +16,7 @@ function AdminEventManagement() {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-events`);
+      const response = await axios.get(`http://localhost:8080/all-events`);
       setEvents(response.data);
     } catch (error) {
       console.error("Error fetching events:", error);
@@ -32,7 +32,7 @@ function AdminEventManagement() {
     const eventData = { title, description, date, location, time };
 
     try {
-      await axios.post(`${import.meta.env.VITE_BASE_URL}add-event`, eventData, {
+      await axios.post(`http://localhost:8080/add-event`, eventData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTitle("");
@@ -52,7 +52,7 @@ function AdminEventManagement() {
   const handleDelete = async (eventId) => {
     try {
       const response = await axios.put(
-        `import.meta.env.VITE_BASE_URLdelete-event/${eventId}`,
+        `http://localhost:8080/delete-event/${eventId}`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },

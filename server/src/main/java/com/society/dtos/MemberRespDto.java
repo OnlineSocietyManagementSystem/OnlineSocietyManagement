@@ -13,7 +13,7 @@ import lombok.Setter;
 public class MemberRespDto extends BaseDto {
 	
 	
-	private String firstName;
+	private String firstName;W
 
 	private String lastName;
 	

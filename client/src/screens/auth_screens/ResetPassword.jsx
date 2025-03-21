@@ -18,7 +18,7 @@ function ResetPassword() {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}reset-password?token=${token}`, // Use token as request parameter
+        `http://localhost:8080/reset-password?token=${token}`, // Use token as request parameter
         { newPassword: password }
       );
       toast.success(response.data.message);

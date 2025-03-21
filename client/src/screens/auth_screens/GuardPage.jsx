@@ -15,7 +15,7 @@ function GuardPage() {
 
   const fetchMembers = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-members`);
+      const response = await axios.get(`http://localhost:8080/all-members`);
       setMembers(response.data);
       console.log(response.data);
     } catch (error) {
@@ -26,7 +26,7 @@ function GuardPage() {
   const fetchNotification = async (notificationId) => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}notify-guard/${notificationId}`
+        `http://localhost:8080/notify-guard/${notificationId}`
       );
       setNotification(response.data);
       console.log(response.data);
@@ -47,7 +47,7 @@ function GuardPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}notify-member`, formData);
+      const response = await axios.post(`http://localhost:8080/notify-member`, formData);
       const notificationId = response.data.notificationId;
       console.log(notificationId);
 

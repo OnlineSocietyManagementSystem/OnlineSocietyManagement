@@ -21,7 +21,7 @@ function MemberFacilityBooking() {
   const fetchResources = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-resources`, {
+      const response = await axios.get(`http://localhost:8080/all-resources`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setResources(response.data);
@@ -33,7 +33,7 @@ function MemberFacilityBooking() {
   const fetchBookedResources = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-bookings`, {
+      const response = await axios.get(`http://localhost:8080/all-bookings`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log(response);
@@ -65,7 +65,7 @@ function MemberFacilityBooking() {
         comments,
       };
       console.log("resourceName : ", selectedResource.resourceType);
-      await axios.post(`${import.meta.env.VITE_BASE_URL}add-booking`, bookingData, {
+      await axios.post(`http://localhost:8080/add-booking`, bookingData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Booking successful");
@@ -81,7 +81,7 @@ function MemberFacilityBooking() {
   const handleDeleteBooking = async (bookingId) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`${import.meta.env.VITE_BASE_URL}cancel-booking/${bookingId}`, {
+      await axios.delete(`http://localhost:8080/cancel-booking/${bookingId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Booking deleted successfully");

@@ -11,7 +11,7 @@ function MemberEventManagement() {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}all-events`);
+      const response = await axios.get(`http://localhost:8080/all-events`);
       setEvents(response.data);
     } catch (error) {
       console.error("Error fetching events:", error);
