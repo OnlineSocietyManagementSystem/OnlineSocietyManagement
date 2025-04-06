@@ -32,5 +32,7 @@ public class UserRegisterDto {
 	private String password;
 
 	private String phone;
+	
+	private UserRole role;
 
 }

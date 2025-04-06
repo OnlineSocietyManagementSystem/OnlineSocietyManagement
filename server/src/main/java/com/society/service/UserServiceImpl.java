@@ -24,65 +24,69 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
-	
+
 //	@Autowired
 //	private SocietyDao societyDao;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Override
 	public ApiResponse registerMemeber(UserRegisterDto dto) {
-		if(userDao.existsByEmail(dto.getEmail()))
+		if (userDao.existsByEmail(dto.getEmail()))
 			throw new ApiException("User email already exists!!!");
 		User memberEntity = modelMapper.map(dto, User.class);
 		memberEntity.setPassword(passwordEncoder.encode(memberEntity.getPassword()));
-		memberEntity.setRole(UserRole.ROLE_MEMBER);
-		User savedMember= userDao.save(memberEntity);
-		return new ApiResponse(savedMember.getRole()+" "+"registered with ID " + savedMember.getId());
-		
+
+		if (dto.getRole() == UserRole.ROLE_ADMIN) {
+			memberEntity.setRole(UserRole.ROLE_ADMIN);
+		} else {
+			memberEntity.setRole(UserRole.ROLE_MEMBER);
+		}
+
+		User savedMember = userDao.save(memberEntity);
+		return new ApiResponse(savedMember.getRole() + " " + "registered with ID " + savedMember.getId());
+
 	}
 
 	@Override
-	public ApiResponse updateProfile(ProfileDto dto,String email) 
-	{
-	        Optional<User> optionalUser = userDao.findByEmail(email);
-	        
-//	        Society society = societyDao.findById(dto.getSocietyId()).orElseThrow(() -> new ApiException("No society with given id"));
-	        
-	        if (optionalUser.isEmpty()) {
-	            return new ApiResponse("User not found");
-	        }
+	public ApiResponse updateProfile(ProfileDto dto, String email) {
+		Optional<User> optionalUser = userDao.findByEmail(email);
 
-	        User user = optionalUser.get();
-	        
-	        // Updating profile fields
-	        user.setBuilding(dto.getBuilding());
-	        user.setFlatNo(dto.getFlatNo());
-	        user.setFloor(dto.getFloor());
-	        user.setAadhar(dto.getAadhar());
-	        user.setPhone(dto.getPhone());
-	        user.setFamilyCount(dto.getFamilyCount());
+//	        Society society = societyDao.findById(dto.getSocietyId()).orElseThrow(() -> new ApiException("No society with given id"));
+
+		if (optionalUser.isEmpty()) {
+			return new ApiResponse("User not found");
+		}
+
+		User user = optionalUser.get();
+
+		// Updating profile fields
+		user.setBuilding(dto.getBuilding());
+		user.setFlatNo(dto.getFlatNo());
+		user.setFloor(dto.getFloor());
+		user.setAadhar(dto.getAadhar());
+		user.setPhone(dto.getPhone());
+		user.setFamilyCount(dto.getFamilyCount());
 //	        user.setSociety(society);
-	        userDao.save(user); // Update user in database
-	        return new ApiResponse("Profile updated successfully");
-	    }
+		userDao.save(user); // Update user in database
+		return new ApiResponse("Profile updated successfully");
+	}
 
 	@Override
-    public ProfileDto getProfile(String email) {
-        Optional<User> optionalUser = userDao.findByEmail(email);
+	public ProfileDto getProfile(String email) {
+		Optional<User> optionalUser = userDao.findByEmail(email);
 
-        if (optionalUser.isEmpty()) {
-            throw new ApiException("User not found");
-        }
+		if (optionalUser.isEmpty()) {
+			throw new ApiException("User not found");
+		}
 
-        User user = optionalUser.get();
-        
-        // Convert User to ProfileDto using ModelMapper
-        return modelMapper.map(user, ProfileDto.class);
-    }		
+		User user = optionalUser.get();
+
+		// Convert User to ProfileDto using ModelMapper
+		return modelMapper.map(user, ProfileDto.class);
+	}
 }
-
